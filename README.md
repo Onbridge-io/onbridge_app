@@ -2,6 +2,19 @@
 
 User interface of OnBridge NFT cross-chain gateway.
 
+## Build and run
+
+This app designed to be built as a docker compose service from the root repository.
+
+You can use docker to build and run it separately
+
+```sh
+docker build -t app .
+docker run -it -p 80:80 app
+```
+
+Then navigate to http://127.0.0.1/ and have fun :-)
+
 ## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
