@@ -4,7 +4,7 @@
   margin: auto;
   display: flex;
   flex-direction: column;
-  background-color: #292c32;
+  background-color: $card-bg;
   border-radius: 16px;
   overflow: hidden;
   width: 260px;
@@ -16,10 +16,38 @@
   }
 
   &Info {
-    line-height: 24px;
     margin: 20px;
+
+    &Head {
+      line-height: 24px;
+      display: flex;
+      justify-content: space-between;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid $border;
+    }
+
+    &Foot {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  &Spec {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+
+    &Label {
+      font-weight: normal;
+      font-size: 13px;
+      color: $secondary-text;
+      margin-bottom: 5px;
+    }
+
+    &Value {
+      font-weight: normal;
+      font-size: 15px;
+    }
   }
 
   &NetworkLogo {

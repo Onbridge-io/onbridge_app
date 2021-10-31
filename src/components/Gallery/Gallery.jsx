@@ -1,3 +1,6 @@
+import { useEffect, useState } from 'react'
+
+import { getTokensInfo } from '../../api/fetchTokens'
 import {
   Gallery as GalleryStyled,
   GalleryHead,
@@ -11,7 +14,7 @@ import { GalleryItem } from './GalleryItem/GalleryItem'
 const fakeData = {
   contract: {
     logo: 'https://avatars.githubusercontent.com/u/45615063?s=200&v=4',
-    name: 'Crypto Punks',
+    name: 'Grizzly V4',
   },
   tokens: [
     {
@@ -23,13 +26,34 @@ const fakeData = {
     },
   ],
 }
-const { contract, tokens } = fakeData
+const { contract } = fakeData
 
-const tokensList = tokens.map(({ ...props }) => {
-  return <GalleryItem {...props} />
-})
+function TokensList({ tokens }) {
+  return (
+    tokens &&
+    tokens.map(({ token_id, owner, image, chain_id }) => {
+      return (
+        <GalleryItem
+          key={token_id}
+          tokenId={token_id}
+          owner={owner}
+          image={image}
+          chainId={chain_id}
+        />
+      )
+    })
+  )
+}
 
 export function Gallery() {
+  const [tokensList, setTokensList] = useState([])
+
+  useEffect(() => {
+    getTokensInfo().then(res => {
+      setTokensList(res)
+    })
+  }, [])
+
   return (
     <div className={GalleryStyled}>
       <div className={GalleryHead}>
@@ -37,10 +61,14 @@ export function Gallery() {
           <img className={GalleryHeadLogo} src={contract.logo} alt='Logo' />
           {contract.name}
         </div>
-        <div className={GalleryHeadCounter}>4 items</div>
+        <div className={GalleryHeadCounter}>
+          {tokensList && tokensList.length} items
+        </div>
       </div>
 
-      <div className={GalleryGrid}>{tokensList}</div>
+      <div className={GalleryGrid}>
+        <TokensList tokens={tokensList} />
+      </div>
     </div>
   )
 }
