@@ -1,0 +1,48 @@
+@import '../../scss/variables.scss';
+
+.Gallery {
+  margin: 40px auto;
+  display: flex;
+  flex-direction: column;
+  background-color: #22252c;
+  padding: 32px;
+  border: 1px solid $border;
+  border-radius: 16px;
+  max-width: 1200px;
+
+  &Head {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding-bottom: 24px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid $border;
+    display: flex;
+    align-items: center;
+
+    &Title {
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+    }
+
+    &Logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 16px;
+      border: 2px solid $border;
+    }
+
+    &Counter {
+      color: $secondary-text;
+    }
+  }
+
+  &Grid {
+    display: grid;
+    gap: 32px 30px;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-rows: repeat(2, 1fr);
+  }
+}

@@ -1,5 +1,9 @@
-import { MainWrapper } from '../../components'
+import { MainWrapper, Gallery } from '../../components'
 
 export function Main() {
-  return <MainWrapper></MainWrapper>
+  return (
+    <MainWrapper>
+      <Gallery />
+    </MainWrapper>
+  )
 }
