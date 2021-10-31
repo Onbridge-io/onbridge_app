@@ -1,23 +1,33 @@
 {
-  "1": {
-    "blockExplorer": "https://etherscan.io/tx/",
-    "name": "Mainnet",
+  "4": {
+    "blockExplorer": "https://rinkeby.etherscan.io/tx/",
+    "name": "Rinkeby",
     "params": {
-      "chainId": "0x1"
+      "chainId": "0x4",
+      "chainName": "Rinkeby",
+      "nativeCurrency": {
+        "name": "Ethereum",
+        "symbol": "ETH",
+        "decimals": 18
+      },
+      "rpcUrls": [
+        "https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161"
+      ],
+      "blockExplorerUrls": ["https://rinkeby.etherscan.io"]
     }
   },
-  "56": {
-    "blockExplorer": "https://www.bscscan.com/tx/",
-    "name": "BSC",
+  "97": {
+    "blockExplorer": "https://testnet.bscscan.com/tx/",
+    "name": "BSC Testnet",
     "params": {
-      "chainId": "0x38",
-      "chainName": "Binance Smart Chain",
+      "chainId": "0x61",
+      "chainName": "BSC Testnet",
       "nativeCurrency": {
         "name": "Binance Coin",
         "symbol": "BNB",
         "decimals": 18
       },
-      "rpcUrls": ["https://bsc-dataseed.binance.org"],
+      "rpcUrls": ["https://data-seed-prebsc-1-s1.binance.org:8545/"],
       "blockExplorerUrls": ["https://bscscan.com"]
     }
   }
