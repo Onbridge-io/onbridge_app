@@ -1,3 +1,11 @@
+import { Web3Status } from '../../components'
+
 export function Main() {
-  return <h1>OnBridge</h1>
+  return (
+    <div>
+      <h1>OnBridge</h1>
+
+      <Web3Status />
+    </div>
+  )
 }
