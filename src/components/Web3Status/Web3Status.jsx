@@ -1,19 +1,92 @@
 import { useState, useEffect } from 'react'
 import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
+import classnames from 'classnames'
 
+import Networks from '../../networks.json'
+import { supportedChainIds } from '../../constants'
+import {
+  Web3Status as Web3StatusStyled,
+  Web3StatusAddressWrapper,
+  Web3StatusAddress,
+  Web3StatusCircle,
+  NetworksMenu,
+  NetworksMenuTitle,
+  NetworksMenuHidden,
+  NetworksMenuWrapper,
+  NetworksMenuList,
+  NetworksMenuButton,
+  NetworksMenuMainButton,
+  NetworksMenuArrow,
+} from './Web3Status.module.scss'
 import { injected } from '../../utils/web3/connectors'
 import { useEagerConnect, useInactiveListener } from '../../utils/web3/hooks'
+import { shortenAddress, switchNetwork } from '../../utils/web3'
+import { Button } from '../'
 
 const connectorsByName = {
   Injected: {
-    text: 'MetaMask',
+    text: 'Connect',
     connector: injected,
   },
 }
 
-export function Web3Status({ type, ...props }) {
-  const { connector, account, activate, deactivate, active, error } =
-    useWeb3React()
+function NetworkSwitcher() {
+  const { error, chainId } = useWeb3React()
+  const [menuIsVisible, setMenuIsVidible] = useState(false)
+  const wrongNetwork = error instanceof UnsupportedChainIdError
+
+  const menuClassNames = classnames(NetworksMenu, {
+    [NetworksMenuHidden]: !menuIsVisible,
+  })
+
+  const selectButtonText = wrongNetwork
+    ? 'Wrong Network'
+    : Networks[chainId].name
+
+  return (
+    <div className={NetworksMenuWrapper}>
+      <Button
+        className={NetworksMenuMainButton}
+        onClick={() => {
+          setMenuIsVidible(!menuIsVisible)
+        }}
+      >
+        {selectButtonText}
+        <img
+          className={NetworksMenuArrow}
+          src='/img/chevron-down.svg'
+          alt='Down'
+        />
+      </Button>
+      <div className={menuClassNames}>
+        <div className={NetworksMenuTitle}>Select network</div>
+
+        <div className={NetworksMenuList}>
+          {supportedChainIds.map(id => {
+            if (chainId === id) {
+              return null
+            }
+
+            return (
+              <Button
+                key={id}
+                onClick={() => {
+                  switchNetwork(id)
+                }}
+                className={NetworksMenuButton}
+              >
+                {Networks[id].name}
+              </Button>
+            )
+          })}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export function Web3Status({ ...props }) {
+  const { connector, account, activate, deactivate, error } = useWeb3React()
   const wrongNetwork = error instanceof UnsupportedChainIdError
 
   // handle logic to recognize the connector currently being activated
@@ -30,94 +103,57 @@ export function Web3Status({ type, ...props }) {
   // handle logic to connect in reaction to certain events on the injected ethereum provider, if it exists
   useInactiveListener(!triedEager || !!activatingConnector)
 
-  const accountValue =
-    account === undefined ? '...' : account === null ? 'None' : account
-
-  const Status = ({ type }) =>
-    active ? (
-      <div type={type}>{accountValue}</div>
-    ) : error ? (
-      <div type={type}>
-        {wrongNetwork && connector === injected ? 'Wrong network' : 'Error'}
-      </div>
-    ) : (
-      <div type={type}>Connect wallet</div>
-    )
+  const address = account && (
+    <>
+      <div className={Web3StatusCircle} />
+      <span className={Web3StatusAddress}>{shortenAddress(account)}</span>
+    </>
+  )
 
   const StatusContent = () => {
-    if (error instanceof UnsupportedChainIdError) {
-      return <span>Wrong Network</span>
-    }
-
     const TryAgain = () => (
-      <>
-        <span>Error</span>
-        <button
-          onClick={() => {
-            if (connector === injected) {
-              deactivate()
-            }
-          }}
-        >
-          Try again
-        </button>
-      </>
+      <Button
+        onClick={() => {
+          if (connector === injected) {
+            deactivate()
+          }
+        }}
+      >
+        Try again
+      </Button>
     )
 
     if (connector === injected) {
-      if (error) {
+      if (error && !wrongNetwork) {
         return <TryAgain />
       }
 
+      return <NetworkSwitcher />
+    }
+
+    return Object.keys(connectorsByName).map(name => {
+      const currentConnector = connectorsByName[name].connector
+      const connected = currentConnector === connector
+      const disabled =
+        !triedEager || !!activatingConnector || connected || !!error
+
+      const connectFunction = () => {
+        setActivatingConnector.call(this, currentConnector)
+        activate.call(this, connectorsByName[name].connector)
+      }
+
       return (
-        <>
-          <h3>Connected with MetaMask</h3>
-          <br />
-          <span>
-            * For disconnect, please use Metamask and disconnect this account -{' '}
-            {account}
-          </span>
-        </>
+        <Button disabled={disabled} key={name} onClick={connectFunction}>
+          {connectorsByName[name].text}
+        </Button>
       )
-    }
-
-    if (error) {
-      return <span>Error. Try to reload the page.</span>
-    }
-
-    return (
-      <>
-        <h4>Connect to a wallet</h4>
-        {Object.keys(connectorsByName).map(name => {
-          const currentConnector = connectorsByName[name].connector
-          const activating = currentConnector === activatingConnector
-          const connected = currentConnector === connector
-          const disabled =
-            !triedEager || !!activatingConnector || connected || !!error
-
-          const connectFunction = () => {
-            setActivatingConnector.call(this, currentConnector)
-            activate.call(this, connectorsByName[name].connector)
-          }
-
-          return (
-            <button disabled={disabled} key={name} onClick={connectFunction}>
-              {connectorsByName[name].text}&nbsp;
-              <span>
-                {activating && <span>(waiting...)</span>}
-                {connected && <span>(connected)</span>}
-              </span>
-            </button>
-          )
-        })}
-      </>
-    )
+    })
   }
 
   return (
-    <div {...props}>
+    <div className={Web3StatusStyled} {...props}>
+      <div className={Web3StatusAddressWrapper}>{address}</div>
       <StatusContent />
-      <Status type={type} />
     </div>
   )
 }

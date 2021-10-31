@@ -1,11 +1,11 @@
 import { Header as HeaderStyled } from './Header.module.scss'
-import { Button } from '../../'
+import { Web3Status } from '../../'
 
 export function Header() {
   return (
     <div className={HeaderStyled}>
       <img src='/img/logo.png' alt='OnBridge' />
-      <Button>Connect</Button>
+      <Web3Status />
     </div>
   )
 }

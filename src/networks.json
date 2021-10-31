@@ -1,0 +1,24 @@
+{
+  "1": {
+    "blockExplorer": "https://etherscan.io/tx/",
+    "name": "Mainnet",
+    "params": {
+      "chainId": "0x1"
+    }
+  },
+  "56": {
+    "blockExplorer": "https://www.bscscan.com/tx/",
+    "name": "BSC",
+    "params": {
+      "chainId": "0x38",
+      "chainName": "Binance Smart Chain",
+      "nativeCurrency": {
+        "name": "Binance Coin",
+        "symbol": "BNB",
+        "decimals": 18
+      },
+      "rpcUrls": ["https://bsc-dataseed.binance.org"],
+      "blockExplorerUrls": ["https://bscscan.com"]
+    }
+  }
+}

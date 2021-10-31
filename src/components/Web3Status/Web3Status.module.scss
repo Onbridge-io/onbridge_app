@@ -1,0 +1,71 @@
+@import '../../scss/variables.scss';
+
+.Web3Status {
+  display: flex;
+  align-items: center;
+
+  &AddressWrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  &Address {
+    margin: 0 10px;
+    display: flex;
+    align-items: center;
+  }
+
+  &Circle {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #70f1d9;
+  }
+}
+
+.NetworksMenu {
+  border: 1px solid $border;
+  border-radius: 10px;
+  background-color: $secondary-bg;
+  padding: 10px;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, calc(100% + 10px));
+  min-width: 100%;
+  max-width: none;
+  white-space: nowrap;
+  z-index: 11;
+
+  &Title {
+    margin-bottom: 10px;
+  }
+
+  &Hidden {
+    display: none;
+  }
+
+  &List {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &Wrapper {
+    position: relative;
+    margin-right: 20px;
+  }
+
+  &MainButton {
+    display: flex;
+    align-items: center;
+  }
+
+  &Button {
+    margin-top: 10px;
+  }
+
+  &Arrow {
+    height: 20px;
+    margin-left: 10px;
+  }
+}
