@@ -1,0 +1,9 @@
+@import '../../../scss/variables.scss';
+
+.Header {
+  padding: 23px;
+  border-bottom: 1px solid $header-border;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
