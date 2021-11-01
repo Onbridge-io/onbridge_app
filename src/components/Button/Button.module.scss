@@ -15,4 +15,15 @@
     background-color: $button-hover;
     transition: 0.3 all;
   }
+
+  &Disabled {
+    background-color: $disabled-text;
+    color: $secondary-text;
+    cursor: not-allowed;
+
+    &:hover {
+      background-color: $disabled-text;
+      color: $secondary-text;
+    }
+  }
 }
