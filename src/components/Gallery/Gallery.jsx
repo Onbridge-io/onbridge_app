@@ -14,7 +14,7 @@ import { GalleryItem } from './GalleryItem/GalleryItem'
 const fakeData = {
   contract: {
     logo: 'https://avatars.githubusercontent.com/u/45615063?s=200&v=4',
-    name: 'Grizzly V4',
+    name: 'Battleverse',
   },
   tokens: [
     {

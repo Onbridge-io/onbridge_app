@@ -61,7 +61,7 @@ export function GalleryItem({
     <div className={GalleryItemStyled}>
       <img src={image} alt='Token' className={GalleryItemPicture} />
       <div className={GalleryItemInfo}>
-        <div className={GalleryItemInfoHead}># {tokenId}</div>
+        <div className={GalleryItemInfoHead}>Baby Battle Bot #{tokenId}</div>
 
         <div className={GalleryItemInfoFoot}>
           <div className={GalleryItemSpecsWrapper}>
