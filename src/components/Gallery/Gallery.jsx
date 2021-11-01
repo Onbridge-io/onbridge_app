@@ -31,7 +31,7 @@ const { contract } = fakeData
 function TokensList({ tokens }) {
   return (
     tokens &&
-    tokens.map(({ token_id, owner, image, chain_id }) => {
+    tokens.map(({ token_id, owner, image, chain_id, skill }) => {
       return (
         <GalleryItem
           key={token_id}
@@ -39,6 +39,7 @@ function TokensList({ tokens }) {
           owner={owner}
           image={image}
           chainId={chain_id}
+          skill={skill}
         />
       )
     })
