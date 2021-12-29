@@ -7,8 +7,18 @@
         "type": "address"
       },
       {
+        "internalType": "contract DeBridgeGateMock",
+        "name": "_l1DeBridgeGate",
+        "type": "address"
+      },
+      {
         "internalType": "contract IERC721",
         "name": "_l2Token",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_l2bridge",
         "type": "address"
       }
     ],
@@ -264,6 +274,19 @@
   },
   {
     "inputs": [],
+    "name": "l1DeBridgeGate",
+    "outputs": [
+      {
+        "internalType": "contract DeBridgeGateMock",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "l1Token",
     "outputs": [
       {
@@ -289,6 +312,19 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "l2bridge",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -303,7 +339,7 @@
     ],
     "name": "outboundTransfer",
     "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "payable",
     "type": "function"
   },
   {
@@ -338,6 +374,19 @@
       }
     ],
     "name": "revokeRole",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_l2bridge",
+        "type": "address"
+      }
+    ],
+    "name": "setL2bridge",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

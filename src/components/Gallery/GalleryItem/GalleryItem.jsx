@@ -19,10 +19,11 @@ import {
 import { shortenAddress } from '../../../utils/web3'
 import { bridgeToken } from '../../../api/bridge'
 import Networks from '../../../networks.json'
+import { L1ChainId, L2ChainId } from '../../../constants'
 
 const networksLogos = {
-  4: '/img/networks-logos/mainnet.png',
-  97: '/img/networks-logos/BSC.png',
+  [L1ChainId]: '/img/networks-logos/mainnet.png',
+  [L2ChainId]: '/img/networks-logos/BSC.png',
 }
 
 export function GalleryItem({
@@ -35,7 +36,7 @@ export function GalleryItem({
   const { chainId } = useWeb3React()
   const [pending, setPending] = useState(false)
   const blockExplorer = Networks[tokensChainId].blockExplorer
-  const invertNetwork = Number(tokensChainId) === 4 ? 'BSC' : 'ETH'
+  const invertNetwork = Number(tokensChainId) === L1ChainId ? 'BSC' : 'ETH'
 
   const bridgeHandler = () => {
     bridgeToken(chainId, tokenId, setPending)

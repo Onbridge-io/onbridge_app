@@ -1,21 +1,22 @@
 {
-  "4": {
-    "blockExplorer": "https://rinkeby.etherscan.io",
-    "name": "Rinkeby",
-    "tokenAddress": "0x97ea372254e8bF2Da32fD2756934d798C12bef54",
-    "bridgeAddress": "0x9cB066EA2331F92f892b678C0339706Dcb6e5572",
+  "42": {
+    "blockExplorer": "https://kovan.etherscan.io",
+    "name": "Kovan",
+    "tokenAddress": "0x55904F2C4B672103a4E04E6BFcb1c5DDC4f41D6F",
+    "bridgeAddress": "0x279e0cF58d6B3913C917222A61ba9ef5E9fF8057",
+    "fee": "50000000000000000",
     "params": {
-      "chainId": "0x4",
-      "chainName": "Rinkeby",
+      "chainId": "0x2a",
+      "chainName": "Kovan",
       "nativeCurrency": {
         "name": "Ethereum",
         "symbol": "ETH",
         "decimals": 18
       },
       "rpcUrls": [
-        "https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161"
+        "https://kovan.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161"
       ],
-      "blockExplorerUrls": ["https://rinkeby.etherscan.io"]
+      "blockExplorerUrls": ["https://kovan.etherscan.io"]
     }
   },
   "97": {
@@ -23,6 +24,7 @@
     "name": "BSC Testnet",
     "tokenAddress": "0x49d25DD6a5BC2993c1A4762F826065940909Ee5F",
     "bridgeAddress": "0x4ec28d7b5A0daE81A4ac4aE017BfE17786aE7aB2",
+    "fee": "50000000000000000",
     "params": {
       "chainId": "0x61",
       "chainName": "BSC Testnet",
