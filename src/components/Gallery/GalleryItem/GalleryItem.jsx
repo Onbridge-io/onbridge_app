@@ -19,7 +19,7 @@ import {
 import { shortenAddress } from '../../../utils/web3'
 import { bridgeToken } from '../../../api/bridge'
 import Networks from '../../../networks.json'
-import { L1ChainId, L2ChainId } from '../../../constants'
+import { L1ChainId, L2ChainId, debridgeHost } from '../../../constants'
 
 const networksLogos = {
   [L1ChainId]: '/img/networks-logos/mainnet.png',
@@ -35,11 +35,13 @@ export function GalleryItem({
 }) {
   const { chainId } = useWeb3React()
   const [pending, setPending] = useState(false)
+  const [txHash, setTxHash] = useState('')
+
   const blockExplorer = Networks[tokensChainId].blockExplorer
   const invertNetwork = Number(tokensChainId) === L1ChainId ? 'BSC' : 'ETH'
 
   const bridgeHandler = () => {
-    bridgeToken(chainId, tokenId, setPending)
+    bridgeToken({ chainId, tokenId, setPending, setTxHash })
   }
 
   const BridgeButton = () => {
@@ -85,7 +87,33 @@ export function GalleryItem({
           </div>
 
           {pending ? (
-            <div className={GalleryItemText}>Pending...</div>
+            <div className={GalleryItemText}>
+              <span>Pending...</span>
+              {txHash && (
+                <>
+                  <span>
+                    Explorer:{' '}
+                    <Link
+                      className={GalleryItemSpecValueLink}
+                      target='_blank'
+                      href={`${blockExplorer}/tx/${txHash}`}
+                    >
+                      {shortenAddress(txHash)}
+                    </Link>
+                  </span>
+                  <span>
+                    Debridge:{' '}
+                    <Link
+                      className={GalleryItemSpecValueLink}
+                      target='_blank'
+                      href={`${debridgeHost}/transaction?tx=${txHash}&chainId=${chainId}`}
+                    >
+                      {shortenAddress(txHash)}
+                    </Link>
+                  </span>{' '}
+                </>
+              )}
+            </div>
           ) : (
             <BridgeButton />
           )}

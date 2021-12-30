@@ -35,7 +35,7 @@ const Contracts = {
   },
 }
 
-export async function bridgeToken(chainId, tokenId, setPending) {
+export async function bridgeToken({ chainId, tokenId, setPending, setTxHash }) {
   const Token = Contracts[chainId].Token
   const Bridge = Contracts[chainId].Bridge
   const BridgeAddress = Contracts[chainId].BridgeAddress
@@ -48,24 +48,42 @@ export async function bridgeToken(chainId, tokenId, setPending) {
     setPending(true)
     Token.approve(BridgeAddress, tokenId)
       .then((tx) => {
+        setTxHash(tx.hash)
+
         tx.wait()
           .then(() => {
+            setTxHash('')
+
             Bridge.outboundTransfer(signerAddress, tokenId, {
               value: fee,
-            }).then((tx) => {
-              tx.wait().then(() => {
-                setPending(false)
-              })
             })
+              .then((tx) => {
+                setTxHash(tx.hash)
+
+                tx.wait()
+                  .then(() => {
+                    setTxHash('')
+                    setPending(false)
+                  })
+                  .catch((err) => {
+                    setTxHash('')
+                    console.log(err)
+                  })
+              })
+              .catch((err) => {
+                setTxHash('')
+                console.log(err)
+              })
           })
           .catch((err) => {
+            setTxHash('')
             console.log(err)
           })
       })
       .catch((err) => {
-        console.log(err)
-
+        setTxHash('')
         setPending(false)
+        console.log(err)
       })
 
     return
@@ -76,13 +94,21 @@ export async function bridgeToken(chainId, tokenId, setPending) {
     value: fee,
   })
     .then((tx) => {
-      tx.wait().then(() => {
-        setPending(false)
-      })
+      setTxHash(tx.hash)
+
+      tx.wait()
+        .then(() => {
+          setTxHash('')
+          setPending(false)
+        })
+        .catch((err) => {
+          setTxHash('')
+          console.log(err)
+        })
     })
     .catch((err) => {
-      console.log(err)
-
+      setTxHash('')
       setPending(false)
+      console.log(err)
     })
 }
