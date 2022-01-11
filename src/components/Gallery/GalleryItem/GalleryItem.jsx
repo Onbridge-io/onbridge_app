@@ -38,7 +38,7 @@ export function GalleryItem({
   const [txHash, setTxHash] = useState('')
 
   const blockExplorer = Networks[tokensChainId].blockExplorer
-  const invertNetwork = Number(tokensChainId) === L1ChainId ? 'BSC' : 'ETH'
+  const invertNetwork = Number(tokensChainId) === Number(L1ChainId) ? 'BSC' : 'ETH'
 
   const bridgeHandler = () => {
     bridgeToken({ chainId, tokenId, setPending, setTxHash })
@@ -60,6 +60,29 @@ export function GalleryItem({
     )
   }
 
+  // const BridgeImage = () => {
+  //   if (Number(chainId) === Number(tokensChainId)) {
+  //     return (
+  //       <div className={GalleryItemNetworkLogo}>
+  //           <img src={networksLogos[L1ChainId]} alt='Network' />
+  //         </div>
+  //     )
+  //   }
+
+  //   return (
+  //     <div className={GalleryItemNetworkLogo}>
+  //           <img src={networksLogos[L1ChainId]} alt='Network' />
+  //         </div>
+  //   )
+  // }
+
+  // console.log(tokensChainId);
+  // console.log(invertNetwork);
+  // console.log(L1ChainId)
+  console.log(chainId);
+  
+
+  
   return (
     <div className={GalleryItemStyled}>
       <img src={image} alt='Token' className={GalleryItemPicture} />
