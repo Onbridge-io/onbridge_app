@@ -19,12 +19,7 @@ import {
 import { shortenAddress } from '../../../utils/web3'
 import { bridgeToken } from '../../../api/bridge'
 import Networks from '../../../networks.json'
-import { L1ChainId, L2ChainId, debridgeHost } from '../../../constants'
-
-const networksLogos = {
-  [L1ChainId]: '/img/networks-logos/mainnet.png',
-  [L2ChainId]: '/img/networks-logos/BSC.png',
-}
+import { L1ChainId, debridgeHost } from '../../../constants'
 
 export function GalleryItem({
   tokenId,
@@ -142,7 +137,7 @@ export function GalleryItem({
           )}
 
           <div className={GalleryItemNetworkLogo}>
-            <img src={networksLogos[tokensChainId]} alt='Network' />
+            <img src={Networks[tokensChainId].networkLogo} alt='Network' />
           </div>
         </div>
       </div>
