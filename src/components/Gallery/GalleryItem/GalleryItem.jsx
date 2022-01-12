@@ -1,7 +1,7 @@
-import { useState } from 'react'
-import { useWeb3React } from '@web3-react/core'
+import { useState } from "react";
+import { useWeb3React } from "@web3-react/core";
 
-import { Button, Link } from '../../'
+import { Button, Link } from "../../";
 import {
   GalleryItem as GalleryItemStyled,
   GalleryItemText,
@@ -15,11 +15,11 @@ import {
   GalleryItemSpecLabel,
   GalleryItemSpecValue,
   GalleryItemSpecValueLink,
-} from './GalleryItem.module.scss'
-import { shortenAddress } from '../../../utils/web3'
-import { bridgeToken } from '../../../api/bridge'
-import Networks from '../../../networks.json'
-import { L1ChainId, debridgeHost } from '../../../constants'
+} from "./GalleryItem.module.scss";
+import { shortenAddress } from "../../../utils/web3";
+import { bridgeToken } from "../../../api/bridge";
+import Networks from "../../../networks.json";
+import { L1ChainId, debridgeHost } from "../../../constants";
 
 export function GalleryItem({
   tokenId,
@@ -28,16 +28,17 @@ export function GalleryItem({
   chainId: tokensChainId,
   skill,
 }) {
-  const { chainId } = useWeb3React()
-  const [pending, setPending] = useState(false)
-  const [txHash, setTxHash] = useState('')
+  const { chainId } = useWeb3React();
+  const [pending, setPending] = useState(false);
+  const [txHash, setTxHash] = useState("");
 
-  const blockExplorer = Networks[tokensChainId].blockExplorer
-  const invertNetwork = Number(tokensChainId) === Number(L1ChainId) ? 'BSC' : 'ETH'
+  const blockExplorer = Networks[tokensChainId].blockExplorer;
+  const invertNetwork =
+    Number(tokensChainId) === Number(L1ChainId) ? "BSC" : "ETH";
 
   const bridgeHandler = () => {
-    bridgeToken({ chainId, tokenId, setPending, setTxHash })
-  }
+    bridgeToken({ chainId, tokenId, setPending, setTxHash });
+  };
 
   const BridgeButton = () => {
     if (Number(chainId) === Number(tokensChainId)) {
@@ -45,42 +46,19 @@ export function GalleryItem({
         <Button className={GalleryItemText} onClick={bridgeHandler}>
           Bridge to {invertNetwork}
         </Button>
-      )
+      );
     }
 
     return (
       <Button disabled className={GalleryItemText}>
         Withdraw to {invertNetwork}
       </Button>
-    )
-  }
+    );
+  };
 
-  // const BridgeImage = () => {
-  //   if (Number(chainId) === Number(tokensChainId)) {
-  //     return (
-  //       <div className={GalleryItemNetworkLogo}>
-  //           <img src={networksLogos[L1ChainId]} alt='Network' />
-  //         </div>
-  //     )
-  //   }
-
-  //   return (
-  //     <div className={GalleryItemNetworkLogo}>
-  //           <img src={networksLogos[L1ChainId]} alt='Network' />
-  //         </div>
-  //   )
-  // }
-
-  // console.log(tokensChainId);
-  // console.log(invertNetwork);
-  // console.log(L1ChainId)
-  console.log(chainId);
-  
-
-  
   return (
     <div className={GalleryItemStyled}>
-      <img src={image} alt='Token' className={GalleryItemPicture} />
+      <img src={image} alt="Token" className={GalleryItemPicture} />
       <div className={GalleryItemInfo}>
         <div className={GalleryItemInfoHead}>Baby Battle Bot #{tokenId}</div>
 
@@ -91,9 +69,8 @@ export function GalleryItem({
               <div className={GalleryItemSpecValue}>
                 <Link
                   className={GalleryItemSpecValueLink}
-                  target='_blank'
-                  href={`${blockExplorer}/address/${owner}`}
-                >
+                  target="_blank"
+                  href={`${blockExplorer}/address/${owner}`}>
                   {shortenAddress(owner)}
                 </Link>
               </div>
@@ -110,25 +87,23 @@ export function GalleryItem({
               {txHash && (
                 <>
                   <span>
-                    Explorer:{' '}
+                    Explorer:{" "}
                     <Link
                       className={GalleryItemSpecValueLink}
-                      target='_blank'
-                      href={`${blockExplorer}/tx/${txHash}`}
-                    >
+                      target="_blank"
+                      href={`${blockExplorer}/tx/${txHash}`}>
                       {shortenAddress(txHash)}
                     </Link>
                   </span>
                   <span>
-                    Debridge:{' '}
+                    Debridge:{" "}
                     <Link
                       className={GalleryItemSpecValueLink}
-                      target='_blank'
-                      href={`${debridgeHost}/transaction?tx=${txHash}&chainId=${chainId}`}
-                    >
+                      target="_blank"
+                      href={`${debridgeHost}/transaction?tx=${txHash}&chainId=${chainId}`}>
                       {shortenAddress(txHash)}
                     </Link>
-                  </span>{' '}
+                  </span>{" "}
                 </>
               )}
             </div>
@@ -137,10 +112,10 @@ export function GalleryItem({
           )}
 
           <div className={GalleryItemNetworkLogo}>
-            <img src={Networks[tokensChainId].networkLogo} alt='Network' />
+            <img src={Networks[tokensChainId].networkLogo} alt="Network" />
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
