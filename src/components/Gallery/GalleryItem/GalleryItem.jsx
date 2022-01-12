@@ -28,7 +28,7 @@ export function GalleryItem({
   chainId: tokensChainId,
   skill,
 }) {
-  const { chainId } = useWeb3React()
+  const { chainId} = useWeb3React()
   const [pending, setPending] = useState(false)
   const [txHash, setTxHash] = useState('')
 
@@ -54,29 +54,6 @@ export function GalleryItem({
       </Button>
     )
   }
-
-  // const BridgeImage = () => {
-  //   if (Number(chainId) === Number(tokensChainId)) {
-  //     return (
-  //       <div className={GalleryItemNetworkLogo}>
-  //           <img src={networksLogos[L1ChainId]} alt='Network' />
-  //         </div>
-  //     )
-  //   }
-
-  //   return (
-  //     <div className={GalleryItemNetworkLogo}>
-  //           <img src={networksLogos[L1ChainId]} alt='Network' />
-  //         </div>
-  //   )
-  // }
-
-  // console.log(tokensChainId);
-  // console.log(invertNetwork);
-  // console.log(L1ChainId)
-  console.log(chainId);
-  
-
   
   return (
     <div className={GalleryItemStyled}>

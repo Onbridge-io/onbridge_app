@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react'
 
+import { useWeb3React } from '@web3-react/core'
+
+
 import { getTokensInfo } from '../../api/fetchTokens'
+
 import {
   Gallery as GalleryStyled,
   GalleryHead,
@@ -9,6 +13,7 @@ import {
   GalleryHeadCounter,
   GalleryGrid,
 } from './Gallery.module.scss'
+
 import { GalleryItem } from './GalleryItem/GalleryItem'
 
 const fakeData = {
@@ -27,6 +32,7 @@ const fakeData = {
   ],
 }
 const { contract } = fakeData
+
 
 function TokensList({ tokens }) {
   return (
@@ -47,13 +53,18 @@ function TokensList({ tokens }) {
 }
 
 export function Gallery() {
+  const {  active, account } = useWeb3React()
   const [tokensList, setTokensList] = useState([])
 
   useEffect(() => {
-    getTokensInfo().then(res => {
+    getTokensInfo(active, account).then(res => {
       setTokensList(res)
     })
-  }, [])
+
+    // console.log('mounted/updated')
+    // console.log(account)
+    // console.log(Boolean(active))
+  }, [active])
 
   return (
     <div className={GalleryStyled}>
