@@ -61,9 +61,6 @@ export function Gallery() {
       setTokensList(res)
     })
 
-    // console.log('mounted/updated')
-    // console.log(account)
-    // console.log(Boolean(active))
   }, [active])
 
   return (

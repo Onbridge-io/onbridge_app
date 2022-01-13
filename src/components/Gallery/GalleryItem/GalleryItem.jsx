@@ -28,7 +28,7 @@ export function GalleryItem({
   chainId: tokensChainId,
   skill,
 }) {
-  const { chainId} = useWeb3React()
+  const { chainId } = useWeb3React()
   const [pending, setPending] = useState(false)
   const [txHash, setTxHash] = useState('')
 
@@ -40,21 +40,14 @@ export function GalleryItem({
   }
 
   const BridgeButton = () => {
-    if (Number(chainId) === Number(tokensChainId)) {
-      return (
-        <Button className={GalleryItemText} onClick={bridgeHandler}>
-          Bridge to {invertNetwork}
-        </Button>
-      )
-    }
-
+    const bridgeButtonText = Number(L1ChainId) === Number(tokensChainId) ? 'Bridge to' : 'Withdraw to'
     return (
-      <Button disabled className={GalleryItemText}>
-        Withdraw to {invertNetwork}
+      <Button disabled={chainId !== tokensChainId} className={GalleryItemText} onClick={bridgeHandler}>
+        {bridgeButtonText} {invertNetwork}
       </Button>
     )
   }
-  
+
   return (
     <div className={GalleryItemStyled}>
       <img src={image} alt='Token' className={GalleryItemPicture} />
