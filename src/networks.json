@@ -1,38 +1,36 @@
 {
-  "4": {
-    "blockExplorer": "https://rinkeby.etherscan.io",
-    "name": "Rinkeby",
-    "tokenAddress": "0x97ea372254e8bF2Da32fD2756934d798C12bef54",
-    "bridgeAddress": "0x9cB066EA2331F92f892b678C0339706Dcb6e5572",
+  "1337": {
+    "blockExplorer": "",
+    "name": "Ganache eth",
+    "tokenAddress": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+    "bridgeAddress": "0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0",
     "params": {
-      "chainId": "0x4",
-      "chainName": "Rinkeby",
+      "chainId": "0x539",
+      "chainName": "Ganache eth",
       "nativeCurrency": {
-        "name": "Ethereum",
-        "symbol": "ETH",
+        "name": "Ganache eth",
+        "symbol": "Eth",
         "decimals": 18
       },
-      "rpcUrls": [
-        "https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161"
-      ],
-      "blockExplorerUrls": ["https://rinkeby.etherscan.io"]
+      "rpcUrls": ["https://0.0.0.0:8545"],
+      "blockExplorerUrls": [""]
     }
   },
-  "97": {
-    "blockExplorer": "https://testnet.bscscan.com",
-    "name": "BSC Testnet",
-    "tokenAddress": "0x49d25DD6a5BC2993c1A4762F826065940909Ee5F",
-    "bridgeAddress": "0x4ec28d7b5A0daE81A4ac4aE017BfE17786aE7aB2",
+  "1338": {
+    "blockExplorer": "",
+    "name": "Ganache bsc",
+    "tokenAddress": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+    "bridgeAddress": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
     "params": {
-      "chainId": "0x61",
-      "chainName": "BSC Testnet",
+      "chainId": "0x53a",
+      "chainName": "Ganache bsc",
       "nativeCurrency": {
-        "name": "Binance Coin",
+        "name": "Ganache bsc",
         "symbol": "BNB",
         "decimals": 18
       },
-      "rpcUrls": ["https://data-seed-prebsc-1-s1.binance.org:8545/"],
-      "blockExplorerUrls": ["https://bscscan.com"]
+      "rpcUrls": ["https://0.0.0.0:8546"],
+      "blockExplorerUrls": [""]
     }
   }
 }

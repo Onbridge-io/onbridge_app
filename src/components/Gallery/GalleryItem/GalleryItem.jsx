@@ -21,8 +21,8 @@ import { bridgeToken } from '../../../api/bridge'
 import Networks from '../../../networks.json'
 
 const networksLogos = {
-  4: '/img/networks-logos/mainnet.png',
-  97: '/img/networks-logos/BSC.png',
+  1337: '/img/networks-logos/mainnet.png',
+  1338: '/img/networks-logos/BSC.png',
 }
 
 export function GalleryItem({
@@ -35,7 +35,7 @@ export function GalleryItem({
   const { chainId } = useWeb3React()
   const [pending, setPending] = useState(false)
   const blockExplorer = Networks[tokensChainId].blockExplorer
-  const invertNetwork = Number(tokensChainId) === 4 ? 'BSC' : 'ETH'
+  const invertNetwork = Number(tokensChainId) === 1337 ? 'BSC' : 'ETH'
 
   const bridgeHandler = () => {
     bridgeToken(chainId, tokenId, setPending)
