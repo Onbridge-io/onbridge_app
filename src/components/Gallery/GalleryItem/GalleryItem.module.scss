@@ -70,6 +70,14 @@
     }
   }
 
+  &BridgeInfo {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+  }
+
   &NetworkLogo {
     flex: 0 0 40px;
     width: 40px;

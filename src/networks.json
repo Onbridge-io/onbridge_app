@@ -12,7 +12,7 @@
         "symbol": "Eth",
         "decimals": 18
       },
-      "rpcUrls": ["https://0.0.0.0:8545"],
+      "rpcUrls": ["https://127.0.0.1:8545"],
       "blockExplorerUrls": [""]
     }
   },
@@ -29,7 +29,7 @@
         "symbol": "BNB",
         "decimals": 18
       },
-      "rpcUrls": ["https://0.0.0.0:8546"],
+      "rpcUrls": ["https://127.0.0.1:8546"],
       "blockExplorerUrls": [""]
     }
   }
