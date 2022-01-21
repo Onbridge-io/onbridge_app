@@ -15,10 +15,13 @@ import {
   GalleryItemSpecLabel,
   GalleryItemSpecValue,
   GalleryItemSpecValueLink,
+  GalleryItemBridgeInfo,
 } from './GalleryItem.module.scss'
 import { shortenAddress } from '../../../utils/web3'
 import { bridgeToken } from '../../../api/bridge'
 import Networks from '../../../networks.json'
+import { L1ChainId, debridgeHost } from '../../../constants'
+
 
 const networksLogos = {
   1337: '/img/networks-logos/mainnet.png',
@@ -31,28 +34,28 @@ export function GalleryItem({
   image,
   chainId: tokensChainId,
   skill,
+  change,
+  setChange
 }) {
   const { chainId } = useWeb3React()
   const [pending, setPending] = useState(false)
+  const [transactionStatus, setTransactionStatus] = useState('Pending...');
+  const [disableButtons, setDisableButtons] = useState(false);
+  
   const blockExplorer = Networks[tokensChainId].blockExplorer
   const invertNetwork = Number(tokensChainId) === 1337 ? 'BSC' : 'ETH'
 
   const bridgeHandler = () => {
-    bridgeToken(chainId, tokenId, setPending)
+    setDisableButtons(true)
+    bridgeToken(chainId, tokenId, setPending, setTransactionStatus, setChange, change, setDisableButtons)
   }
 
   const BridgeButton = () => {
-    if (Number(chainId) === Number(tokensChainId)) {
-      return (
-        <Button className={GalleryItemText} onClick={bridgeHandler}>
-          Bridge to {invertNetwork}
-        </Button>
-      )
-    }
-
+    
+    const bridgeButtonText = Number(L1ChainId) === Number(tokensChainId) ? 'Bridge to' : 'Withdraw to';
     return (
-      <Button disabled className={GalleryItemText}>
-        Withdraw to {invertNetwork}
+      <Button disabled={chainId !== tokensChainId || disableButtons} className={GalleryItemText} onClick={bridgeHandler}>
+          {bridgeButtonText} {invertNetwork}
       </Button>
     )
   }
@@ -82,15 +85,16 @@ export function GalleryItem({
               <div className={GalleryItemSpecValue}>{skill}</div>
             </div>
           </div>
+            <div className={GalleryItemBridgeInfo}>
+            {pending ? (
+              <div className={GalleryItemText}>{transactionStatus}</div>
+            ) : (
+              <BridgeButton />
+            )}
 
-          {pending ? (
-            <div className={GalleryItemText}>Pending...</div>
-          ) : (
-            <BridgeButton />
-          )}
-
-          <div className={GalleryItemNetworkLogo}>
-            <img src={networksLogos[tokensChainId]} alt='Network' />
+            <div className={GalleryItemNetworkLogo}>
+              <img src={networksLogos[tokensChainId]} alt='Network' />
+            </div>
           </div>
         </div>
       </div>

@@ -39,6 +39,8 @@ function NetworkSwitcher() {
     [NetworksMenuHidden]: !menuIsVisible,
   })
 
+  console.log(supportedChainIds);
+
   const selectButtonText = wrongNetwork
     ? 'Wrong Network'
     : Networks[chainId].name

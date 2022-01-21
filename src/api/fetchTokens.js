@@ -6,6 +6,7 @@ export function getTokensInfo() {
   return axios
     .get(`${host}/tokens/`)
     .then(response => {
+      console.log(response.data.results);
       return response.data.results
     })
     .catch(error => {

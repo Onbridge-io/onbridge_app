@@ -28,7 +28,7 @@ const fakeData = {
 }
 const { contract } = fakeData
 
-function TokensList({ tokens }) {
+function TokensList({ tokens, change, setChange }) {
   return (
     tokens &&
     tokens.map(({ token_id, owner, image, chain_id, skill }) => {
@@ -40,6 +40,8 @@ function TokensList({ tokens }) {
           image={image}
           chainId={chain_id}
           skill={skill}
+          change={change}
+          setChange={setChange}
         />
       )
     })
@@ -48,12 +50,14 @@ function TokensList({ tokens }) {
 
 export function Gallery() {
   const [tokensList, setTokensList] = useState([])
+  const [change, setChange] = useState(true);
 
   useEffect(() => {
     getTokensInfo().then(res => {
       setTokensList(res)
     })
-  }, [])
+    console.log(change);
+  }, [change])
 
   return (
     <div className={GalleryStyled}>
@@ -68,7 +72,7 @@ export function Gallery() {
       </div>
 
       <div className={GalleryGrid}>
-        <TokensList tokens={tokensList} />
+        <TokensList tokens={tokensList} setChange={setChange} change={change} />
       </div>
     </div>
   )
