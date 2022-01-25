@@ -1,0 +1,44 @@
+@import "../../scss/variables.scss";
+
+.LackOfMetamask {
+  margin: 60px auto 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #22252c;
+  padding: 32px;
+  border: 1px solid $border;
+  border-radius: 16px;
+  max-width: 600px;
+
+  &Heading {
+    text-align: center;
+    color: white;
+    font-size: 36px;
+    line-height: 110%;
+    margin-bottom: 16px;
+  }
+  &Button {
+    border: none;
+    border-radius: 8px;
+    padding: 8px 17px;
+    background-color: $main-color;
+    color: $dark-text;
+    font-size: 18px;
+    line-height: 22px;
+    cursor: pointer;
+    transition: 0.3s all;
+
+    &:hover {
+      background-color: $button-hover;
+      transition: 0.3 all;
+    }
+
+    &Link {
+      color: #1e2126;
+      font-size: 18px;
+      line-height: 22px;
+      text-decoration: none;
+    }
+  }
+}

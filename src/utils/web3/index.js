@@ -15,6 +15,11 @@ export function web3Injected(e) {
 export async function switchNetwork(chainId) {
   const params = Networks[chainId].params
 
+  if (!window.ethereum) {
+    console.log('error');
+    throw new Error('eror')
+  }
+
   if (web3Injected(window.ethereum)) {
     try {
       await window.ethereum.request({
