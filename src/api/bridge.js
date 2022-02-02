@@ -11,10 +11,10 @@ import L2BridgeAbi from "../abis/L2Bridge.json";
 
 const host = process.env.REACT_APP_API_HOST;
 
-const L1TokenAddress = Networks[1337].tokenAddress;
-const L1BridgeAddress = Networks[1337].bridgeAddress;
-const L2TokenAddress = Networks[1338].tokenAddress;
-const L2BridgeAddress = Networks[1338].bridgeAddress;
+const L1TokenAddress = Networks[42].tokenAddress;
+const L1BridgeAddress = Networks[42].bridgeAddress;
+const L2TokenAddress = Networks[97].tokenAddress;
+const L2BridgeAddress = Networks[97].bridgeAddress;
 
 export let provider = null;
 let signer = null;
@@ -38,8 +38,8 @@ try {
   AddressZero = ethers.constants.AddressZero;
 
   Contracts = {
-    1337: { Token: L1Token, Bridge: L1Bridge, BridgeAddress: L1BridgeAddress },
-    1338: { Token: L2Token, Bridge: L2Bridge, BridgeAddress: L2BridgeAddress },
+    42: { Token: L1Token, Bridge: L1Bridge, BridgeAddress: L1BridgeAddress },
+    97: { Token: L2Token, Bridge: L2Bridge, BridgeAddress: L2BridgeAddress },
   };
 } catch (e) {
   console.log(e);
@@ -48,36 +48,52 @@ try {
 export async function bridgeToken(
   chainId,
   tokenId,
+  tokensChainId,
+  change,
+  setChange,
+  setDisableButtons,
   setPending,
   setTransactionStatus,
-  setChange,
-  change,
-  setDisableButtons
+  setTxLink
 ) {
   const Token = Contracts[chainId].Token;
   const Bridge = Contracts[chainId].Bridge;
   const BridgeAddress = Contracts[chainId].BridgeAddress;
   const signerAddress = await signer.getAddress();
   const allowance = (await Token.getApproved(tokenId)).toString();
+  const bridgeToChain = tokensChainId === 42 ? 97 : 42;
+  const bridgeToAddress =
+    tokensChainId === 42 ? L2BridgeAddress : L1BridgeAddress;
 
   if (allowance === AddressZero) {
     setPending(true);
-    Token.approve(BridgeAddress, tokenId)
+    Token.approve(BridgeAddress, tokenId, {
+      from: signerAddress,
+    })
       .then((tx) => {
-        setTransactionStatus(`Approving with hash: ${shortenAddress(tx.hash)}`);
+        setTransactionStatus(`Approving`);
+        setTxLink(tx.hash);
         tx.wait()
           .then(() => {
-            setTransactionStatus(
-              `Approved with hash: ${shortenAddress(tx.hash)}`
-            );
-            Bridge.outboundTransfer(signerAddress, tokenId).then((tx) => {
-              setTransactionStatus(
-                `Outbound with hash: ${shortenAddress(tx.hash)}`
-              );
+            setTransactionStatus(`Approved`);
+            setTxLink(tx.hash);
+            Bridge.outboundTransfer(
+              signerAddress,
+              tokenId,
+              bridgeToChain,
+              bridgeToAddress,
+              ethers.utils.parseEther("0.01"),
+              {
+                from: signerAddress,
+                value: ethers.utils.parseEther("0.03"),
+              }
+            ).then((tx) => {
+              console.log(tokenId, bridgeToChain, bridgeToAddress);
+              setTransactionStatus(`Outbound`);
+              setTxLink(tx.hash);
               tx.wait().then(() => {
-                setTransactionStatus(
-                  `Mined with hash: ${shortenAddress(tx.hash)}`
-                );
+                setTransactionStatus(`Mined `);
+                setTxLink(tx.hash);
                 setTimeout(function testTokens() {
                   axios
                     .get(`${host}/tokens/`)
@@ -88,6 +104,7 @@ export async function bridgeToken(
                         setDisableButtons(false);
                       } else {
                         setTimeout(testTokens, 2000);
+                        console.log("try");
                       }
                     })
                     .catch((error) => {
@@ -106,6 +123,8 @@ export async function bridgeToken(
       });
 
     return;
+  } else {
+    console.log("fg");
   }
 
   setPending(true);

@@ -1,35 +1,35 @@
 {
-  "1337": {
+  "42": {
     "blockExplorer": "",
-    "name": "Ganache eth",
-    "tokenAddress": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
-    "bridgeAddress": "0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0",
+    "name": "Kovan",
+    "tokenAddress": "0xA421878D9294fdF4245C76749DB547546F7D4D8D",
+    "bridgeAddress": "0x17eaBbA5B8462F782c7784f7DABd7f37088148aE",
     "params": {
-      "chainId": "0x539",
-      "chainName": "Ganache eth",
+      "chainId": "0x2A",
+      "chainName": "kovan eth",
       "nativeCurrency": {
-        "name": "Ganache eth",
+        "name": "kovan eth",
         "symbol": "Eth",
         "decimals": 18
       },
-      "rpcUrls": ["https://127.0.0.1:8545"],
+      "rpcUrls": ["https://kovan.poa.network"],
       "blockExplorerUrls": [""]
     }
   },
-  "1338": {
+  "97": {
     "blockExplorer": "",
-    "name": "Ganache bsc",
-    "tokenAddress": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
-    "bridgeAddress": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+    "name": "BSC",
+    "tokenAddress": "0xA421878D9294fdF4245C76749DB547546F7D4D8D",
+    "bridgeAddress": "0xB9e88B45154E4686b1d7f99547312DCB6aaa7220",
     "params": {
-      "chainId": "0x53a",
-      "chainName": "Ganache bsc",
+      "chainId": "0x61",
+      "chainName": "bsc bnb",
       "nativeCurrency": {
-        "name": "Ganache bsc",
+        "name": "bsc bnb",
         "symbol": "BNB",
         "decimals": 18
       },
-      "rpcUrls": ["https://127.0.0.1:8546"],
+      "rpcUrls": ["https://data-seed-prebsc-1-s1.binance.org:8545/"],
       "blockExplorerUrls": [""]
     }
   }
