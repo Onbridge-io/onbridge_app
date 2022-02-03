@@ -2,8 +2,8 @@
   "42": {
     "blockExplorer": "",
     "name": "Kovan",
-    "tokenAddress": "0xA421878D9294fdF4245C76749DB547546F7D4D8D",
-    "bridgeAddress": "0x17eaBbA5B8462F782c7784f7DABd7f37088148aE",
+    "tokenAddress": "0xfACC0b7f7A14D70bC738fC6643E852c986211E47",
+    "bridgeAddress": "0xC776722d1988B25f144e81DBa01035c39aE2CF98",
     "params": {
       "chainId": "0x2A",
       "chainName": "kovan eth",
@@ -19,8 +19,8 @@
   "97": {
     "blockExplorer": "",
     "name": "BSC",
-    "tokenAddress": "0xA421878D9294fdF4245C76749DB547546F7D4D8D",
-    "bridgeAddress": "0xB9e88B45154E4686b1d7f99547312DCB6aaa7220",
+    "tokenAddress": "0x445762A71226FD155A912cbCa0b33f9D71eb4249",
+    "bridgeAddress": "0x23a235f4c73357946d0362B49628f1568ecb1714",
     "params": {
       "chainId": "0x61",
       "chainName": "bsc bnb",

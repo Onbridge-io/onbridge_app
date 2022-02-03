@@ -1,6 +1,7 @@
 FROM node:16.12.0-buster as build
-ARG REACT_APP_INFURA_ID
 ARG REACT_APP_API_HOST
+ARG REACT_APP_L1_CHAIN_ID
+ARG REACT_APP_L2_CHAIN_ID
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 COPY public/ ./public/
