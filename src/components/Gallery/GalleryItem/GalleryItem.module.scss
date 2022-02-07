@@ -1,7 +1,6 @@
-@import '../../../scss/variables.scss';
+@import "../../../scss/variables.scss";
 
 .GalleryItem {
-  margin: auto;
   display: flex;
   flex-direction: column;
   background-color: $card-bg;
@@ -9,6 +8,7 @@
   overflow: hidden;
   width: 260px;
   height: 100%;
+  cursor: pointer;
 
   &Text {
     font-size: 15px;

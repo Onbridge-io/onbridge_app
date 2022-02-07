@@ -2,7 +2,6 @@ import axios from "axios";
 import { ethers } from "ethers";
 
 import Networks from "../networks.json";
-import { shortenAddress } from "../utils/web3";
 
 import L1TokenAbi from "../abis/L1Token.json";
 import L1BridgeAbi from "../abis/L1Bridge.json";
@@ -54,7 +53,9 @@ export async function bridgeToken(
   setDisableButtons,
   setPending,
   setTransactionStatus,
-  setTxLink
+  setTxLink,
+  setIsLoading,
+  setConfirmed
 ) {
   const Token = Contracts[chainId].Token;
   const Bridge = Contracts[chainId].Bridge;
@@ -88,7 +89,6 @@ export async function bridgeToken(
                 value: ethers.utils.parseEther("0.03"),
               }
             ).then((tx) => {
-              console.log(tokenId, bridgeToChain, bridgeToAddress);
               setTransactionStatus(`Outbound`);
               setTxLink(tx.hash);
               tx.wait().then(() => {
@@ -102,6 +102,8 @@ export async function bridgeToken(
                         setPending(false);
                         setChange((change) => !change);
                         setDisableButtons(false);
+                        setIsLoading(false);
+                        setConfirmed(true);
                       } else {
                         setTimeout(testTokens, 2000);
                         console.log("try");
@@ -120,21 +122,20 @@ export async function bridgeToken(
       })
       .catch(() => {
         setPending(false);
+        setIsLoading(false);
       });
 
     return;
-  } else {
-    console.log("fg");
   }
 
-  setPending(true);
+  setIsLoading(true);
   Bridge.outboundTransfer(signerAddress, tokenId)
     .then((tx) => {
       tx.wait().then(() => {
-        setPending(false);
+        setIsLoading(false);
       });
     })
     .catch(() => {
-      setPending(false);
+      setIsLoading(true);
     });
 }

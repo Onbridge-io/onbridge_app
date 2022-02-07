@@ -8,13 +8,15 @@ import {
   Web3Status as Web3StatusStyled,
   Web3StatusAddressWrapper,
   Web3StatusAddress,
-  Web3StatusCircle,
+  Web3StatusHolder,
   NetworksMenu,
   NetworksMenuTitle,
   NetworksMenuHidden,
   NetworksMenuWrapper,
   NetworksMenuList,
   NetworksMenuButton,
+  NetworksMenuButtonActive,
+  NetworksMenuButtonContent,
   NetworksMenuMainButton,
   NetworksMenuArrow,
 } from "./Web3Status.module.scss";
@@ -28,6 +30,11 @@ const connectorsByName = {
     text: "Connect",
     connector: injected,
   },
+};
+
+const networksLogos = {
+  42: "/img/networks-logos/mainnet.png",
+  97: "/img/networks-logos/BSC.png",
 };
 
 function NetworkSwitcher() {
@@ -45,7 +52,7 @@ function NetworkSwitcher() {
 
   return (
     <div className={NetworksMenuWrapper}>
-      <Button
+      <button
         className={NetworksMenuMainButton}
         onClick={() => {
           setMenuIsVidible(!menuIsVisible);
@@ -56,14 +63,27 @@ function NetworkSwitcher() {
           src="/img/chevron-down.svg"
           alt="Down"
         />
-      </Button>
+      </button>
       <div className={menuClassNames}>
         <div className={NetworksMenuTitle}>Select network</div>
 
         <div className={NetworksMenuList}>
           {supportedChainIds.map((id) => {
             if (chainId === id) {
-              return null;
+              return (
+                <Button
+                  key={id}
+                  onClick={() => {
+                    switchNetwork(id);
+                  }}
+                  className={(NetworksMenuButton, NetworksMenuButtonActive)}>
+                  <div className={NetworksMenuButtonContent}>
+                    <img src={networksLogos[id]} alt={Networks[id].name} />
+                    <span>{Networks[id].name}</span>
+                  </div>
+                  <img src="/img/active-network-ind.svg" alt="active-network" />
+                </Button>
+              );
             }
 
             return (
@@ -73,7 +93,10 @@ function NetworkSwitcher() {
                   switchNetwork(id);
                 }}
                 className={NetworksMenuButton}>
-                {Networks[id].name}
+                <div className={NetworksMenuButtonContent}>
+                  <img src={networksLogos[id]} alt={Networks[id].name} />
+                  <span>{Networks[id].name}</span>
+                </div>
               </Button>
             );
           })}
@@ -103,8 +126,9 @@ export function Web3Status({ ...props }) {
 
   const address = account && (
     <>
-      <div className={Web3StatusCircle} />
-      <span className={Web3StatusAddress}>{shortenAddress(account)}</span>
+      <div className={Web3StatusHolder}>
+        <span className={Web3StatusAddress}>{shortenAddress(account)}</span>
+      </div>
     </>
   );
 
@@ -149,8 +173,8 @@ export function Web3Status({ ...props }) {
 
   return (
     <div className={Web3StatusStyled} {...props}>
-      <div className={Web3StatusAddressWrapper}>{address}</div>
       <StatusContent />
+      <div className={Web3StatusAddressWrapper}>{address}</div>
     </div>
   );
 }

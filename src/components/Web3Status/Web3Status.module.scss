@@ -1,4 +1,4 @@
-@import '../../scss/variables.scss';
+@import "../../scss/variables.scss";
 
 .Web3Status {
   display: flex;
@@ -10,30 +10,28 @@
   }
 
   &Address {
-    margin: 0 10px;
-    display: flex;
-    align-items: center;
+    color: #70f1d9;
   }
 
-  &Circle {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background-color: #70f1d9;
+  &Holder {
+    background-color: rgba(112, 241, 217, 0.3);
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+    color: #70f1d9;
   }
 }
 
 .NetworksMenu {
   border: 1px solid $border;
-  border-radius: 10px;
-  background-color: $secondary-bg;
-  padding: 10px;
+  background: #292c32;
+  border-radius: 8px;
+  padding: 16px;
   position: absolute;
   bottom: 0;
-  left: 50%;
+  left: 130%;
   transform: translate(-50%, calc(100% + 10px));
-  min-width: 100%;
-  max-width: none;
+  width: 300px;
   white-space: nowrap;
   z-index: 11;
 
@@ -58,14 +56,53 @@
   &MainButton {
     display: flex;
     align-items: center;
+    background-color: #292c32;
+    background: #292c32;
+    border-radius: 8px;
+    color: #fff;
+    padding: 15px 16px;
+    border: none;
   }
 
   &Button {
     margin-top: 10px;
+    background-color: #292c32;
+    border-radius: 8px;
+    border: 1px solid #373839;
+    padding: 16px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+  }
+
+  &ButtonActive {
+    border: 1px solid #fff;
+    background-color: #292c32;
+    padding: 16px;
+    color: #fff;
+    border-radius: 8px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &ButtonContent {
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 
   &Arrow {
     height: 20px;
     margin-left: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .Web3Status {
+    &Holder {
+      padding: 14px 12px;
+    }
   }
 }

@@ -1,4 +1,4 @@
-@import '../../scss/variables.scss';
+@import "../../scss/variables.scss";
 
 .Gallery {
   margin: 40px auto;
@@ -9,6 +9,10 @@
   border: 1px solid $border;
   border-radius: 16px;
   max-width: 1200px;
+
+  &ChainStatus {
+    display: none;
+  }
 
   &Head {
     display: flex;
@@ -41,8 +45,21 @@
 
   &Grid {
     display: grid;
+    justify-items: center;
     gap: 32px 30px;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     grid-template-rows: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .Gallery {
+    &ChainStatus {
+      display: flex;
+    }
+
+    &Head {
+      margin-top: 12px;
+    }
   }
 }
