@@ -2,4 +2,12 @@
   padding: 40px;
   display: flex;
   justify-content: center;
+
+  .FooterIcons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 32px;
+  }
 }

@@ -2,8 +2,8 @@
   "42": {
     "blockExplorer": "",
     "name": "Kovan",
-    "tokenAddress": "0xfACC0b7f7A14D70bC738fC6643E852c986211E47",
-    "bridgeAddress": "0xC776722d1988B25f144e81DBa01035c39aE2CF98",
+    "tokenAddress": "0xCAFC2A13A4B1A69e9775AD0f4Dec742cA5a7d075",
+    "bridgeAddress": "0x58056560901F58d2BA67058d4f0f984C249c5314",
     "params": {
       "chainId": "0x2A",
       "chainName": "kovan eth",
@@ -12,15 +12,15 @@
         "symbol": "Eth",
         "decimals": 18
       },
-      "rpcUrls": ["https://kovan.poa.network"],
+      "rpcUrls": ["https://kovan.infura.io/v3/499cb18b5349480dab3e9a822893bb5f"],
       "blockExplorerUrls": [""]
     }
   },
   "97": {
     "blockExplorer": "",
     "name": "BSC",
-    "tokenAddress": "0x445762A71226FD155A912cbCa0b33f9D71eb4249",
-    "bridgeAddress": "0x23a235f4c73357946d0362B49628f1568ecb1714",
+    "tokenAddress": "0xc67b5Fa537062E1D3a1cb97eeC64Eb52Be662e48",
+    "bridgeAddress": "0x9A47A67505c55161FE263d0D3ca4c85754c2C0A0",
     "params": {
       "chainId": "0x61",
       "chainName": "bsc bnb",
