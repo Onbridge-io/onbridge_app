@@ -45,7 +45,7 @@ export function GalleryItem({
       }}>
       <img src={image} alt="Token" className={GalleryItemPicture} />
       <div className={GalleryItemInfo}>
-        <div className={GalleryItemInfoHead}>Baby Battle Bot #{tokenId}</div>
+        <div className={GalleryItemInfoHead}>OnBridge Pirate #{tokenId}</div>
 
         <div className={GalleryItemInfoFoot}>
           <div className={GalleryItemSpecsWrapper}>

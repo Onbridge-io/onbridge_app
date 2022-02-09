@@ -119,8 +119,7 @@ function Modal({
           </div>
           <div className={ModalInfoApprove}>
             <p className={ModalInfoApproveText}>
-              Небольшой текст для понимания, что будет происходить и что для
-              этого нужно тебе сделать!
+              Approve and bridging token to another network. The stages of bridging will be shown here
             </p>
             <Button
               disabled={disableButtons}

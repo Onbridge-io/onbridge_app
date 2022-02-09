@@ -19,8 +19,8 @@ import { Web3Status } from "..";
 
 const fakeData = {
   contract: {
-    logo: "https://avatars.githubusercontent.com/u/45615063?s=200&v=4",
-    name: "Battleverse",
+    logo: "https://app.onbridge.io/img/favicon.ico",
+    name: "OnBridge Pirates",
   },
   tokens: [
     {
