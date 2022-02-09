@@ -19,8 +19,8 @@ import { shortenAddress } from "../../../utils/web3";
 import Networks from "../../../networks.json";
 
 const networksLogos = {
-  42: "/img/networks-logos/mainnet.png",
-  97: "/img/networks-logos/BSC.png",
+  42: "/img/networks-logos/mainnet.svg",
+  97: "/img/networks-logos/BSC.svg",
 };
 
 export function GalleryItem({

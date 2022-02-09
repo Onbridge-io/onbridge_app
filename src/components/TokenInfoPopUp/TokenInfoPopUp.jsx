@@ -33,8 +33,8 @@ import {
 import Spiner from "../Spiner/Spiner";
 
 const networksLogos = {
-  42: "/img/networks-logos/mainnet.png",
-  97: "/img/networks-logos/BSC.png",
+  42: "/img/networks-logos/mainnet.svg",
+  97: "/img/networks-logos/BSC.svg",
 };
 
 function Modal({
