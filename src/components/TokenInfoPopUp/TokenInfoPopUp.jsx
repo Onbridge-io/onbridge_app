@@ -119,8 +119,9 @@ function Modal({
           </div>
           <div className={ModalInfoApprove}>
             <p className={ModalInfoApproveText}>
-              Небольшой текст для понимания, что будет происходить и что для
-              этого нужно тебе сделать!
+              Bridging between BSC and Polygon typically takes no more than 5-10
+              minutes and depends on network load conditions and gas price you
+              set for outgoing tx
             </p>
             <Button
               disabled={disableButtons}
