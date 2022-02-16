@@ -10,17 +10,21 @@ import L2BridgeAbi from "../abis/L2Bridge.json";
 
 const host = process.env.REACT_APP_API_HOST;
 
-const L1TokenAddress = Networks[42].tokenAddress;
-const L1BridgeAddress = Networks[42].bridgeAddress;
-const L2TokenAddress = Networks[97].tokenAddress;
-const L2BridgeAddress = Networks[97].bridgeAddress;
+const BSCTockenAddress = Networks[97].tokenAddress;
+const BSCBridgeAddress = Networks[97].bridgeAddress;
+const ETHTokenAddress = Networks[42].tokenAddress;
+const ETHBridgeAddress = Networks[42].bridgeAddress;
+const PolygonTokenAddress = Networks[80001].tokenAddress;
+const PolygonBridgeAddress = Networks[80001].bridgeAddress;
 
 export let provider = null;
 let signer = null;
-let L1Token = null;
-let L1Bridge = null;
-let L2Token = null;
-let L2Bridge = null;
+let BSCToken = null;
+let BSCBridge = null;
+let ETHToken = null;
+let ETHBridge = null;
+let PolygonToken = null;
+let PolygonBridge = null;
 
 let AddressZero = null;
 
@@ -29,16 +33,27 @@ let Contracts = null;
 try {
   provider = new ethers.providers.Web3Provider(window.ethereum);
   signer = provider.getSigner();
-  L1Token = new ethers.Contract(L1TokenAddress, L1TokenAbi, signer);
-  L1Bridge = new ethers.Contract(L1BridgeAddress, L1BridgeAbi, signer);
-  L2Token = new ethers.Contract(L2TokenAddress, L2TokenAbi, signer);
-  L2Bridge = new ethers.Contract(L2BridgeAddress, L2BridgeAbi, signer);
+  BSCToken = new ethers.Contract(BSCTockenAddress, L1TokenAbi, signer);
+  BSCBridge = new ethers.Contract(BSCBridgeAddress, L1BridgeAbi, signer);
+  ETHToken = new ethers.Contract(ETHTokenAddress, L2TokenAbi, signer);
+  ETHBridge = new ethers.Contract(ETHBridgeAddress, L2BridgeAbi, signer);
+  PolygonToken = new ethers.Contract(PolygonTokenAddress, L2TokenAbi, signer);
+  PolygonBridge = new ethers.Contract(
+    PolygonBridgeAddress,
+    L2BridgeAbi,
+    signer
+  );
 
   AddressZero = ethers.constants.AddressZero;
 
   Contracts = {
-    42: { Token: L1Token, Bridge: L1Bridge, BridgeAddress: L1BridgeAddress },
-    97: { Token: L2Token, Bridge: L2Bridge, BridgeAddress: L2BridgeAddress },
+    97: { Token: BSCToken, Bridge: BSCBridge, BridgeAddress: BSCBridgeAddress },
+    42: { Token: ETHToken, Bridge: ETHBridge, BridgeAddress: ETHBridgeAddress },
+    80001: {
+      Token: PolygonToken,
+      Bridge: PolygonBridge,
+      BridgeAddress: PolygonBridgeAddress,
+    },
   };
 } catch (e) {
   console.log(e);
@@ -55,16 +70,15 @@ export async function bridgeToken(
   setTransactionStatus,
   setTxLink,
   setIsLoading,
-  setConfirmed
+  setConfirmed,
+  bridgeToChain
 ) {
   const Token = Contracts[chainId].Token;
   const Bridge = Contracts[chainId].Bridge;
   const BridgeAddress = Contracts[chainId].BridgeAddress;
   const signerAddress = await signer.getAddress();
   const allowance = (await Token.getApproved(tokenId)).toString();
-  const bridgeToChain = tokensChainId === 42 ? 97 : 42;
-  const bridgeToAddress =
-    tokensChainId === 42 ? L2BridgeAddress : L1BridgeAddress;
+  const bridgeToAddress = Contracts[bridgeToChain].BridgeAddress;
 
   if (allowance === AddressZero) {
     setPending(true);
@@ -83,10 +97,14 @@ export async function bridgeToken(
               tokenId,
               bridgeToChain,
               bridgeToAddress,
-              ethers.utils.parseEther("0.01"),
+              ethers.utils.parseEther(
+                `${Networks[chainId].brigingPrice[bridgeToChain].debridgeValue}`
+              ),
               {
                 from: signerAddress,
-                value: ethers.utils.parseEther("0.03"),
+                value: ethers.utils.parseEther(
+                  `${Networks[chainId].brigingPrice[bridgeToChain].value}`
+                ),
               }
             ).then((tx) => {
               setTransactionStatus(`Outbound`);

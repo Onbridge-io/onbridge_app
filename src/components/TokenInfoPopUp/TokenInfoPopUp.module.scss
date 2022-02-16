@@ -84,7 +84,7 @@
   flex-direction: column;
   align-items: center;
   gap: 22px;
-  z-index: 1;
+  position: relative;
 }
 
 .ModalChainBlock::before {
@@ -257,4 +257,17 @@
     padding: 22px 12px;
     width: 100%;
   }
+}
+
+.ModalOtherNetworks {
+  position: absolute;
+  top: calc(100% + 10px);
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #373839;
+  background: #202329;
+  border-radius: 8px;
+  padding: 10px 16px 16px 16px;
+  z-index: 1001;
+  display: grid;
 }
