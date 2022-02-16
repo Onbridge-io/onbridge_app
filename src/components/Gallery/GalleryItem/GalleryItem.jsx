@@ -21,6 +21,7 @@ import Networks from "../../../networks.json";
 const networksLogos = {
   42: "/img/networks-logos/mainnet.svg",
   97: "/img/networks-logos/BSC.svg",
+  80001: "/img/networks-logos/polygon.svg",
 };
 
 export function GalleryItem({
@@ -42,7 +43,8 @@ export function GalleryItem({
       onClick={() => {
         setCurrentItem({ tokenId, owner, skill, change, tokensChainId, image });
         toggleModal();
-      }}>
+      }}
+    >
       <img src={image} alt="Token" className={GalleryItemPicture} />
       <div className={GalleryItemInfo}>
         <div className={GalleryItemInfoHead}>OnBridge Pirate #{tokenId}</div>
@@ -55,7 +57,8 @@ export function GalleryItem({
                 <Link
                   className={GalleryItemSpecValueLink}
                   target="_blank"
-                  href={`${blockExplorer}/address/${owner}`}>
+                  href={`${blockExplorer}/address/${owner}`}
+                >
                   {shortenAddress(owner)}
                 </Link>
               </div>

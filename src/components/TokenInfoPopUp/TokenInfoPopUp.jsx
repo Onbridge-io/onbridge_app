@@ -8,6 +8,7 @@ import { Button } from "..";
 import { bridgeToken } from "../../api/bridge";
 import { shortenAddress } from "../../utils/web3";
 
+import networks from "../../networks.json";
 import {
   ModalWrapper as ModalWrapperStyled,
   ModalOverlay,
@@ -29,12 +30,18 @@ import {
   ModalSuccessImg,
   ModalSuccessContainer,
   ModalCloseButtonItem,
+  ModalOtherNetworks,
 } from "./TokenInfoPopUp.module.scss";
+import {
+  NetworksMenuButton,
+  NetworksMenuButtonContent,
+} from "../Web3Status/Web3Status.module.scss";
 import Spiner from "../Spiner/Spiner";
 
 const networksLogos = {
   42: "/img/networks-logos/mainnet.svg",
   97: "/img/networks-logos/BSC.svg",
+  80001: "/img/networks-logos/polygon.svg",
 };
 
 function Modal({
@@ -63,17 +70,23 @@ function Modal({
     }, 8000);
   }, [confirmed]);
 
-  const bridgeCurrentItemId = currentItem.tokensChainId === 42 ? 97 : 42;
+  const { allowedToTransferNetworks } = networks[currentItem.tokensChainId];
+  const [bridgeCurrentItemId, setBridgeCurrentItemId] = useState(
+    allowedToTransferNetworks[0]
+  );
+
+  useEffect(() => {
+    setBridgeCurrentItemId(allowedToTransferNetworks[0]);
+  }, [allowedToTransferNetworks]);
 
   const linkToTxDetails =
     Number(currentItem.tokensChainId) === 42
       ? "https://kovan.etherscan.io/tx/"
       : "https://testnet.bscscan.com/tx/";
 
-  const bridgeInfoChainText = {
-    42: "Ethereum Mainnet",
-    97: "Binance Smart Chain",
-  };
+  const [bridgeInfoChainText, setBridgeInfoChainText] = useState(
+    networks[bridgeCurrentItemId].longName
+  );
 
   const bridgeHandler = () => {
     setDisableButtons(true);
@@ -89,8 +102,36 @@ function Modal({
       setTransactionStatus,
       setTxLink,
       setIsLoading,
-      setConfirmed
+      setConfirmed,
+      bridgeCurrentItemId
     );
+  };
+
+  const [showBridgeSwitcher, setShowBridgeSwitcher] = useState(false);
+  const BridgeSwitcher = ({ items }) => {
+    const listItems = items.map((item) => {
+      return (
+        <Button
+          key={item}
+          className={NetworksMenuButton}
+          onClick={() => {
+            setBridgeCurrentItemId(item);
+          }}
+        >
+          <div className={NetworksMenuButtonContent}>
+            <img
+              src={networksLogos[item]}
+              alt={networks[item].name}
+              width={40}
+              height={40}
+            />
+            <span>{networks[item].name}</span>
+          </div>
+        </Button>
+      );
+    });
+
+    return <div className={ModalOtherNetworks}>{listItems}</div>;
   };
 
   const InfoTransfer = () => {
@@ -104,27 +145,39 @@ function Modal({
                 src={networksLogos[currentItem.tokensChainId]}
                 alt={bridgeInfoChainText[currentItem.tokensChainId]}
               />
-              <p>{bridgeInfoChainText[currentItem.tokensChainId]}</p>
+              <p>{networks[currentItem.tokensChainId].longName}</p>
             </div>
             <div className={ModalChainArrow}>
               <img src="/img/arrow.svg" alt="transfer-arrow" />
             </div>
-            <div className={ModalChainBlock}>
+            <div
+              className={ModalChainBlock}
+              onClick={() => {
+                if (allowedToTransferNetworks.length > 1) {
+                  setShowBridgeSwitcher(!showBridgeSwitcher);
+                }
+              }}
+            >
               <img
                 src={networksLogos[bridgeCurrentItemId]}
-                alt={bridgeInfoChainText[bridgeCurrentItemId]}
+                alt={bridgeInfoChainText}
               />
-              <p>{bridgeInfoChainText[bridgeCurrentItemId]}</p>
+              <p>{bridgeInfoChainText}</p>
+              {showBridgeSwitcher && (
+                <BridgeSwitcher items={allowedToTransferNetworks} />
+              )}
             </div>
           </div>
           <div className={ModalInfoApprove}>
             <p className={ModalInfoApproveText}>
-              Approve and bridging token to another network. The stages of bridging will be shown here
+              Approve and bridging token to another network. The stages of
+              bridging will be shown here
             </p>
             <Button
               disabled={disableButtons}
               onClick={bridgeHandler}
-              className={ModalApproveButton}>
+              className={ModalApproveButton}
+            >
               Approve
             </Button>
           </div>
@@ -177,14 +230,16 @@ function Modal({
             aria-modal
             aria-hidden
             tabIndex={-1}
-            role="dialog">
+            role="dialog"
+          >
             <div className={ModalBlock}>
               <div className={ModalCloseButton}>
                 <button
                   className={ModalCloseButtonItem}
                   disabled={isLoading}
                   data-dismiss="modal"
-                  onClick={hide}>
+                  onClick={hide}
+                >
                   <img src="/img/close-modal.svg" alt="close" />
                 </button>
               </div>

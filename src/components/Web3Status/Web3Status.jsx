@@ -35,6 +35,7 @@ const connectorsByName = {
 const networksLogos = {
   42: "/img/networks-logos/mainnet.svg",
   97: "/img/networks-logos/BSC.svg",
+  80001: "/img/networks-logos/polygon.svg",
 };
 
 function NetworkSwitcher() {
@@ -56,7 +57,8 @@ function NetworkSwitcher() {
         className={NetworksMenuMainButton}
         onClick={() => {
           setMenuIsVidible(!menuIsVisible);
-        }}>
+        }}
+      >
         {selectButtonText}
         <img
           className={NetworksMenuArrow}
@@ -76,7 +78,8 @@ function NetworkSwitcher() {
                   onClick={() => {
                     switchNetwork(id);
                   }}
-                  className={(NetworksMenuButton, NetworksMenuButtonActive)}>
+                  className={(NetworksMenuButton, NetworksMenuButtonActive)}
+                >
                   <div className={NetworksMenuButtonContent}>
                     <img src={networksLogos[id]} alt={Networks[id].name} />
                     <span>{Networks[id].name}</span>
@@ -92,7 +95,8 @@ function NetworkSwitcher() {
                 onClick={() => {
                   switchNetwork(id);
                 }}
-                className={NetworksMenuButton}>
+                className={NetworksMenuButton}
+              >
                 <div className={NetworksMenuButtonContent}>
                   <img src={networksLogos[id]} alt={Networks[id].name} />
                   <span>{Networks[id].name}</span>
@@ -139,7 +143,8 @@ export function Web3Status({ ...props }) {
           if (connector === injected) {
             deactivate();
           }
-        }}>
+        }}
+      >
         Try again
       </Button>
     );

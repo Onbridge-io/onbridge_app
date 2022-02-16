@@ -1,9 +1,10 @@
 {
   "42": {
-    "blockExplorer": "",
+    "blockExplorer": "https://kovan.etherscan.io/",
     "name": "Kovan",
-    "tokenAddress": "0xE003C1167eBb252e55F72Fb187452AD19595F39c",
-    "bridgeAddress": "0x0b92C823Dca8bab789eF85a11e95A6C72bd4cB27",
+    "longName": "Ethereum Mainnet",
+    "tokenAddress": "0x8f6F308cf3eF669FdFe50Aa0f9821Fd7d7bEaFBa",
+    "bridgeAddress": "0x7fFa003feA2698F0e15638172eb531E99080F290",
     "params": {
       "chainId": "0x2A",
       "chainName": "kovan eth",
@@ -12,15 +13,25 @@
         "symbol": "Eth",
         "decimals": 18
       },
-      "rpcUrls": ["https://kovan.poa.network"],
+      "rpcUrls": [
+        "https://kovan.infura.io/v3/499cb18b5349480dab3e9a822893bb5f"
+      ],
       "blockExplorerUrls": [""]
+    },
+    "allowedToTransferNetworks": [97],
+    "brigingPrice": {
+      "97": {
+        "value": 0.03,
+        "debridgeValue": 0.01
+      }
     }
   },
   "97": {
-    "blockExplorer": "",
+    "blockExplorer": "https://testnet.bscscan.com/",
     "name": "BSC",
-    "tokenAddress": "0x0DB7AE37d37881DE3876E4b74a6D818F5e656d05",
-    "bridgeAddress": "0x152d8e56cc7795bbD401331cb94D8b83fa6BA3BB",
+    "longName": "Binance Smart Chain",
+    "tokenAddress": "0xe73bbf24E886c12B1a56Ebcc216015F542FF394D",
+    "bridgeAddress": "0x923e82348C9aDD1661c7Cd5889DA0f59644B599f",
     "params": {
       "chainId": "0x61",
       "chainName": "bsc bnb",
@@ -31,6 +42,42 @@
       },
       "rpcUrls": ["https://data-seed-prebsc-1-s1.binance.org:8545/"],
       "blockExplorerUrls": [""]
+    },
+    "allowedToTransferNetworks": [42, 80001],
+    "brigingPrice": {
+      "42": {
+        "value": 0.03,
+        "debridgeValue": 0.01
+      },
+      "80001": {
+        "value": 0.03,
+        "debridgeValue": 0.01
+      }
+    }
+  },
+  "80001": {
+    "blockExplorer": "https://mumbai.polygonscan.com/",
+    "name": "Polygon",
+    "longName": "Polygon",
+    "tokenAddress": "0x5d3edd90bABB74EA44f79f81baBa9daB8c39fe81",
+    "bridgeAddress": "0x7982c4790fe89aAc379C7489B3ecE367c9af09Bd",
+    "params": {
+      "chainId": "0x13881",
+      "chainName": "polygon",
+      "nativeCurrency": {
+        "name": "matic",
+        "symbol": "Matic",
+        "decimals": 18
+      },
+      "rpcUrls": ["https://rpc-mumbai.matic.today"],
+      "blockExplorerUrls": [""]
+    },
+    "allowedToTransferNetworks": [97],
+    "brigingPrice": {
+      "97": {
+        "value": 0.3,
+        "debridgeValue": 0.1
+      }
     }
   }
 }
