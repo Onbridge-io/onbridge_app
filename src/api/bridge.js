@@ -30,6 +30,10 @@ let AddressZero = null;
 
 let Contracts = null;
 
+const deBridgeApiUrl = (hash) => {
+  return `https://testapi101.debridge.finance/api/Transactions/GetFullSubmissionInfo?filter=${hash}&filterType=1`;
+};
+
 try {
   provider = new ethers.providers.Web3Provider(window.ethereum);
   signer = provider.getSigner();
@@ -71,7 +75,8 @@ export async function bridgeToken(
   setTxLink,
   setIsLoading,
   setConfirmed,
-  bridgeToChain
+  bridgeToChain,
+  setDebridgeInfo
 ) {
   const Token = Contracts[chainId].Token;
   const Bridge = Contracts[chainId].Bridge;
@@ -79,6 +84,38 @@ export async function bridgeToken(
   const signerAddress = await signer.getAddress();
   const allowance = (await Token.getApproved(tokenId)).toString();
   const bridgeToAddress = Contracts[bridgeToChain].BridgeAddress;
+
+  const getDeBridgeInfo = (hash) => {
+    console.log("Start: getDeBridgeInfo");
+    let index = 1;
+
+    let requestDeBridgeInfo = setInterval(() => {
+      axios.get(deBridgeApiUrl(hash)).then((res) => {
+        if (res) {
+          setDebridgeInfo(res.data);
+
+          if (Object.keys(res.data).length !== 0) {
+            if (res.data.send !== null) {
+              const { isExecuted } = res.data.send;
+
+              console.log(`${index++}. Try get Debridge data`, res.data);
+
+              if (isExecuted) {
+                setDebridgeInfo(res.data);
+                clearInterval(requestDeBridgeInfo);
+              }
+            }
+          }
+        }
+
+        console.log(
+          hash,
+          deBridgeApiUrl(hash),
+          `https://testnet.debridge.finance/transaction?tx${hash}&chainId=42`
+        );
+      });
+    }, 2000);
+  };
 
   if (allowance === AddressZero) {
     setPending(true);
@@ -110,9 +147,24 @@ export async function bridgeToken(
               setTransactionStatus(`Outbound`);
               setTxLink(tx.hash);
               tx.wait().then(() => {
-                setTransactionStatus(`Mined `);
+                setTransactionStatus(`Mined`);
                 setTxLink(tx.hash);
+                getDeBridgeInfo(tx.hash);
                 setTimeout(function testTokens() {
+                  // axios
+                  //   .get(deBridgeApiUrl(tx.hash))
+                  //   .then((res) => {
+                  //     if (res) {
+                  //       setDebridgeInfo(res.data);
+                  //     }
+
+                  //     console.log(
+                  //       tx.hash,
+                  //       deBridgeApiUrl(tx.hash),
+                  //       `https://testnet.debridge.finance/transaction?tx${tx.hash}&chainId=42`
+                  //     );
+                  //   })
+                  //   .catch((err) => console.log(err));
                   axios
                     .get(`${host}/tokens/`)
                     .then((response) => {

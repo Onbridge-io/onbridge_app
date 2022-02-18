@@ -31,12 +31,14 @@ import {
   ModalSuccessContainer,
   ModalCloseButtonItem,
   ModalOtherNetworks,
+  ModalBridgeInfoChainText,
 } from "./TokenInfoPopUp.module.scss";
 import {
   NetworksMenuButton,
   NetworksMenuButtonContent,
 } from "../Web3Status/Web3Status.module.scss";
 import Spiner from "../Spiner/Spiner";
+import Accordion from "../Accordion/Accordion";
 
 const networksLogos = {
   42: "/img/networks-logos/mainnet.svg",
@@ -58,17 +60,8 @@ function Modal({
   const [txLink, setTxLink] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [disableButtons, setDisableButtons] = useState(false);
+  const [debridgeInfo, setDebridgeInfo] = useState({});
   const { chainId } = useWeb3React();
-
-  useEffect(() => {
-    setTimeout(() => {
-      if (modalActive) {
-        hide();
-        setConfirmed(false);
-      }
-      setConfirmed(false);
-    }, 8000);
-  }, [confirmed]);
 
   const { allowedToTransferNetworks } = networks[currentItem.tokensChainId];
   const [bridgeCurrentItemId, setBridgeCurrentItemId] = useState(
@@ -88,6 +81,10 @@ function Modal({
     networks[bridgeCurrentItemId].longName
   );
 
+  useEffect(() => {
+    setBridgeInfoChainText(networks[bridgeCurrentItemId].longName);
+  }, [bridgeCurrentItemId]);
+
   const bridgeHandler = () => {
     setDisableButtons(true);
     setIsLoading(true);
@@ -103,7 +100,8 @@ function Modal({
       setTxLink,
       setIsLoading,
       setConfirmed,
-      bridgeCurrentItemId
+      bridgeCurrentItemId,
+      setDebridgeInfo
     );
   };
 
@@ -135,90 +133,106 @@ function Modal({
   };
 
   const InfoTransfer = () => {
-    if (!isLoading && !confirmed) {
-      return (
-        <>
-          <p>The token will be transferred to another network</p>
-          <div className={ModalChainTransferInfo}>
-            <div className={ModalChainBlock}>
-              <img
-                src={networksLogos[currentItem.tokensChainId]}
-                alt={bridgeInfoChainText[currentItem.tokensChainId]}
-              />
-              <p>{networks[currentItem.tokensChainId].longName}</p>
+    return (
+      <>
+        {!isLoading && !confirmed ? (
+          <>
+            <p>The token will be transferred to another network</p>
+            <div className={ModalChainTransferInfo}>
+              <div className={ModalChainBlock}>
+                <img
+                  src={networksLogos[currentItem.tokensChainId]}
+                  alt={bridgeInfoChainText[currentItem.tokensChainId]}
+                />
+                <p>{networks[currentItem.tokensChainId].longName}</p>
+              </div>
+              <div className={ModalChainArrow}>
+                <img src="/img/arrow.svg" alt="transfer-arrow" />
+              </div>
+              <div
+                className={ModalChainBlock}
+                onClick={() => {
+                  if (allowedToTransferNetworks.length > 1) {
+                    setShowBridgeSwitcher(!showBridgeSwitcher);
+                  }
+                }}
+              >
+                <img
+                  src={networksLogos[bridgeCurrentItemId]}
+                  alt={bridgeInfoChainText}
+                />
+                <p className={ModalBridgeInfoChainText}>
+                  <span>{bridgeInfoChainText}</span>
+                  {allowedToTransferNetworks.length > 1 && (
+                    <span>
+                      <img
+                        src="/img/chevron-down.svg"
+                        width={17}
+                        alt="Arrow down"
+                      />
+                    </span>
+                  )}
+                </p>
+                {showBridgeSwitcher && (
+                  <BridgeSwitcher items={allowedToTransferNetworks} />
+                )}
+              </div>
             </div>
-            <div className={ModalChainArrow}>
-              <img src="/img/arrow.svg" alt="transfer-arrow" />
-            </div>
-            <div
-              className={ModalChainBlock}
-              onClick={() => {
-                if (allowedToTransferNetworks.length > 1) {
-                  setShowBridgeSwitcher(!showBridgeSwitcher);
-                }
-              }}
-            >
-              <img
-                src={networksLogos[bridgeCurrentItemId]}
-                alt={bridgeInfoChainText}
-              />
-              <p>{bridgeInfoChainText}</p>
-              {showBridgeSwitcher && (
-                <BridgeSwitcher items={allowedToTransferNetworks} />
-              )}
-            </div>
-          </div>
-          <div className={ModalInfoApprove}>
-            <p className={ModalInfoApproveText}>
-              Approve and bridging token to another network. The stages of
-              bridging will be shown here
-            </p>
-            <Button
-              disabled={disableButtons}
-              onClick={bridgeHandler}
-              className={ModalApproveButton}
-            >
-              Approve
-            </Button>
-          </div>
-        </>
-      );
-    } else if (isLoading && !confirmed) {
-      return (
-        <div className={ModalLoadingWrapper}>
-          <div className={ModalLoadingBlock}>
-            <Spiner />
-            <div className={ModalLoadingStageBlock}>
-              <span className={ModalLoadingProcessText}>
-                {transactionStatus}{" "}
-                <a href={linkToTxDetails + txLink}>{shortenAddress(txLink)}</a>
-              </span>
-              <p className={ModalLoadingProcessSupprotText}>
-                The token is being transferred to another network.
+            <div className={ModalInfoApprove}>
+              <p className={ModalInfoApproveText}>
+                Bridging between BSC and polygon typically takes no more than
+                5-10 minutes and depends on network load conditions and gas
+                price you set for outgoing tx
               </p>
+              <Button
+                disabled={disableButtons}
+                onClick={bridgeHandler}
+                className={ModalApproveButton}
+              >
+                Approve
+              </Button>
             </div>
+          </>
+        ) : (
+          <div className={ModalLoadingWrapper}>
+            {isLoading && !confirmed ? (
+              <div className={ModalLoadingBlock}>
+                <Spiner />
+                <div className={ModalLoadingStageBlock}>
+                  <span className={ModalLoadingProcessText}>
+                    {transactionStatus}{" "}
+                    <a href={linkToTxDetails + txLink}>
+                      {shortenAddress(txLink)}
+                    </a>
+                  </span>
+                  <p className={ModalLoadingProcessSupprotText}>
+                    The token is being transferred to another network.
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <div className={ModalSuccessContainer}>
+                <img
+                  className={ModalSuccessImg}
+                  src="/img/success-transaction.svg"
+                  alt="Success"
+                />
+                <span className={ModalLoadingProcessText}>Successfully!</span>
+                <p className={ModalLoadingProcessSupprotText}>
+                  The token is being transferred to another network.
+                </p>
+              </div>
+            )}
+            {transactionStatus === "Mined" && (
+              <Accordion debridgeInfo={debridgeInfo} />
+            )}
+            {isLoading && !confirmed && (
+              <p>Confirm this operation in your wallet.</p>
+            )}
           </div>
-          <p>Confirm this operation in your wallet.</p>
-        </div>
-      );
-    } else {
-      return (
-        <div className={ModalLoadingWrapper}>
-          <div className={ModalSuccessContainer}>
-            <img
-              className={ModalSuccessImg}
-              src="/img/success-transaction.svg"
-              alt="Success"
-            />
-
-            <span className={ModalLoadingProcessText}>Successfully!</span>
-            <p className={ModalLoadingProcessSupprotText}>
-              The token is being transferred to another network.
-            </p>
-          </div>
-        </div>
-      );
-    }
+        )}
+      </>
+    );
   };
 
   return isShowing

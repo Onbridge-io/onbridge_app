@@ -25,7 +25,6 @@
 
 .ModalBlock {
   font-family: $main-font;
-  max-height: 550px;
   background: white;
   position: relative;
   top: 20%;
@@ -198,6 +197,10 @@
   width: 100%;
 }
 
+.ModalAccordionWrapper {
+  position: relative;
+}
+
 @media (max-width: 1300px) {
   .ModalContent {
     display: block;
@@ -270,4 +273,18 @@
   padding: 10px 16px 16px 16px;
   z-index: 1001;
   display: grid;
+}
+
+.ModalBridgeInfoChainText {
+  display: flex;
+  align-items: center;
+
+  :global {
+    span {
+      &:nth-child(2n) {
+        display: flex;
+        margin-left: 10px;
+      }
+    }
+  }
 }

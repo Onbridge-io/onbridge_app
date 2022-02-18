@@ -43,6 +43,7 @@ function TokensList({ tokens, change, setChange }) {
     tokensChainId: 97,
     image: "",
   });
+
   const { isShowing, toggle } = useModal();
 
   return (
