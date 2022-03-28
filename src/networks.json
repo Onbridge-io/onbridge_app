@@ -16,7 +16,7 @@
       "rpcUrls": [
         "https://kovan.infura.io/v3/499cb18b5349480dab3e9a822893bb5f"
       ],
-      "blockExplorerUrls": [""]
+      "blockExplorerUrls": ["https://kovan.etherscan.io/"]
     },
     "allowedToTransferNetworks": [97],
     "brigingPrice": {
@@ -34,14 +34,14 @@
     "bridgeAddress": "0x923e82348C9aDD1661c7Cd5889DA0f59644B599f",
     "params": {
       "chainId": "0x61",
-      "chainName": "bsc bnb",
+      "chainName": "BSC Testnet",
       "nativeCurrency": {
         "name": "bsc bnb",
         "symbol": "BNB",
         "decimals": 18
       },
       "rpcUrls": ["https://data-seed-prebsc-1-s1.binance.org:8545/"],
-      "blockExplorerUrls": [""]
+      "blockExplorerUrls": ["https://testnet.bscscan.com/"]
     },
     "allowedToTransferNetworks": [42, 80001],
     "brigingPrice": {
@@ -63,14 +63,14 @@
     "bridgeAddress": "0x7982c4790fe89aAc379C7489B3ecE367c9af09Bd",
     "params": {
       "chainId": "0x13881",
-      "chainName": "polygon",
+      "chainName": "Polygon Mumbai",
       "nativeCurrency": {
         "name": "matic",
         "symbol": "Matic",
         "decimals": 18
       },
       "rpcUrls": ["https://rpc-mumbai.matic.today"],
-      "blockExplorerUrls": [""]
+      "blockExplorerUrls": ["https://mumbai.polygonscan.com/"]
     },
     "allowedToTransferNetworks": [97],
     "brigingPrice": {
