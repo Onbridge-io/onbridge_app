@@ -1,4 +1,4 @@
-@import "../../../scss/variables.scss";
+@import '../../../scss/variables.scss';
 
 .GalleryItem {
   display: flex;
@@ -9,6 +9,10 @@
   width: 260px;
   height: 100%;
   cursor: pointer;
+
+  &Disabled {
+    cursor: auto;
+  }
 
   &Text {
     font-size: 15px;
