@@ -1,6 +1,8 @@
-import { Link } from "../../";
+import classnames from 'classnames'
+import { Link } from '../../'
 import {
   GalleryItem as GalleryItemStyled,
+  GalleryItemDisabled,
   GalleryItemText,
   GalleryItemPicture,
   GalleryItemInfo,
@@ -13,16 +15,16 @@ import {
   GalleryItemSpecValue,
   GalleryItemSpecValueLink,
   GalleryItemBridgeInfo,
-} from "./GalleryItem.module.scss";
+} from './GalleryItem.module.scss'
 
-import { shortenAddress } from "../../../utils/web3";
-import Networks from "../../../networks.json";
+import { shortenAddress } from '../../../utils/web3'
+import Networks from '../../../networks.json'
 
 const networksLogos = {
-  42: "/img/networks-logos/mainnet.svg",
-  97: "/img/networks-logos/BSC.svg",
-  80001: "/img/networks-logos/polygon.svg",
-};
+  42: '/img/networks-logos/mainnet.svg',
+  97: '/img/networks-logos/BSC.svg',
+  80001: '/img/networks-logos/polygon.svg',
+}
 
 export function GalleryItem({
   tokenId,
@@ -31,21 +33,34 @@ export function GalleryItem({
   chainId: tokensChainId,
   skill,
   change,
-  setChange,
   setCurrentItem,
   toggleModal,
+  isShowing,
 }) {
-  const blockExplorer = Networks[tokensChainId].blockExplorer;
+  const classNames = classnames(GalleryItemStyled, {
+    [GalleryItemDisabled]: isShowing,
+  })
+
+  const blockExplorer = Networks[tokensChainId].blockExplorer
 
   return (
     <div
-      className={GalleryItemStyled}
+      className={classNames}
       onClick={() => {
-        setCurrentItem({ tokenId, owner, skill, change, tokensChainId, image });
-        toggleModal();
+        if (!isShowing) {
+          setCurrentItem({
+            tokenId,
+            owner,
+            skill,
+            change,
+            tokensChainId,
+            image,
+          })
+          toggleModal()
+        }
       }}
     >
-      <img src={image} alt="Token" className={GalleryItemPicture} />
+      <img src={image} alt='Token' className={GalleryItemPicture} />
       <div className={GalleryItemInfo}>
         <div className={GalleryItemInfoHead}>OnBridge Pirate #{tokenId}</div>
 
@@ -56,7 +71,7 @@ export function GalleryItem({
               <div className={GalleryItemSpecValue}>
                 <Link
                   className={GalleryItemSpecValueLink}
-                  target="_blank"
+                  target='_blank'
                   href={`${blockExplorer}/address/${owner}`}
                 >
                   {shortenAddress(owner)}
@@ -73,11 +88,11 @@ export function GalleryItem({
               <p>{tokenId}</p>
             </div>
             <div className={GalleryItemNetworkLogo}>
-              <img src={networksLogos[tokensChainId]} alt="Network" />
+              <img src={networksLogos[tokensChainId]} alt='Network' />
             </div>
           </div>
         </div>
       </div>
     </div>
-  );
+  )
 }

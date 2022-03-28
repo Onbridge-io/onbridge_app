@@ -247,6 +247,8 @@ function Modal({
                   image={currentItem.image}
                   chainId={currentItem.tokensChainId}
                   skill={currentItem.skill}
+                  change={change}
+                  isShowing={isShowing}
                 />
                 <div className={ModalInfoTransfer}>
                   <InfoTransfer />
@@ -257,6 +259,8 @@ function Modal({
                   image={currentItem.image}
                   chainId={bridgeCurrentItemId}
                   skill={currentItem.skill}
+                  change={change}
+                  isShowing={isShowing}
                 />
               </div>
             </div>

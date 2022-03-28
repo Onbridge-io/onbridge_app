@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react'
 
-import Modal from "../TokenInfoPopUp/TokenInfoPopUp";
+import Modal from '../TokenInfoPopUp/TokenInfoPopUp'
 
-import { getTokensInfo } from "../../api/fetchTokens";
+import { getTokensInfo } from '../../api/fetchTokens'
 import {
   Gallery as GalleryStyled,
   GalleryHead,
@@ -11,39 +11,39 @@ import {
   GalleryHeadCounter,
   GalleryGrid,
   GalleryChainStatus,
-} from "./Gallery.module.scss";
-import { GalleryItem } from "./GalleryItem/GalleryItem";
+} from './Gallery.module.scss'
+import { GalleryItem } from './GalleryItem/GalleryItem'
 
-import useModal from "../../utils/hooks/useModal";
-import { Web3Status } from "..";
+import useModal from '../../utils/hooks/useModal'
+import { Web3Status } from '..'
 
 const fakeData = {
   contract: {
-    logo: "https://app.onbridge.io/img/favicon.ico",
-    name: "OnBridge Pirates",
+    logo: 'https://app.onbridge.io/img/favicon.ico',
+    name: 'OnBridge Pirates',
   },
   tokens: [
     {
-      colectionName: "Unofficial Punks",
-      name: "Cryptonatrix ",
+      colectionName: 'Unofficial Punks',
+      name: 'Cryptonatrix ',
       imageSrc:
-        "https://lh3.googleusercontent.com/ZQG5lomHgYynSNFZwDFETow-i6BxtJ7AIb5AUHkjH-PbGHKpzEIq5J0g-ohtFeB-gvu2QTMBUkVo2aKS_GnzZc-X3nIWiRLVwzcpfw=w600",
-      network: "mainnet",
+        'https://lh3.googleusercontent.com/ZQG5lomHgYynSNFZwDFETow-i6BxtJ7AIb5AUHkjH-PbGHKpzEIq5J0g-ohtFeB-gvu2QTMBUkVo2aKS_GnzZc-X3nIWiRLVwzcpfw=w600',
+      network: 'mainnet',
     },
   ],
-};
-const { contract } = fakeData;
+}
+const { contract } = fakeData
 
 function TokensList({ tokens, change, setChange }) {
   const [currentItem, setCurrentItem] = useState({
     change: true,
-    owner: "0x5fCb8f7149E8aD03544157C90E6f81b26933d3a2",
+    owner: '0x5fCb8f7149E8aD03544157C90E6f81b26933d3a2',
     skill: 0,
     tokenId: 0,
     tokensChainId: 97,
-    image: "",
-  });
-  const { isShowing, toggle } = useModal();
+    image: '',
+  })
+  const { isShowing, toggle } = useModal()
 
   return (
     <>
@@ -58,11 +58,10 @@ function TokensList({ tokens, change, setChange }) {
               chainId={chain_id}
               skill={skill}
               change={change}
-              setChange={setChange}
               setCurrentItem={setCurrentItem}
               toggleModal={toggle}
             />
-          );
+          )
         })}
       <Modal
         isShowing={isShowing}
@@ -73,25 +72,25 @@ function TokensList({ tokens, change, setChange }) {
         setChange={setChange}
       />
     </>
-  );
+  )
 }
 
 export function Gallery() {
-  const [tokensList, setTokensList] = useState([]);
-  const [change, setChange] = useState(true);
+  const [tokensList, setTokensList] = useState([])
+  const [change, setChange] = useState(true)
 
   useEffect(() => {
-    getTokensInfo().then((res) => {
-      setTokensList(res);
-    });
-  }, [change]);
+    getTokensInfo().then(res => {
+      setTokensList(res)
+    })
+  }, [change])
 
   return (
     <div className={GalleryStyled}>
       <Web3Status className={GalleryChainStatus} />
       <div className={GalleryHead}>
         <div className={GalleryHeadTitle}>
-          <img className={GalleryHeadLogo} src={contract.logo} alt="Logo" />
+          <img className={GalleryHeadLogo} src={contract.logo} alt='Logo' />
           {contract.name}
         </div>
         <div className={GalleryHeadCounter}>
@@ -103,5 +102,5 @@ export function Gallery() {
         <TokensList tokens={tokensList} setChange={setChange} change={change} />
       </div>
     </div>
-  );
+  )
 }
