@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
-import ReactDOM from "react-dom";
+import React, { useState, useEffect } from 'react'
+import ReactDOM from 'react-dom'
 
-import { useWeb3React } from "@web3-react/core";
+import { useWeb3React } from '@web3-react/core'
 
-import { GalleryItem } from "../Gallery/GalleryItem/GalleryItem";
-import { Button } from "..";
-import { bridgeToken } from "../../api/bridge";
-import { shortenAddress } from "../../utils/web3";
+import { GalleryItem } from '../Gallery/GalleryItem/GalleryItem'
+import { Button } from '..'
+import { bridgeToken } from '../../api/bridge'
+import { shortenAddress } from '../../utils/web3'
 
-import networks from "../../networks.json";
+import networks from '../../networks.json'
 import {
   ModalWrapper as ModalWrapperStyled,
   ModalOverlay,
@@ -31,18 +31,18 @@ import {
   ModalSuccessContainer,
   ModalCloseButtonItem,
   ModalOtherNetworks,
-} from "./TokenInfoPopUp.module.scss";
+} from './TokenInfoPopUp.module.scss'
 import {
   NetworksMenuButton,
   NetworksMenuButtonContent,
-} from "../Web3Status/Web3Status.module.scss";
-import Spiner from "../Spiner/Spiner";
+} from '../Web3Status/Web3Status.module.scss'
+import Spiner from '../Spiner/Spiner'
 
 const networksLogos = {
-  42: "/img/networks-logos/mainnet.svg",
-  97: "/img/networks-logos/BSC.svg",
-  80001: "/img/networks-logos/polygon.svg",
-};
+  42: '/img/networks-logos/mainnet.svg',
+  97: '/img/networks-logos/BSC.svg',
+  80001: '/img/networks-logos/polygon.svg',
+}
 
 function Modal({
   isShowing,
@@ -52,45 +52,42 @@ function Modal({
   change,
   setChange,
 }) {
-  const [pending, setPending] = useState(false);
-  const [confirmed, setConfirmed] = useState(false);
-  const [transactionStatus, setTransactionStatus] = useState("Pending...");
-  const [txLink, setTxLink] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [disableButtons, setDisableButtons] = useState(false);
-  const { chainId } = useWeb3React();
+  const [, setPending] = useState(false)
+  const [confirmed, setConfirmed] = useState(false)
+  const [transactionStatus, setTransactionStatus] = useState('Pending...')
+  const [txLink, setTxLink] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const [disableButtons, setDisableButtons] = useState(false)
+  const { chainId } = useWeb3React()
 
   useEffect(() => {
     setTimeout(() => {
       if (modalActive) {
-        hide();
-        setConfirmed(false);
+        hide()
+        setConfirmed(false)
       }
-      setConfirmed(false);
-    }, 8000);
-  }, [confirmed]);
+      setConfirmed(false)
+    }, 8000)
+  }, [confirmed])
 
-  const { allowedToTransferNetworks } = networks[currentItem.tokensChainId];
+  const { allowedToTransferNetworks } = networks[currentItem.tokensChainId]
   const [bridgeCurrentItemId, setBridgeCurrentItemId] = useState(
     allowedToTransferNetworks[0]
-  );
+  )
 
   useEffect(() => {
-    setBridgeCurrentItemId(allowedToTransferNetworks[0]);
-  }, [allowedToTransferNetworks]);
+    setBridgeCurrentItemId(allowedToTransferNetworks[0])
+  }, [allowedToTransferNetworks])
 
   const linkToTxDetails =
     Number(currentItem.tokensChainId) === 42
-      ? "https://kovan.etherscan.io/tx/"
-      : "https://testnet.bscscan.com/tx/";
+      ? 'https://kovan.etherscan.io/tx/'
+      : 'https://testnet.bscscan.com/tx/'
 
-  const [bridgeInfoChainText, setBridgeInfoChainText] = useState(
-    networks[bridgeCurrentItemId].longName
-  );
-
+  const bridgeInfoChainText = networks[bridgeCurrentItemId].longName
   const bridgeHandler = () => {
-    setDisableButtons(true);
-    setIsLoading(true);
+    setDisableButtons(true)
+    setIsLoading(true)
     bridgeToken(
       chainId,
       currentItem.tokenId,
@@ -104,18 +101,18 @@ function Modal({
       setIsLoading,
       setConfirmed,
       bridgeCurrentItemId
-    );
-  };
+    )
+  }
 
-  const [showBridgeSwitcher, setShowBridgeSwitcher] = useState(false);
+  const [showBridgeSwitcher, setShowBridgeSwitcher] = useState(false)
   const BridgeSwitcher = ({ items }) => {
-    const listItems = items.map((item) => {
+    const listItems = items.map(item => {
       return (
         <Button
           key={item}
           className={NetworksMenuButton}
           onClick={() => {
-            setBridgeCurrentItemId(item);
+            setBridgeCurrentItemId(item)
           }}
         >
           <div className={NetworksMenuButtonContent}>
@@ -128,11 +125,11 @@ function Modal({
             <span>{networks[item].name}</span>
           </div>
         </Button>
-      );
-    });
+      )
+    })
 
-    return <div className={ModalOtherNetworks}>{listItems}</div>;
-  };
+    return <div className={ModalOtherNetworks}>{listItems}</div>
+  }
 
   const InfoTransfer = () => {
     if (!isLoading && !confirmed) {
@@ -148,13 +145,13 @@ function Modal({
               <p>{networks[currentItem.tokensChainId].longName}</p>
             </div>
             <div className={ModalChainArrow}>
-              <img src="/img/arrow.svg" alt="transfer-arrow" />
+              <img src='/img/arrow.svg' alt='transfer-arrow' />
             </div>
             <div
               className={ModalChainBlock}
               onClick={() => {
                 if (allowedToTransferNetworks.length > 1) {
-                  setShowBridgeSwitcher(!showBridgeSwitcher);
+                  setShowBridgeSwitcher(!showBridgeSwitcher)
                 }
               }}
             >
@@ -182,7 +179,7 @@ function Modal({
             </Button>
           </div>
         </>
-      );
+      )
     } else if (isLoading && !confirmed) {
       return (
         <div className={ModalLoadingWrapper}>
@@ -190,7 +187,7 @@ function Modal({
             <Spiner />
             <div className={ModalLoadingStageBlock}>
               <span className={ModalLoadingProcessText}>
-                {transactionStatus}{" "}
+                {transactionStatus}{' '}
                 <a href={linkToTxDetails + txLink}>{shortenAddress(txLink)}</a>
               </span>
               <p className={ModalLoadingProcessSupprotText}>
@@ -200,15 +197,15 @@ function Modal({
           </div>
           <p>Confirm this operation in your wallet.</p>
         </div>
-      );
+      )
     } else {
       return (
         <div className={ModalLoadingWrapper}>
           <div className={ModalSuccessContainer}>
             <img
               className={ModalSuccessImg}
-              src="/img/success-transaction.svg"
-              alt="Success"
+              src='/img/success-transaction.svg'
+              alt='Success'
             />
 
             <span className={ModalLoadingProcessText}>Successfully!</span>
@@ -217,9 +214,9 @@ function Modal({
             </p>
           </div>
         </div>
-      );
+      )
     }
-  };
+  }
 
   return isShowing
     ? ReactDOM.createPortal(
@@ -230,17 +227,17 @@ function Modal({
             aria-modal
             aria-hidden
             tabIndex={-1}
-            role="dialog"
+            role='dialog'
           >
             <div className={ModalBlock}>
               <div className={ModalCloseButton}>
                 <button
                   className={ModalCloseButtonItem}
                   disabled={isLoading}
-                  data-dismiss="modal"
+                  data-dismiss='modal'
                   onClick={hide}
                 >
-                  <img src="/img/close-modal.svg" alt="close" />
+                  <img src='/img/close-modal.svg' alt='close' />
                 </button>
               </div>
               <div className={ModalContent}>
@@ -267,7 +264,7 @@ function Modal({
         </React.Fragment>,
         document.body
       )
-    : null;
+    : null
 }
 
-export default Modal;
+export default Modal
