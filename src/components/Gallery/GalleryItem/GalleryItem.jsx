@@ -1,20 +1,19 @@
 import classnames from 'classnames'
-import { Link } from '../../'
+import { Button, Link } from '../../'
 import {
   GalleryItem as GalleryItemStyled,
-  GalleryItemDisabled,
-  GalleryItemText,
   GalleryItemPicture,
   GalleryItemInfo,
   GalleryItemInfoHead,
   GalleryItemInfoFoot,
+  GalleryItemInfoFootDisabled,
   GalleryItemNetworkLogo,
-  GalleryItemSpecsWrapper,
   GalleryItemSpec,
   GalleryItemSpecLabel,
   GalleryItemSpecValue,
   GalleryItemSpecValueLink,
-  GalleryItemBridgeInfo,
+  GalleryItemButton,
+  GalleryItemButtonDisabled,
 } from './GalleryItem.module.scss'
 
 import { shortenAddress } from '../../../utils/web3'
@@ -37,61 +36,63 @@ export function GalleryItem({
   toggleModal,
   isShowing,
 }) {
-  const classNames = classnames(GalleryItemStyled, {
-    [GalleryItemDisabled]: isShowing,
+  const buttonClassNames = classnames(GalleryItemButton, {
+    [GalleryItemButtonDisabled]: isShowing,
+  })
+
+  const itemClassNames = classnames(GalleryItemInfoFoot, {
+    [GalleryItemInfoFootDisabled]: isShowing,
   })
 
   const blockExplorer = Networks[tokensChainId].blockExplorer
 
   return (
-    <div
-      className={classNames}
-      onClick={() => {
-        if (!isShowing) {
-          setCurrentItem({
-            tokenId,
-            owner,
-            skill,
-            change,
-            tokensChainId,
-            image,
-          })
-          toggleModal()
-        }
-      }}
-    >
+    <div className={GalleryItemStyled}>
       <img src={image} alt='Token' className={GalleryItemPicture} />
       <div className={GalleryItemInfo}>
-        <div className={GalleryItemInfoHead}>OnBridge Pirate #{tokenId}</div>
-
-        <div className={GalleryItemInfoFoot}>
-          <div className={GalleryItemSpecsWrapper}>
-            <div className={GalleryItemSpec}>
-              <div className={GalleryItemSpecLabel}>Owner</div>
-              <div className={GalleryItemSpecValue}>
-                <Link
-                  className={GalleryItemSpecValueLink}
-                  target='_blank'
-                  href={`${blockExplorer}/address/${owner}`}
-                >
-                  {shortenAddress(owner)}
-                </Link>
-              </div>
-            </div>
-            <div className={GalleryItemSpec}>
-              <div className={GalleryItemSpecLabel}>Skill</div>
-              <div className={GalleryItemSpecValue}>{skill}</div>
-            </div>
+        <div className={GalleryItemInfoHead}>
+          OnBridge Pirate #{tokenId}
+          <div className={GalleryItemNetworkLogo}>
+            <img src={networksLogos[tokensChainId]} alt='Network' />
           </div>
-          <div className={GalleryItemBridgeInfo}>
-            <div className={GalleryItemText}>
-              <p>{tokenId}</p>
-            </div>
-            <div className={GalleryItemNetworkLogo}>
-              <img src={networksLogos[tokensChainId]} alt='Network' />
+        </div>
+        <div className={GalleryItemInfoFoot}>
+          <div className={GalleryItemSpec}>
+            <div className={GalleryItemSpecLabel}>Character points:</div>
+            <div className={GalleryItemSpecValue}>{skill}</div>
+          </div>
+        </div>
+        <div className={itemClassNames}>
+          <div className={GalleryItemSpec}>
+            <div className={GalleryItemSpecLabel}>Owner:</div>
+            <div className={GalleryItemSpecValue}>
+              <Link
+                className={GalleryItemSpecValueLink}
+                target='_blank'
+                href={`${blockExplorer}/address/${owner}`}
+              >
+                {shortenAddress(owner)}
+              </Link>
             </div>
           </div>
         </div>
+        <Button
+          className={buttonClassNames}
+          disabled={isShowing}
+          onClick={() => {
+            setCurrentItem({
+              tokenId,
+              owner,
+              skill,
+              change,
+              tokensChainId,
+              image,
+            })
+            toggleModal()
+          }}
+        >
+          Bridge
+        </Button>
       </div>
     </div>
   )
