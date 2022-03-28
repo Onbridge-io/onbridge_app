@@ -1,4 +1,4 @@
-@import "../../scss/variables.scss";
+@import '../../scss/variables.scss';
 
 .ModalOverlay {
   position: fixed;
@@ -54,7 +54,7 @@
 }
 
 .ModalInfoTransfer::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
@@ -64,7 +64,7 @@
   padding: 10px;
   border: 1px solid transparent;
   background: linear-gradient(130deg, #3e3e3e, #21242a) border-box;
-  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
 }
@@ -88,7 +88,7 @@
 }
 
 .ModalChainBlock::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
@@ -98,7 +98,7 @@
   padding: 10px;
   border: 1px solid transparent;
   background: linear-gradient(130deg, #3e3e3e, #21242a) border-box;
-  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
 }
@@ -159,7 +159,7 @@
   border-radius: 16px;
   cursor: pointer;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .ModalCloseButtonItem {
