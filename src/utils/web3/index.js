@@ -16,29 +16,25 @@ export async function switchNetwork(chainId) {
   const params = Networks[chainId].params
 
   if (!window.ethereum) {
-    console.log('error');
+    console.log('error')
     throw new Error('eror')
   }
 
   if (web3Injected(window.ethereum)) {
     try {
-      await window.ethereum.request({
-        method: 'wallet_switchEthereumChain',
-        params: [{ chainId: params.chainId }],
-      })
-    } catch (switchError) {
-      // This error code indicates that the chain has not been added to MetaMask.
-      if (switchError.code === 4902) {
-        try {
-          await window.ethereum.request({
-            method: 'wallet_addEthereumChain',
-            params: [params],
-          })
-        } catch (addError) {
-          // handle "add" error
-        }
+      if (chainId === 42) {
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: params.chainId }],
+        })
+      } else {
+        await window.ethereum.request({
+          method: 'wallet_addEthereumChain',
+          params: [params],
+        })
       }
-      // handle other "switch" errors
+    } catch (err) {
+      console.log(err)
     }
   }
 }
