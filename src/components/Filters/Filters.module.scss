@@ -1,0 +1,119 @@
+@import '../../scss/variables.scss';
+
+.Filters {
+  margin: 40px auto;
+  display: grid;
+  justify-content: space-between;
+  justify-items: center;
+  gap: 32px 70px;
+  grid-template-columns: repeat(2, minmax(160px, 1fr));
+  position: relative;
+  max-width: 1200px;
+
+  &Item {
+    border-radius: 16px;
+    background-color: #22252c;
+    background: linear-gradient(180deg, #22252c 0%, #202329 104.84%);
+
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+
+    &MainButton {
+      display: flex;
+      align-items: center;
+      background: transparent;
+      border-radius: 8px;
+      color: #fff;
+      padding: 22px;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      border: 1px solid $border;
+    }
+
+    &Arrow {
+      height: 20px;
+      margin-left: auto;
+    }
+    &Image {
+      margin-right: 8px;
+    }
+  }
+  &Menu {
+    border: 1px solid $border;
+    border-top: none;
+    background: #292c32;
+    background: linear-gradient(180deg, #22252c 0%, #202329 104.84%);
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    padding: 16px;
+    padding-top: 0;
+    position: absolute;
+    top: 96px;
+    left: 0;
+    width: 100%;
+    white-space: nowrap;
+    z-index: 11;
+    max-height: 380px;
+    box-sizing: border-box;
+
+    &Hidden {
+      display: none;
+    }
+
+    &List {
+      border-top: 1px solid $border;
+      display: flex;
+      flex-direction: column;
+    }
+    &Button {
+      margin-top: 10px;
+      background: transparent;
+      padding: 16px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+    }
+
+    &ButtonContent {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  }
+
+  &Arrows {
+    position: absolute;
+    top: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .Filters {
+    grid-template-columns: 1fr;
+    gap: 56px 70px;
+    &Item {
+      &MainButton {
+        padding: 10px 24px;
+      }
+      &Image {
+        width: 40px;
+        height: 40px;
+      }
+    }
+    &Menu {
+      top: 57px;
+      &Button {
+        padding: 8px;
+      }
+      &Image {
+        width: 40px;
+        height: 40px;
+      }
+    }
+    &Arrows {
+      top: 75px;
+    }
+  }
+}
