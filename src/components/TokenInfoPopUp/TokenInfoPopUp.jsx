@@ -64,6 +64,7 @@ function Modal({
     setTimeout(() => {
       if (modalActive) {
         hide()
+        setDisableButtons(false)
         setConfirmed(false)
       }
       setConfirmed(false)
@@ -171,11 +172,15 @@ function Modal({
               bridging will be shown here
             </p>
             <Button
-              disabled={disableButtons}
+              disabled={disableButtons || chainId !== currentItem.tokensChainId}
               onClick={bridgeHandler}
               className={ModalApproveButton}
             >
-              Approve
+              {chainId !== currentItem.tokensChainId
+                ? `Switch to the appropriate network (${
+                    networks[currentItem.tokensChainId].name
+                  })`
+                : 'Approve'}
             </Button>
           </div>
         </>
@@ -235,7 +240,10 @@ function Modal({
                   className={ModalCloseButtonItem}
                   disabled={isLoading}
                   data-dismiss='modal'
-                  onClick={hide}
+                  onClick={() => {
+                    hide()
+                    setDisableButtons(false)
+                  }}
                 >
                   <img src='/img/close-modal.svg' alt='close' />
                 </button>
