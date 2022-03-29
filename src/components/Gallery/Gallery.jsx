@@ -14,6 +14,7 @@ import {
   GallerySpinner,
 } from './Gallery.module.scss'
 import { GalleryItem } from './GalleryItem/GalleryItem'
+import Filters from '../Filters/Filters'
 
 import useModal from '../../utils/hooks/useModal'
 import { Web3Status } from '..'
@@ -113,36 +114,39 @@ export function Gallery() {
   }, [change])
 
   return (
-    <div className={GalleryStyled}>
-      <Web3Status className={GalleryChainStatus} />
-      <div className={GalleryHead}>
-        <div className={GalleryHeadTitle}>
-          <img className={GalleryHeadLogo} src={contract.logo} alt="Logo" />
-          {contract.name}
-        </div>
-        <div className={GalleryHeadCounter}>
-          {tokensList && totalAmountOfTokens} items
-        </div>
-      </div>
-      <InfiniteScroll
-        style={{ overflow: 'hidden' }}
-        dataLength={tokensList.length}
-        next={fetchMoreTokens}
-        hasMore={hasMoreTokens}
-        loader={
-          <div className={GallerySpinner}>
-            <Spinner />
+    <>
+      <Filters />
+      <div className={GalleryStyled}>
+        <Web3Status className={GalleryChainStatus} />
+        <div className={GalleryHead}>
+          <div className={GalleryHeadTitle}>
+            <img className={GalleryHeadLogo} src={contract.logo} alt="Logo" />
+            {contract.name}
           </div>
-        }
-      >
-        <div className={GalleryGrid}>
-          <TokensList
-            tokens={tokensList}
-            setChange={setChange}
-            change={change}
-          />
+          <div className={GalleryHeadCounter}>
+            {tokensList && totalAmountOfTokens} items
+          </div>
         </div>
-      </InfiniteScroll>
-    </div>
+        <InfiniteScroll
+          style={{ overflow: 'hidden' }}
+          dataLength={tokensList.length}
+          next={fetchMoreTokens}
+          hasMore={hasMoreTokens}
+          loader={
+            <div className={GallerySpinner}>
+              <Spinner />
+            </div>
+          }
+        >
+          <div className={GalleryGrid}>
+            <TokensList
+              tokens={tokensList}
+              setChange={setChange}
+              change={change}
+            />
+          </div>
+        </InfiniteScroll>
+      </div>
+    </>
   )
 }
