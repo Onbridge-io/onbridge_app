@@ -116,7 +116,7 @@ export async function bridgeToken(
                   axios
                     .get(`${host}/tokens/`)
                     .then((response) => {
-                      if (response.data.results[tokenId].chain_id !== chainId) {
+                      if (response.data.results[tokenId].chainId !== chainId) {
                         setPending(false);
                         setChange((change) => !change);
                         setDisableButtons(false);
