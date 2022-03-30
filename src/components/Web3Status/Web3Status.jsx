@@ -69,23 +69,23 @@ function NetworkSwitcher() {
       >
         <img
           src={networksLogos[chainId]}
-          alt='chainImage'
-          height='24'
-          width='24'
+          alt="chainImage"
+          height="24"
+          width="24"
           className={imageClassNames}
         />
         {selectButtonText}
         <img
           className={NetworksMenuArrow}
-          src='/img/chevron-down.svg'
-          alt='Down'
+          src="/img/chevron-down.svg"
+          alt="Down"
         />
       </button>
       <div className={menuClassNames}>
         <div className={NetworksMenuTitle}>Select network</div>
 
         <div className={NetworksMenuList}>
-          {supportedChainIds.map(id => {
+          {supportedChainIds.map((id) => {
             if (chainId === id) {
               return (
                 <Button
@@ -99,12 +99,12 @@ function NetworkSwitcher() {
                     <img
                       src={networksLogos[id]}
                       alt={Networks[id].name}
-                      height='24'
-                      width='24'
+                      height="24"
+                      width="24"
                     />
                     <span>{Networks[id].name}</span>
                   </div>
-                  <img src='/img/active-network-ind.svg' alt='active-network' />
+                  <img src="/img/active-network-ind.svg" alt="active-network" />
                 </Button>
               )
             }
@@ -121,8 +121,8 @@ function NetworkSwitcher() {
                   <img
                     src={networksLogos[id]}
                     alt={Networks[id].name}
-                    height='24'
-                    width='24'
+                    height="24"
+                    width="24"
                   />
                   <span>{Networks[id].name}</span>
                 </div>
@@ -182,7 +182,7 @@ export function Web3Status({ ...props }) {
       return <NetworkSwitcher />
     }
 
-    return Object.keys(connectorsByName).map(name => {
+    return Object.keys(connectorsByName).map((name) => {
       const currentConnector = connectorsByName[name].connector
       const connected = currentConnector === connector
       const disabled =

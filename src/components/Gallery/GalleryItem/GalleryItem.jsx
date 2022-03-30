@@ -48,12 +48,12 @@ export function GalleryItem({
 
   return (
     <div className={GalleryItemStyled}>
-      <img src={image} alt='Token' className={GalleryItemPicture} />
+      <img src={image} alt="Token" className={GalleryItemPicture} />
       <div className={GalleryItemInfo}>
         <div className={GalleryItemInfoHead}>
           OnBridge Pirate #{tokenId}
           <div className={GalleryItemNetworkLogo}>
-            <img src={networksLogos[tokensChainId]} alt='Network' />
+            <img src={networksLogos[tokensChainId]} alt="Network" />
           </div>
         </div>
         <div className={GalleryItemInfoFoot}>
@@ -68,7 +68,7 @@ export function GalleryItem({
             <div className={GalleryItemSpecValue}>
               <Link
                 className={GalleryItemSpecValueLink}
-                target='_blank'
+                target="_blank"
                 href={`${blockExplorer}/address/${owner}`}
               >
                 {shortenAddress(owner)}

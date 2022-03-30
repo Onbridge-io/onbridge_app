@@ -2,8 +2,8 @@ import {
   Header as HeaderStyled,
   HeaderLogo,
   HeaderChainStatus,
-} from "./Header.module.scss";
-import { Web3Status } from "../../";
+} from './Header.module.scss'
+import { Web3Status } from '../../'
 
 export function Header() {
   return (
@@ -11,5 +11,5 @@ export function Header() {
       <img className={HeaderLogo} src="/img/logo.svg" alt="OnBridge" />
       <Web3Status className={HeaderChainStatus} />
     </div>
-  );
+  )
 }

@@ -80,7 +80,7 @@ export function Gallery() {
   const [change, setChange] = useState(true)
 
   useEffect(() => {
-    getTokensInfo().then(res => {
+    getTokensInfo().then((res) => {
       setTokensList(res)
     })
   }, [change])
@@ -90,7 +90,7 @@ export function Gallery() {
       <Web3Status className={GalleryChainStatus} />
       <div className={GalleryHead}>
         <div className={GalleryHeadTitle}>
-          <img className={GalleryHeadLogo} src={contract.logo} alt='Logo' />
+          <img className={GalleryHeadLogo} src={contract.logo} alt="Logo" />
           {contract.name}
         </div>
         <div className={GalleryHeadCounter}>
