@@ -48,14 +48,14 @@ function TokensList({ tokens, change, setChange }) {
   return (
     <>
       {tokens &&
-        tokens.map(({ token_id, owner, image, chain_id, skill }) => {
+        tokens.map(({ tokenId, owner, image, chainId, skill }) => {
           return (
             <GalleryItem
-              key={token_id}
-              tokenId={token_id}
+              key={tokenId}
+              tokenId={tokenId}
               owner={owner}
               image={image}
-              chainId={chain_id}
+              chainId={chainId}
               skill={skill}
               change={change}
               setCurrentItem={setCurrentItem}
