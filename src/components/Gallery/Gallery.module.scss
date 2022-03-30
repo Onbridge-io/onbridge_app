@@ -1,4 +1,4 @@
-@import "../../scss/variables.scss";
+@import '../../scss/variables.scss';
 
 .Gallery {
   margin: 40px auto;
@@ -9,6 +9,11 @@
   border: 1px solid $border;
   border-radius: 16px;
   max-width: 1200px;
+
+  &Spinner {
+    display: flex;
+    justify-content: center;
+  }
 
   &ChainStatus {
     display: none;

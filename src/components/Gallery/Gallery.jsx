@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-
+import InfiniteScroll from 'react-infinite-scroll-component'
 import Modal from '../TokenInfoPopUp/TokenInfoPopUp'
-
+import Spinner from '../Spiner/Spiner'
 import { getTokensInfo } from '../../api/fetchTokens'
 import {
   Gallery as GalleryStyled,
@@ -11,6 +11,7 @@ import {
   GalleryHeadCounter,
   GalleryGrid,
   GalleryChainStatus,
+  GallerySpinner,
 } from './Gallery.module.scss'
 import { GalleryItem } from './GalleryItem/GalleryItem'
 
@@ -78,11 +79,37 @@ function TokensList({ tokens, change, setChange }) {
 export function Gallery() {
   const [tokensList, setTokensList] = useState([])
   const [change, setChange] = useState(true)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [hasMoreTokens, setHasMoreTokens] = useState(true)
+  const [totalAmountOfTokens, setTotalAmountOfTokens] = useState()
+
+  const fetchMoreTokens = () => {
+    if (tokensList.length >= totalAmountOfTokens) {
+      setHasMoreTokens(false)
+      return
+    }
+
+    getTokensInfo({
+      page: currentPage + 1,
+    })
+      .then(({ results }) => {
+        setCurrentPage((prev) => prev + 1)
+        setTokensList((prevValue) => {
+          return prevValue.concat(results)
+        })
+      })
+      .catch((err) => console.log(err))
+  }
 
   useEffect(() => {
-    getTokensInfo().then((res) => {
-      setTokensList(res)
-    })
+    getTokensInfo()
+      .then((res) => {
+        setCurrentPage(1)
+        setTokensList(res.results)
+        setTotalAmountOfTokens(res.count)
+        setHasMoreTokens(res.results.length < res.count)
+      })
+      .catch((err) => console.log(err))
   }, [change])
 
   return (
@@ -94,13 +121,28 @@ export function Gallery() {
           {contract.name}
         </div>
         <div className={GalleryHeadCounter}>
-          {tokensList && tokensList.length} items
+          {tokensList && totalAmountOfTokens} items
         </div>
       </div>
-
-      <div className={GalleryGrid}>
-        <TokensList tokens={tokensList} setChange={setChange} change={change} />
-      </div>
+      <InfiniteScroll
+        style={{ overflow: 'hidden' }}
+        dataLength={tokensList.length}
+        next={fetchMoreTokens}
+        hasMore={hasMoreTokens}
+        loader={
+          <div className={GallerySpinner}>
+            <Spinner />
+          </div>
+        }
+      >
+        <div className={GalleryGrid}>
+          <TokensList
+            tokens={tokensList}
+            setChange={setChange}
+            change={change}
+          />
+        </div>
+      </InfiniteScroll>
     </div>
   )
 }
