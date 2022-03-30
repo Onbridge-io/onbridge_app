@@ -73,7 +73,7 @@ function Modal({
 
   const { allowedToTransferNetworks } = networks[currentItem.tokensChainId]
   const [bridgeCurrentItemId, setBridgeCurrentItemId] = useState(
-    allowedToTransferNetworks[0]
+    allowedToTransferNetworks[0],
   )
 
   useEffect(() => {
@@ -101,13 +101,13 @@ function Modal({
       setTxLink,
       setIsLoading,
       setConfirmed,
-      bridgeCurrentItemId
+      bridgeCurrentItemId,
     )
   }
 
   const [showBridgeSwitcher, setShowBridgeSwitcher] = useState(false)
   const BridgeSwitcher = ({ items }) => {
-    const listItems = items.map(item => {
+    const listItems = items.map((item) => {
       return (
         <Button
           key={item}
@@ -146,7 +146,7 @@ function Modal({
               <p>{networks[currentItem.tokensChainId].longName}</p>
             </div>
             <div className={ModalChainArrow}>
-              <img src='/img/arrow.svg' alt='transfer-arrow' />
+              <img src="/img/arrow.svg" alt="transfer-arrow" />
             </div>
             <div
               className={ModalChainBlock}
@@ -209,8 +209,8 @@ function Modal({
           <div className={ModalSuccessContainer}>
             <img
               className={ModalSuccessImg}
-              src='/img/success-transaction.svg'
-              alt='Success'
+              src="/img/success-transaction.svg"
+              alt="Success"
             />
 
             <span className={ModalLoadingProcessText}>Successfully!</span>
@@ -232,20 +232,20 @@ function Modal({
             aria-modal
             aria-hidden
             tabIndex={-1}
-            role='dialog'
+            role="dialog"
           >
             <div className={ModalBlock}>
               <div className={ModalCloseButton}>
                 <button
                   className={ModalCloseButtonItem}
                   disabled={isLoading}
-                  data-dismiss='modal'
+                  data-dismiss="modal"
                   onClick={() => {
                     hide()
                     setDisableButtons(false)
                   }}
                 >
-                  <img src='/img/close-modal.svg' alt='close' />
+                  <img src="/img/close-modal.svg" alt="close" />
                 </button>
               </div>
               <div className={ModalContent}>
@@ -274,7 +274,7 @@ function Modal({
             </div>
           </div>
         </React.Fragment>,
-        document.body
+        document.body,
       )
     : null
 }

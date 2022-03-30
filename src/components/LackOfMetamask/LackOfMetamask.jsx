@@ -13,10 +13,10 @@ function LackOfMetamask() {
       <h1 className={LackOfMetamaskHeading}>You need to install Metamask</h1>
       <button className={LackOfMetamaskButton}>
         <a
-          target='_blank'
+          target="_blank"
           className={LackOfMetamaskButtonLink}
-          href='https://metamask.io/'
-          rel='noreferrer'
+          href="https://metamask.io/"
+          rel="noreferrer"
         >
           Install
         </a>
