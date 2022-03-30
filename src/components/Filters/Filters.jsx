@@ -17,11 +17,10 @@ import {
   FiltersMenuButton,
   FiltersMenuButtonContent,
 } from './Filters.module.scss'
-export default function Filters() {
+export default function Filters({ firstFilterChain, setFirstFilterChain }) {
   const [firstChainMenuVisible, setFirstChainVisible] = useState(false)
   const [secondChainMenuVisible, setSecondChainVisible] = useState(false)
 
-  const [firstFilterChain, setFirstFilterChain] = useState(L1ChainIds[0])
   const [secondFilterChain, setSecondFilterChain] = useState(L2ChainIds[0])
 
   const firstChainMenuClassNames = classnames(FiltersMenu, {
@@ -194,6 +193,7 @@ export default function Filters() {
                       key={id}
                       onClick={() => {
                         setSecondFilterChain(id)
+                        setSecondChainVisible(false)
                       }}
                       className={FiltersMenuButton}
                     >
