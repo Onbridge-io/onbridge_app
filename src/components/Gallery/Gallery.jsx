@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import classnames from 'classnames'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import Modal from '../TokenInfoPopUp/TokenInfoPopUp'
 import Spinner from '../Spiner/Spiner'
@@ -15,6 +16,10 @@ import {
   GalleryGrid,
   GalleryChainStatus,
   GallerySpinner,
+  GalleryCheckboxWrapper,
+  GalleryCheckboxActive,
+  GalleryCheckboxContainer,
+  GalleryCheckbox,
 } from './Gallery.module.scss'
 import { GalleryItem } from './GalleryItem/GalleryItem'
 import Filters from '../Filters/Filters'
@@ -86,8 +91,14 @@ export function Gallery() {
   const [currentPage, setCurrentPage] = useState(1)
   const [hasMoreTokens, setHasMoreTokens] = useState(true)
   const [totalAmountOfTokens, setTotalAmountOfTokens] = useState()
-  const { chainId } = useWeb3React()
+  const { chainId, account } = useWeb3React()
   const [firstFilterChain, setFirstFilterChain] = useState(L1ChainIds[0])
+  const [accountFilter, setAccountFilter] = useState('')
+  const [onlyOwnerChecked, setOnlyOwnerChecked] = useState(false)
+
+  const checkboxClassNames = classnames(GalleryCheckbox, {
+    [GalleryCheckboxActive]: onlyOwnerChecked,
+  })
 
   const fetchMoreTokens = () => {
     if (tokensList.length >= totalAmountOfTokens) {
@@ -98,6 +109,7 @@ export function Gallery() {
     getTokensInfo({
       page: currentPage + 1,
       chainId: firstFilterChain,
+      account: accountFilter,
     })
       .then(({ results }) => {
         setCurrentPage((prev) => prev + 1)
@@ -109,7 +121,7 @@ export function Gallery() {
   }
 
   useEffect(() => {
-    getTokensInfo({ chainId: firstFilterChain })
+    getTokensInfo({ chainId: firstFilterChain, account: accountFilter })
       .then((res) => {
         setCurrentPage(1)
         setTokensList(res.results)
@@ -117,13 +129,21 @@ export function Gallery() {
         setHasMoreTokens(res.results.length < res.count)
       })
       .catch((err) => console.log(err))
-  }, [change, firstFilterChain])
+  }, [change, firstFilterChain, accountFilter])
 
   useEffect(() => {
     if (supportedChainIds.includes(chainId)) {
       setFirstFilterChain(chainId)
     }
   }, [chainId])
+
+  useEffect(() => {
+    if (account && onlyOwnerChecked) {
+      setAccountFilter(account)
+    } else if (account && !onlyOwnerChecked) {
+      setAccountFilter('')
+    }
+  }, [onlyOwnerChecked, account])
 
   return (
     <>
@@ -140,6 +160,17 @@ export function Gallery() {
           </div>
           <div className={GalleryHeadCounter}>
             {tokensList && totalAmountOfTokens} items
+          </div>
+          <div className={GalleryCheckboxContainer}>
+            Show only your tokens
+            <div
+              className={GalleryCheckboxWrapper}
+              onClick={() => {
+                setOnlyOwnerChecked(!onlyOwnerChecked)
+              }}
+            >
+              <div className={checkboxClassNames}></div>
+            </div>
           </div>
         </div>
         <InfiniteScroll
