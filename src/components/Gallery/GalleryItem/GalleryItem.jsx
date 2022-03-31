@@ -87,7 +87,7 @@ export function GalleryItem({
           </div>
           <Button
             className={buttonClassNames}
-            disabled={isShowing}
+            disabled={isShowing || !account || owner !== account}
             onClick={() => {
               setCurrentItem({
                 tokenId,

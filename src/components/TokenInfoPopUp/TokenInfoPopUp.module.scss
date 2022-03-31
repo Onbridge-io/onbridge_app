@@ -25,13 +25,12 @@
 
 .ModalBlock {
   font-family: $main-font;
-  max-height: 550px;
   background: white;
   position: relative;
-  top: 20%;
+  top: 15%;
   margin: 0 auto;
   border-radius: 16px;
-  max-width: 1200px;
+  max-width: 900px;
   padding: 32px;
   border: 1px solid #373839;
   background: linear-gradient(180deg, #22252c 0%, #202329 104.84%);
@@ -41,6 +40,7 @@
   display: flex;
   justify-content: space-between;
   gap: 32px;
+  align-items: flex-start;
 }
 
 .ModalInfoTransfer {
@@ -51,6 +51,7 @@
   padding: 42px 30px 32px 30px;
   max-width: 552px;
   flex-grow: 1;
+  align-self: stretch;
 }
 
 .ModalInfoTransfer::before {
@@ -101,6 +102,25 @@
   mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
+}
+
+.ModalPrice {
+  font-family: $main-font;
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 44px;
+  letter-spacing: 0.01em;
+  text-align: center;
+}
+.ModalPriceDescription {
+  font-family: $main-font;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 23px;
+  letter-spacing: 0.01em;
+  text-align: center;
+  color: #7f8084;
+  margin-bottom: 15px;
 }
 
 .ModalLoadingWrapper {
@@ -172,7 +192,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 32px;
 }
 
 .ModalInfoApproveText {
@@ -180,6 +199,7 @@
   line-height: 150%;
   text-align: center;
   letter-spacing: 0.01em;
+  margin-bottom: 15px;
 }
 
 .ModalApproveButton {
