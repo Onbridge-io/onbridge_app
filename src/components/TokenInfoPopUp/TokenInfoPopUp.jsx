@@ -31,6 +31,8 @@ import {
   ModalSuccessContainer,
   ModalCloseButtonItem,
   ModalOtherNetworks,
+  ModalPrice,
+  ModalPriceDescription,
 } from './TokenInfoPopUp.module.scss'
 import {
   NetworksMenuButton,
@@ -72,20 +74,30 @@ function Modal({
   }, [confirmed])
 
   const { allowedToTransferNetworks } = networks[currentItem.tokensChainId]
-  const [bridgeCurrentItemId, setBridgeCurrentItemId] = useState(
-    allowedToTransferNetworks[0],
-  )
+  const [bridgeCurrentItemId, setBridgeCurrentItemId] = useState()
+  const [bridgeCurrentPrice, setBridgeCurrentPrice] = useState('')
 
   useEffect(() => {
     setBridgeCurrentItemId(allowedToTransferNetworks[0])
   }, [allowedToTransferNetworks])
+
+  useEffect(() => {
+    if (bridgeCurrentItemId) {
+      setBridgeCurrentPrice(
+        networks[currentItem.tokensChainId].brigingPrice[bridgeCurrentItemId]
+          .value,
+      )
+    }
+  }, [bridgeCurrentItemId])
 
   const linkToTxDetails =
     Number(currentItem.tokensChainId) === 42
       ? 'https://kovan.etherscan.io/tx/'
       : 'https://testnet.bscscan.com/tx/'
 
-  const bridgeInfoChainText = networks[bridgeCurrentItemId].longName
+  const bridgeInfoChainText = networks[bridgeCurrentItemId]
+    ? networks[bridgeCurrentItemId].longName
+    : ''
   const bridgeHandler = () => {
     setDisableButtons(true)
     setIsLoading(true)
@@ -169,7 +181,18 @@ function Modal({
           <div className={ModalInfoApprove}>
             <p className={ModalInfoApproveText}>
               Approve and bridging token to another network. The stages of
-              bridging will be shown here
+              bridging will be shown here.
+            </p>
+            <p className={ModalPrice}>
+              {bridgeCurrentPrice}{' '}
+              {networks[currentItem.tokensChainId].params.nativeCurrency.symbol}
+            </p>
+            <p className={ModalPriceDescription}>Price per translation</p>
+            <p className={ModalInfoApproveText}>
+              The amount payable is estimated. You will pay at least{' '}
+              {bridgeCurrentPrice}{' '}
+              {networks[currentItem.tokensChainId].params.nativeCurrency.symbol}{' '}
+              or the transaction will be rolled back
             </p>
             <Button
               disabled={disableButtons || chainId !== currentItem.tokensChainId}
@@ -261,15 +284,6 @@ function Modal({
                 <div className={ModalInfoTransfer}>
                   <InfoTransfer />
                 </div>
-                <GalleryItem
-                  tokenId={currentItem.tokenId}
-                  owner={currentItem.owner}
-                  image={currentItem.image}
-                  chainId={bridgeCurrentItemId}
-                  skill={currentItem.skill}
-                  change={change}
-                  isShowing={isShowing}
-                />
               </div>
             </div>
           </div>

@@ -18,12 +18,12 @@
 
   &Disabled {
     background-color: $disabled-text;
-    color: $secondary-text;
+    color: #1e2126;
     cursor: not-allowed;
 
     &:hover {
       background-color: $disabled-text;
-      color: $secondary-text;
+      color: #1e2126;
     }
   }
 }
