@@ -2,13 +2,21 @@
 
 .Filters {
   margin: 40px auto;
-  display: grid;
+  display: flex;
   justify-content: space-between;
   justify-items: center;
-  gap: 32px 70px;
-  grid-template-columns: repeat(2, minmax(160px, 1fr));
   position: relative;
   max-width: 1200px;
+  width: 100%;
+
+  &Chain {
+    display: none !important;
+
+    &Active {
+      display: block;
+      margin-left: 40px;
+    }
+  }
 
   &Item {
     border-radius: 16px;
@@ -82,11 +90,6 @@
       gap: 8px;
     }
   }
-
-  &Arrows {
-    position: absolute;
-    top: 40px;
-  }
 }
 
 @media (max-width: 768px) {
@@ -111,9 +114,6 @@
         width: 40px;
         height: 40px;
       }
-    }
-    &Arrows {
-      top: 75px;
     }
   }
 }

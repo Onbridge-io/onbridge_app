@@ -4,7 +4,6 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import Modal from '../TokenInfoPopUp/TokenInfoPopUp'
 import Spinner from '../Spiner/Spiner'
 import { useWeb3React } from '@web3-react/core'
-import { L1ChainIds, supportedChainIds } from '../../constants'
 
 import { getTokensInfo } from '../../api/fetchTokens'
 import {
@@ -92,10 +91,14 @@ export function Gallery() {
   const [hasMoreTokens, setHasMoreTokens] = useState(true)
   const [totalAmountOfTokens, setTotalAmountOfTokens] = useState()
   const { chainId, account } = useWeb3React()
-  const [firstFilterChain, setFirstFilterChain] = useState(L1ChainIds[0])
   const [accountFilter, setAccountFilter] = useState('')
   const [onlyOwnerChecked, setOnlyOwnerChecked] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
+  const [chainChecked, setChainChecked] = useState({
+    42: true,
+    97: true,
+    80001: true,
+  })
 
   const checkboxClassNames = classnames(GalleryCheckbox, {
     [GalleryCheckboxActive]: onlyOwnerChecked,
@@ -109,8 +112,8 @@ export function Gallery() {
 
     getTokensInfo({
       page: currentPage + 1,
-      chainId: firstFilterChain,
       account: accountFilter,
+      chains: chainChecked,
     })
       .then(({ results }) => {
         setCurrentPage((prev) => prev + 1)
@@ -123,7 +126,7 @@ export function Gallery() {
 
   useEffect(() => {
     setIsLoading(true)
-    getTokensInfo({ chainId: firstFilterChain, account: accountFilter })
+    getTokensInfo({ account: accountFilter, chains: chainChecked })
       .then((res) => {
         setCurrentPage(1)
         setIsLoading(false)
@@ -132,13 +135,7 @@ export function Gallery() {
         setHasMoreTokens(res.results.length < res.count)
       })
       .catch((err) => console.log(err))
-  }, [change, firstFilterChain, accountFilter])
-
-  useEffect(() => {
-    if (supportedChainIds.includes(chainId)) {
-      setFirstFilterChain(chainId)
-    }
-  }, [chainId])
+  }, [change, chainChecked, chainId, accountFilter])
 
   useEffect(() => {
     if (account && onlyOwnerChecked) {
@@ -150,10 +147,7 @@ export function Gallery() {
 
   return (
     <>
-      <Filters
-        firstFilterChain={firstFilterChain}
-        setFirstFilterChain={setFirstFilterChain}
-      />
+      <Filters chainChecked={chainChecked} setChainChecked={setChainChecked} />
       <div className={GalleryStyled}>
         <Web3Status className={GalleryChainStatus} />
         <div className={GalleryHead}>
