@@ -89,6 +89,9 @@
 
     &Head {
       margin-top: 12px;
+      flex-direction: column;
+      min-height: 150px;
+      align-items: flex-start;
     }
   }
 }

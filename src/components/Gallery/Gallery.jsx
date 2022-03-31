@@ -95,6 +95,7 @@ export function Gallery() {
   const [firstFilterChain, setFirstFilterChain] = useState(L1ChainIds[0])
   const [accountFilter, setAccountFilter] = useState('')
   const [onlyOwnerChecked, setOnlyOwnerChecked] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   const checkboxClassNames = classnames(GalleryCheckbox, {
     [GalleryCheckboxActive]: onlyOwnerChecked,
@@ -121,9 +122,11 @@ export function Gallery() {
   }
 
   useEffect(() => {
+    setIsLoading(true)
     getTokensInfo({ chainId: firstFilterChain, account: accountFilter })
       .then((res) => {
         setCurrentPage(1)
+        setIsLoading(false)
         setTokensList(res.results)
         setTotalAmountOfTokens(res.count)
         setHasMoreTokens(res.results.length < res.count)
@@ -159,7 +162,7 @@ export function Gallery() {
             {contract.name}
           </div>
           <div className={GalleryHeadCounter}>
-            {tokensList && totalAmountOfTokens} items
+            {tokensList && !isLoading ? totalAmountOfTokens : ''} items
           </div>
           <div className={GalleryCheckboxContainer}>
             Show only your tokens
@@ -173,25 +176,31 @@ export function Gallery() {
             </div>
           </div>
         </div>
-        <InfiniteScroll
-          style={{ overflow: 'hidden' }}
-          dataLength={tokensList.length}
-          next={fetchMoreTokens}
-          hasMore={hasMoreTokens}
-          loader={
-            <div className={GallerySpinner}>
-              <Spinner />
-            </div>
-          }
-        >
-          <div className={GalleryGrid}>
-            <TokensList
-              tokens={tokensList}
-              setChange={setChange}
-              change={change}
-            />
+        {isLoading ? (
+          <div className={GallerySpinner}>
+            <Spinner />
           </div>
-        </InfiniteScroll>
+        ) : (
+          <InfiniteScroll
+            style={{ overflow: 'hidden' }}
+            dataLength={tokensList.length}
+            next={fetchMoreTokens}
+            hasMore={hasMoreTokens}
+            loader={
+              <div className={GallerySpinner}>
+                <Spinner />
+              </div>
+            }
+          >
+            <div className={GalleryGrid}>
+              <TokensList
+                tokens={tokensList}
+                setChange={setChange}
+                change={change}
+              />
+            </div>
+          </InfiniteScroll>
+        )}
       </div>
     </>
   )
