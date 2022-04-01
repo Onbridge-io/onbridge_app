@@ -1,4 +1,4 @@
-@import "../../../scss/variables.scss";
+@import '../../../scss/variables.scss';
 
 .Header {
   padding: 23px;
@@ -13,14 +13,11 @@
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 768px) {
   .Header {
+    padding: 10px 0;
     &Logo {
       max-width: 124px;
-    }
-
-    &ChainStatus {
-      display: none;
     }
   }
 }

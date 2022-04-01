@@ -13,7 +13,6 @@ import {
   GalleryHeadLogo,
   GalleryHeadCounter,
   GalleryGrid,
-  GalleryChainStatus,
   GallerySpinner,
   GalleryCheckboxWrapper,
   GalleryCheckboxActive,
@@ -24,7 +23,6 @@ import { GalleryItem } from './GalleryItem/GalleryItem'
 import Filters from '../Filters/Filters'
 
 import useModal from '../../utils/hooks/useModal'
-import { Web3Status } from '..'
 
 const fakeData = {
   contract: {
@@ -140,16 +138,19 @@ export function Gallery() {
   useEffect(() => {
     if (account && onlyOwnerChecked) {
       setAccountFilter(account)
-    } else if (account && !onlyOwnerChecked) {
+    } else {
       setAccountFilter('')
     }
   }, [onlyOwnerChecked, account])
+
+  useEffect(() => {
+    setOnlyOwnerChecked(false)
+  }, [account, chainId])
 
   return (
     <>
       <Filters chainChecked={chainChecked} setChainChecked={setChainChecked} />
       <div className={GalleryStyled}>
-        <Web3Status className={GalleryChainStatus} />
         <div className={GalleryHead}>
           <div className={GalleryHeadTitle}>
             <img className={GalleryHeadLogo} src={contract.logo} alt="Logo" />
@@ -163,7 +164,9 @@ export function Gallery() {
             <div
               className={GalleryCheckboxWrapper}
               onClick={() => {
-                setOnlyOwnerChecked(!onlyOwnerChecked)
+                if (account) {
+                  setOnlyOwnerChecked(!onlyOwnerChecked)
+                }
               }}
             >
               <div className={checkboxClassNames}></div>
