@@ -1,10 +1,10 @@
-const Spinner = () => {
+const Spinner = ({ width, height }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       version="1.0"
-      width="64px"
-      height="64px"
+      width={width || '64px'}
+      height={height || '64px'}
       viewBox="0 0 128 128"
       xml="preserve"
     >

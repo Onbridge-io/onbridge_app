@@ -1,0 +1,58 @@
+@import '../../../scss/variables.scss';
+
+.GalleryItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: $card-bg;
+  border-radius: 16px;
+  overflow: hidden;
+  width: 260px;
+  height: 100%;
+
+  &Wrapper {
+    padding: 1px;
+    border-radius: 16px;
+    background: linear-gradient(
+      122.82deg,
+      rgba(112, 241, 217, 0.7) 0.61%,
+      rgba(112, 241, 217, 0.2) 76.92%
+    );
+  }
+
+  &Picture {
+    width: 100% !important;
+    height: 384px !important;
+    color: #7f8084 !important;
+  }
+
+  &Network {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 12px;
+    right: 10px;
+  }
+
+  &Button {
+    padding: 10px 20px;
+    width: 100%;
+    position: relative;
+
+    &Info {
+      color: #3e7e00;
+      display: block;
+      font-style: italic;
+      font-size: 16px;
+    }
+  }
+  &ButtonsContainer {
+    margin: 0 16px 16px;
+    border-top: 1px solid $border;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-grow: 1;
+    justify-content: center;
+  }
+}
