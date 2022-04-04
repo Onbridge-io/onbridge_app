@@ -28,7 +28,7 @@
   }
 
   &Info {
-    margin: 20px 16px;
+    margin: 20px 16px 0;
 
     &Head {
       position: relative;
@@ -101,5 +101,20 @@
     &Disabled {
       display: none;
     }
+
+    &Info {
+      color: #3e7e00;
+      display: block;
+      font-style: italic;
+      font-size: 16px;
+    }
+  }
+  &ButtonsContainer {
+    margin: 0 16px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-grow: 1;
+    justify-content: center;
   }
 }

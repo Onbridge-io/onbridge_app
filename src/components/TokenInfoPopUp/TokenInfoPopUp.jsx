@@ -30,14 +30,9 @@ import {
   ModalSuccessImg,
   ModalSuccessContainer,
   ModalCloseButtonItem,
-  ModalOtherNetworks,
   ModalPrice,
   ModalPriceDescription,
 } from './TokenInfoPopUp.module.scss'
-import {
-  NetworksMenuButton,
-  NetworksMenuButtonContent,
-} from '../Web3Status/Web3Status.module.scss'
 import Spiner from '../Spiner/Spiner'
 
 const networksLogos = {
@@ -73,22 +68,9 @@ function Modal({
     }, 8000)
   }, [confirmed])
 
-  const { allowedToTransferNetworks } = networks[currentItem.tokensChainId]
-  const [bridgeCurrentItemId, setBridgeCurrentItemId] = useState()
-  const [bridgeCurrentPrice, setBridgeCurrentPrice] = useState('')
-
-  useEffect(() => {
-    setBridgeCurrentItemId(allowedToTransferNetworks[0])
-  }, [allowedToTransferNetworks])
-
-  useEffect(() => {
-    if (bridgeCurrentItemId) {
-      setBridgeCurrentPrice(
-        networks[currentItem.tokensChainId].brigingPrice[bridgeCurrentItemId]
-          .value,
-      )
-    }
-  }, [bridgeCurrentItemId])
+  const bridgeCurrentItemId = currentItem.transferChainId
+  const bridgeCurrentPrice =
+    networks[currentItem.tokensChainId].brigingPrice[bridgeCurrentItemId].value
 
   const linkToTxDetails =
     Number(currentItem.tokensChainId) === 42
@@ -117,33 +99,6 @@ function Modal({
     )
   }
 
-  const [showBridgeSwitcher, setShowBridgeSwitcher] = useState(false)
-  const BridgeSwitcher = ({ items }) => {
-    const listItems = items.map((item) => {
-      return (
-        <Button
-          key={item}
-          className={NetworksMenuButton}
-          onClick={() => {
-            setBridgeCurrentItemId(item)
-          }}
-        >
-          <div className={NetworksMenuButtonContent}>
-            <img
-              src={networksLogos[item]}
-              alt={networks[item].name}
-              width={40}
-              height={40}
-            />
-            <span>{networks[item].name}</span>
-          </div>
-        </Button>
-      )
-    })
-
-    return <div className={ModalOtherNetworks}>{listItems}</div>
-  }
-
   const InfoTransfer = () => {
     if (!isLoading && !confirmed) {
       return (
@@ -160,22 +115,12 @@ function Modal({
             <div className={ModalChainArrow}>
               <img src="/img/arrow.svg" alt="transfer-arrow" />
             </div>
-            <div
-              className={ModalChainBlock}
-              onClick={() => {
-                if (allowedToTransferNetworks.length > 1) {
-                  setShowBridgeSwitcher(!showBridgeSwitcher)
-                }
-              }}
-            >
+            <div className={ModalChainBlock}>
               <img
-                src={networksLogos[bridgeCurrentItemId]}
-                alt={bridgeInfoChainText}
+                src={networksLogos[currentItem.transferChainId]}
+                alt={networks[currentItem.transferChainId].longName}
               />
-              <p>{bridgeInfoChainText}</p>
-              {showBridgeSwitcher && (
-                <BridgeSwitcher items={allowedToTransferNetworks} />
-              )}
+              <p>{networks[currentItem.transferChainId].longName}</p>
             </div>
           </div>
           <div className={ModalInfoApprove}>
