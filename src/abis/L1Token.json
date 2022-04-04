@@ -168,19 +168,6 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "MINTER_ROLE",
-    "outputs": [
-      {
-        "internalType": "bytes32",
-        "name": "",
-        "type": "bytes32"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "address",
@@ -340,11 +327,6 @@
         "internalType": "address",
         "name": "to",
         "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "mintIndex",
-        "type": "uint256"
       }
     ],
     "name": "mint",

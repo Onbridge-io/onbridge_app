@@ -17,6 +17,7 @@ import {
   GallerySpinner,
 } from './Gallery.module.scss'
 import { GalleryItem } from './GalleryItem/GalleryItem'
+import { GalleryMintItem } from './GalleryMintItem/GalleryMintItem'
 import Filters from '../Filters/Filters'
 
 import useModal from '../../utils/hooks/useModal'
@@ -172,6 +173,11 @@ export function Gallery() {
                 }
               >
                 <div className={GalleryGrid}>
+                  <GalleryMintItem
+                    totalAmountOfTokens={totalAmountOfTokens}
+                    chainId={chainId}
+                    setChange={setChange}
+                  />
                   <TokensList
                     tokens={tokensList}
                     setChange={setChange}
