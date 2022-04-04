@@ -3,8 +3,8 @@
     "blockExplorer": "https://kovan.etherscan.io/",
     "name": "Kovan",
     "longName": "Ethereum Mainnet",
-    "tokenAddress": "0x8f6F308cf3eF669FdFe50Aa0f9821Fd7d7bEaFBa",
-    "bridgeAddress": "0x7fFa003feA2698F0e15638172eb531E99080F290",
+    "tokenAddress": "0xf2391B61D7CC9Bb31D8BeC8Df7d05B3B5Dd97939",
+    "bridgeAddress": "0x5EE16fBe8f8dBB2bb39f3ac2319bE891c2685EA4",
     "params": {
       "chainId": "0x2A",
       "chainName": "kovan eth",
@@ -30,8 +30,8 @@
     "blockExplorer": "https://testnet.bscscan.com/",
     "name": "BSC",
     "longName": "Binance Smart Chain",
-    "tokenAddress": "0xe73bbf24E886c12B1a56Ebcc216015F542FF394D",
-    "bridgeAddress": "0x923e82348C9aDD1661c7Cd5889DA0f59644B599f",
+    "tokenAddress": "0xbceEEA68fC0E50e0DE2e5473dE23CED1a7397629",
+    "bridgeAddress": "0xcA2DaaDAD22BD98c020481A360344B31cD63251e",
     "params": {
       "chainId": "0x61",
       "chainName": "BSC Testnet",
@@ -59,8 +59,8 @@
     "blockExplorer": "https://mumbai.polygonscan.com/",
     "name": "Polygon",
     "longName": "Polygon",
-    "tokenAddress": "0x5d3edd90bABB74EA44f79f81baBa9daB8c39fe81",
-    "bridgeAddress": "0x7982c4790fe89aAc379C7489B3ecE367c9af09Bd",
+    "tokenAddress": "0xeddB5E4b1199Cc409eaFB98EcF1D7f2b18fA51Af",
+    "bridgeAddress": "0x89903eDda80616c9fC0bc01dE408eB8AfC75f09d",
     "params": {
       "chainId": "0x13881",
       "chainName": "Polygon Mumbai",
