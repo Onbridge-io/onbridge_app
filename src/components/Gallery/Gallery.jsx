@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import classnames from 'classnames'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import Modal from '../TokenInfoPopUp/TokenInfoPopUp'
 import Spinner from '../Spiner/Spiner'
@@ -8,6 +7,7 @@ import { useWeb3React } from '@web3-react/core'
 import { getTokensInfo } from '../../api/fetchTokens'
 import {
   Gallery as GalleryStyled,
+  GalleryInfo,
   GalleryHead,
   GalleryHeadTitle,
   GalleryHeadLogo,
@@ -15,10 +15,6 @@ import {
   GalleryGrid,
   GalleryChainStatus,
   GallerySpinner,
-  GalleryCheckboxWrapper,
-  GalleryCheckboxActive,
-  GalleryCheckboxContainer,
-  GalleryCheckbox,
 } from './Gallery.module.scss'
 import { GalleryItem } from './GalleryItem/GalleryItem'
 import Filters from '../Filters/Filters'
@@ -50,6 +46,7 @@ function TokensList({ tokens, change, setChange }) {
     skill: 0,
     tokenId: 0,
     tokensChainId: 97,
+    transferChainId: 42,
     image: '',
   })
   const { isShowing, toggle } = useModal()
@@ -91,17 +88,11 @@ export function Gallery() {
   const [hasMoreTokens, setHasMoreTokens] = useState(true)
   const [totalAmountOfTokens, setTotalAmountOfTokens] = useState()
   const { chainId, account } = useWeb3React()
-  const [accountFilter, setAccountFilter] = useState('')
-  const [onlyOwnerChecked, setOnlyOwnerChecked] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [chainChecked, setChainChecked] = useState({
     42: true,
     97: true,
     80001: true,
-  })
-
-  const checkboxClassNames = classnames(GalleryCheckbox, {
-    [GalleryCheckboxActive]: onlyOwnerChecked,
   })
 
   const fetchMoreTokens = () => {
@@ -112,7 +103,7 @@ export function Gallery() {
 
     getTokensInfo({
       page: currentPage + 1,
-      account: accountFilter,
+      account: account,
       chains: chainChecked,
     })
       .then(({ results }) => {
@@ -126,7 +117,7 @@ export function Gallery() {
 
   useEffect(() => {
     setIsLoading(true)
-    getTokensInfo({ account: accountFilter, chains: chainChecked })
+    getTokensInfo({ account: account, chains: chainChecked })
       .then((res) => {
         setCurrentPage(1)
         setIsLoading(false)
@@ -135,67 +126,63 @@ export function Gallery() {
         setHasMoreTokens(res.results.length < res.count)
       })
       .catch((err) => console.log(err))
-  }, [change, chainChecked, chainId, accountFilter])
-
-  useEffect(() => {
-    if (account && onlyOwnerChecked) {
-      setAccountFilter(account)
-    } else if (account && !onlyOwnerChecked) {
-      setAccountFilter('')
-    }
-  }, [onlyOwnerChecked, account])
+  }, [change, chainChecked, chainId, account])
 
   return (
     <>
-      <Filters chainChecked={chainChecked} setChainChecked={setChainChecked} />
-      <div className={GalleryStyled}>
-        <Web3Status className={GalleryChainStatus} />
-        <div className={GalleryHead}>
-          <div className={GalleryHeadTitle}>
-            <img className={GalleryHeadLogo} src={contract.logo} alt="Logo" />
-            {contract.name}
-          </div>
-          <div className={GalleryHeadCounter}>
-            {tokensList && !isLoading ? totalAmountOfTokens : ''} items
-          </div>
-          <div className={GalleryCheckboxContainer}>
-            Show only your tokens
-            <div
-              className={GalleryCheckboxWrapper}
-              onClick={() => {
-                setOnlyOwnerChecked(!onlyOwnerChecked)
-              }}
-            >
-              <div className={checkboxClassNames}></div>
-            </div>
-          </div>
+      {!account ? (
+        <div className={GalleryStyled}>
+          <p className={GalleryInfo}>Please connect your wallet to proceed</p>
         </div>
-        {isLoading ? (
-          <div className={GallerySpinner}>
-            <Spinner />
-          </div>
-        ) : (
-          <InfiniteScroll
-            style={{ overflow: 'hidden' }}
-            dataLength={tokensList.length}
-            next={fetchMoreTokens}
-            hasMore={hasMoreTokens}
-            loader={
+      ) : (
+        <>
+          <Filters
+            chainChecked={chainChecked}
+            setChainChecked={setChainChecked}
+          />
+          <div className={GalleryStyled}>
+            <Web3Status className={GalleryChainStatus} />
+            <div className={GalleryHead}>
+              <div className={GalleryHeadTitle}>
+                <img
+                  className={GalleryHeadLogo}
+                  src={contract.logo}
+                  alt="Logo"
+                />
+                {contract.name}
+              </div>
+              <div className={GalleryHeadCounter}>
+                {tokensList && !isLoading ? totalAmountOfTokens : ''} items
+              </div>
+            </div>
+            {isLoading ? (
               <div className={GallerySpinner}>
                 <Spinner />
               </div>
-            }
-          >
-            <div className={GalleryGrid}>
-              <TokensList
-                tokens={tokensList}
-                setChange={setChange}
-                change={change}
-              />
-            </div>
-          </InfiniteScroll>
-        )}
-      </div>
+            ) : (
+              <InfiniteScroll
+                style={{ overflow: 'hidden' }}
+                dataLength={tokensList.length}
+                next={fetchMoreTokens}
+                hasMore={hasMoreTokens}
+                loader={
+                  <div className={GallerySpinner}>
+                    <Spinner />
+                  </div>
+                }
+              >
+                <div className={GalleryGrid}>
+                  <TokensList
+                    tokens={tokensList}
+                    setChange={setChange}
+                    change={change}
+                  />
+                </div>
+              </InfiniteScroll>
+            )}
+          </div>
+        </>
+      )}
     </>
   )
 }

@@ -24,6 +24,9 @@
         "value": 0.03,
         "debridgeValue": 0.01
       }
+    },
+    "rewardPrice": {
+      "97": 10
     }
   },
   "97": {
@@ -53,6 +56,10 @@
         "value": 0.03,
         "debridgeValue": 0.01
       }
+    },
+    "rewardPrice": {
+      "42": 10,
+      "80001": 10
     }
   },
   "80001": {
@@ -78,6 +85,9 @@
         "value": 0.3,
         "debridgeValue": 0.1
       }
+    },
+    "rewardPrice": {
+      "97": 10
     }
   }
 }

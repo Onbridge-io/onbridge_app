@@ -16,7 +16,9 @@ import {
   GalleryItemSpecValue,
   GalleryItemSpecValueLink,
   GalleryItemButton,
+  GalleryItemButtonInfo,
   GalleryItemButtonDisabled,
+  GalleryItemButtonsContainer,
 } from './GalleryItem.module.scss'
 
 import { shortenAddress } from '../../../utils/web3'
@@ -40,6 +42,7 @@ export function GalleryItem({
   isShowing,
 }) {
   const { account } = useWeb3React()
+  const { allowedToTransferNetworks } = Networks[tokensChainId]
   const buttonClassNames = classnames(GalleryItemButton, {
     [GalleryItemButtonDisabled]: isShowing,
   })
@@ -85,23 +88,33 @@ export function GalleryItem({
               </div>
             </div>
           </div>
-          <Button
-            className={buttonClassNames}
-            disabled={isShowing || !account || owner !== account}
-            onClick={() => {
-              setCurrentItem({
-                tokenId,
-                owner,
-                skill,
-                change,
-                tokensChainId,
-                image,
-              })
-              toggleModal()
-            }}
-          >
-            Bridge
-          </Button>
+        </div>
+        <div className={GalleryItemButtonsContainer}>
+          {allowedToTransferNetworks.map((item) => {
+            return (
+              <Button
+                key={item}
+                className={buttonClassNames}
+                onClick={() => {
+                  setCurrentItem({
+                    tokenId,
+                    owner,
+                    skill,
+                    change,
+                    tokensChainId,
+                    image,
+                    transferChainId: item,
+                  })
+                  toggleModal()
+                }}
+              >
+                Bridge to {Networks[item].name}
+                <span className={GalleryItemButtonInfo}>
+                  +{Networks[tokensChainId].rewardPrice[item]} ONB
+                </span>
+              </Button>
+            )
+          })}
         </div>
       </div>
     </div>
