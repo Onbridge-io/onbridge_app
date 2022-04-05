@@ -6,10 +6,10 @@ import {
   MainWrapperContent,
 } from './MainWrapper.module.scss'
 
-export function MainWrapper({ children }) {
+export function MainWrapper({ setCurrentPage, currentPage, children }) {
   return (
     <div className={MainWrapperStyled}>
-      <Header />
+      <Header currentPage={currentPage} setCurrentPage={setCurrentPage} />
       <div className={MainWrapperContent}>{children}</div>
       <Footer />
     </div>

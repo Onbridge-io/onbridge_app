@@ -36,6 +36,7 @@ export default function Filters({ chainChecked, setChainChecked }) {
 
   const handleCloseFilters = useCallback((event) => {
     if (
+      filter.current &&
       !Array.from(filter.current.getElementsByTagName('*')).includes(
         event.target,
       )
