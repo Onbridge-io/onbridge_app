@@ -1,10 +1,35 @@
+import { useWeb3React } from '@web3-react/core'
+import FileCopyIcon from '@mui/icons-material/FileCopy'
+import CheckIcon from '@mui/icons-material/Check'
+import classnames from 'classnames'
+import { useCopyToClipboard } from '../../../utils/hooks/useCopyToClipboard'
 import {
   Footer as FooterStyled,
   FooterIcons,
   FooterCoopyright,
+  FooterLink,
+  FooterLinkContainer,
+  FooterLinkInput,
+  FooterLinkButton,
+  FooterLinkButtonSuccess,
 } from './Footer.module.scss'
 
+const host = window.location.origin
+
 export function Footer() {
+  const { account } = useWeb3React()
+  const referralLink = `${host}/${account}`
+
+  const [
+    referralLinkCopied,
+    copyReferralLink,
+    referralLinkRef,
+  ] = useCopyToClipboard()
+
+  const buttonClassNames = classnames(FooterLinkButton, {
+    [FooterLinkButtonSuccess]: referralLinkCopied,
+  })
+
   return (
     <div className={FooterStyled}>
       <div>
@@ -33,6 +58,25 @@ export function Footer() {
         </div>
         <div className={FooterCoopyright}>
           <p>Incubated by Binance. Supported by Polygon.</p>
+          <div className={FooterLink}>
+            Your Referral Link:
+            <div className={FooterLinkContainer}>
+              <input
+                ref={referralLinkRef}
+                className={FooterLinkInput}
+                type="text"
+                value={referralLink}
+                readOnly
+              />
+              <button onClick={copyReferralLink} className={buttonClassNames}>
+                {referralLinkCopied ? (
+                  <CheckIcon style={{ color: '#44db77' }} fontSize="small" />
+                ) : (
+                  <FileCopyIcon fontSize="small" />
+                )}
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
