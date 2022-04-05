@@ -1,4 +1,4 @@
-@import "../../../scss/variables.scss";
+@import '../../../scss/variables.scss';
 
 .Header {
   padding: 23px;
@@ -10,6 +10,40 @@
   &ChainStatus {
     display: flex;
     align-items: center;
+  }
+
+  &List {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    align-self: flex-end;
+    
+    &Item {
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 18px;
+      letter-spacing: 0.01em;
+      text-align: center;
+      position: relative;
+      padding: 10px 20px;
+      cursor: pointer;
+      text-decoration: none;
+      &Active {
+        color: #9e57e4;
+      }
+      &Active::before {
+        content: '';
+        position: absolute;
+
+        left: 0;
+        right: 0;
+        bottom: -25px;
+        height: 4px;
+        width: 100%;
+        background: #9e57e4;
+      }
+    }
   }
 }
 
