@@ -18,7 +18,7 @@ const host = window.location.origin
 
 export function Footer() {
   const { account } = useWeb3React()
-  const referralLink = `${host}/${account}`
+  const referralLink = `${host}/?referrer=${account}`
 
   const [
     referralLinkCopied,
