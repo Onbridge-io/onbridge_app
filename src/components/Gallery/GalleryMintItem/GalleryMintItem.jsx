@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import AddIcon from '@mui/icons-material/Add'
 import Spinner from '../../Spiner/Spiner'
 import { mintToken } from '../../../api/mint'
+import { switchNetwork } from '../../../utils/web3'
+import { L1ChainIds } from '../../../constants'
 import { Button } from '../..'
 import {
   GalleryItem as GalleryItemStyled,
@@ -15,6 +17,15 @@ import {
 
 export function GalleryMintItem({ chainId, totalAmountOfTokens, setChange }) {
   const [transactionStatus, setTransactionStatus] = useState()
+  const [changeNet, setChangeNet] = useState(false)
+
+  useEffect(() => {
+    if (L1ChainIds.includes(chainId) && changeNet) {
+      setTransactionStatus('Await confirmation..')
+      mintToken(totalAmountOfTokens, setChange, setTransactionStatus)
+    }
+  }, [chainId])
+
   return (
     <div className={GalleryItemWrapper}>
       <div className={GalleryItemStyled}>
@@ -22,10 +33,16 @@ export function GalleryMintItem({ chainId, totalAmountOfTokens, setChange }) {
         <div className={GalleryItemButtonsContainer}>
           <Button
             className={GalleryItemButton}
-            disabled={chainId !== 97 || transactionStatus}
+            disabled={transactionStatus}
             onClick={() => {
-              setTransactionStatus('Await confirmation..')
-              mintToken(totalAmountOfTokens, setChange, setTransactionStatus)
+              if (!L1ChainIds.includes(chainId)) {
+                switchNetwork(L1ChainIds[0]).then(() => {
+                  setChangeNet(true)
+                })
+              } else {
+                setTransactionStatus('Await confirmation..')
+                mintToken(totalAmountOfTokens, setChange, setTransactionStatus)
+              }
             }}
           >
             {transactionStatus ? (

@@ -36,8 +36,6 @@
       flex-direction: column;
       justify-content: space-between;
       padding-bottom: 18px;
-
-      border-bottom: 1px solid $border;
       font-family: Inter;
       font-size: 15px;
       font-style: normal;
@@ -45,41 +43,6 @@
       line-height: 18px;
       letter-spacing: 0.01em;
       text-align: left;
-    }
-
-    &Foot {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      align-items: center;
-      width: 100%;
-      padding: 12px 0;
-      border-bottom: 1px solid $border;
-      &Disabled {
-        border: none;
-      }
-    }
-  }
-
-  &Spec {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-
-    &Label {
-      font-weight: normal;
-      font-size: 13px;
-      color: $secondary-text;
-      margin-bottom: 2px;
-    }
-
-    &Value {
-      font-weight: normal;
-      font-size: 13px;
-
-      &Link {
-        font-size: 13px;
-      }
     }
   }
 

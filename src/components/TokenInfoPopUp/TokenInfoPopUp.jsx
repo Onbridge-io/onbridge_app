@@ -6,7 +6,7 @@ import { useWeb3React } from '@web3-react/core'
 import { GalleryItem } from '../Gallery/GalleryItem/GalleryItem'
 import { Button } from '..'
 import { bridgeToken } from '../../api/bridge'
-import { shortenAddress } from '../../utils/web3'
+import { shortenAddress, switchNetwork } from '../../utils/web3'
 
 import networks from '../../networks.json'
 import {
@@ -19,6 +19,7 @@ import {
   ModalChainBlock,
   ModalLoadingWrapper,
   ModalLoadingBlock,
+  ModalLoadingText,
   ModalLoadingStageBlock,
   ModalLoadingProcessText,
   ModalLoadingProcessSupprotText,
@@ -55,6 +56,7 @@ function Modal({
   const [txLink, setTxLink] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [disableButtons, setDisableButtons] = useState(false)
+  const [changeNet, setChangeNet] = useState(false)
   const { chainId } = useWeb3React()
 
   useEffect(() => {
@@ -84,10 +86,8 @@ function Modal({
     setDisableButtons(true)
     setIsLoading(true)
     bridgeToken(
-      chainId,
-      currentItem.tokenId,
       currentItem.tokensChainId,
-      change,
+      currentItem.tokenId,
       setChange,
       setDisableButtons,
       setPending,
@@ -98,6 +98,11 @@ function Modal({
       bridgeCurrentItemId,
     )
   }
+  useEffect(() => {
+    if (chainId === currentItem.tokensChainId && changeNet) {
+      bridgeHandler()
+    }
+  }, [chainId])
 
   const InfoTransfer = () => {
     if (!isLoading && !confirmed) {
@@ -140,15 +145,19 @@ function Modal({
               or the transaction will be rolled back
             </p>
             <Button
-              disabled={disableButtons || chainId !== currentItem.tokensChainId}
-              onClick={bridgeHandler}
+              disabled={disableButtons}
+              onClick={() => {
+                if (chainId !== currentItem.tokensChainId) {
+                  switchNetwork(currentItem.tokensChainId).then(() => {
+                    setChangeNet(true)
+                  })
+                } else {
+                  bridgeHandler()
+                }
+              }}
               className={ModalApproveButton}
             >
-              {chainId !== currentItem.tokensChainId
-                ? `Switch to the appropriate network (${
-                    networks[currentItem.tokensChainId].name
-                  })`
-                : 'Approve'}
+              Approve
             </Button>
           </div>
         </>
@@ -168,7 +177,9 @@ function Modal({
               </p>
             </div>
           </div>
-          <p>Confirm this operation in your wallet.</p>
+          <p className={ModalLoadingText}>
+            Confirm this operation in your wallet.
+          </p>
         </div>
       )
     } else {

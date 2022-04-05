@@ -1,6 +1,6 @@
 import classnames from 'classnames'
 import { useWeb3React } from '@web3-react/core'
-import { Button, Link } from '../../'
+import { Button } from '../../'
 import {
   GalleryItem as GalleryItemStyled,
   GalleryItemWrapper,
@@ -8,20 +8,13 @@ import {
   GalleryItemPicture,
   GalleryItemInfo,
   GalleryItemInfoHead,
-  GalleryItemInfoFoot,
-  GalleryItemInfoFootDisabled,
   GalleryItemNetworkLogo,
-  GalleryItemSpec,
-  GalleryItemSpecLabel,
-  GalleryItemSpecValue,
-  GalleryItemSpecValueLink,
   GalleryItemButton,
   GalleryItemButtonInfo,
   GalleryItemButtonDisabled,
   GalleryItemButtonsContainer,
 } from './GalleryItem.module.scss'
 
-import { shortenAddress } from '../../../utils/web3'
 import Networks from '../../../networks.json'
 
 const networksLogos = {
@@ -47,15 +40,9 @@ export function GalleryItem({
     [GalleryItemButtonDisabled]: isShowing,
   })
 
-  const itemClassNames = classnames(GalleryItemInfoFoot, {
-    [GalleryItemInfoFootDisabled]: isShowing,
-  })
-
   const wrapperClassNames = classnames(GalleryItemWrapper, {
     [GalleryItemWrapperActive]: account === owner,
   })
-
-  const blockExplorer = Networks[tokensChainId].blockExplorer
 
   return (
     <div className={wrapperClassNames}>
@@ -66,26 +53,6 @@ export function GalleryItem({
             OnBridge Pirate #{tokenId}
             <div className={GalleryItemNetworkLogo}>
               <img src={networksLogos[tokensChainId]} alt="Network" />
-            </div>
-          </div>
-          <div className={GalleryItemInfoFoot}>
-            <div className={GalleryItemSpec}>
-              <div className={GalleryItemSpecLabel}>Character points:</div>
-              <div className={GalleryItemSpecValue}>{skill}</div>
-            </div>
-          </div>
-          <div className={itemClassNames}>
-            <div className={GalleryItemSpec}>
-              <div className={GalleryItemSpecLabel}>Owner:</div>
-              <div className={GalleryItemSpecValue}>
-                <Link
-                  className={GalleryItemSpecValueLink}
-                  target="_blank"
-                  href={`${blockExplorer}/address/${owner}`}
-                >
-                  {shortenAddress(owner)}
-                </Link>
-              </div>
             </div>
           </div>
         </div>
