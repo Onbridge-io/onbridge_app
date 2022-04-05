@@ -85,6 +85,7 @@ function TokensList({ tokens, change, setChange }) {
 export function Gallery() {
   const [tokensList, setTokensList] = useState([])
   const [change, setChange] = useState(true)
+  const [mintChange, setMintChange] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
   const [hasMoreTokens, setHasMoreTokens] = useState(true)
   const [totalAmountOfTokens, setTotalAmountOfTokens] = useState()
@@ -127,7 +128,7 @@ export function Gallery() {
         setHasMoreTokens(res.results.length < res.count)
       })
       .catch((err) => console.log(err))
-  }, [change, chainChecked, chainId, account])
+  }, [mintChange, chainChecked, account])
 
   return (
     <>
@@ -176,7 +177,7 @@ export function Gallery() {
                   <GalleryMintItem
                     totalAmountOfTokens={totalAmountOfTokens}
                     chainId={chainId}
-                    setChange={setChange}
+                    setChange={setMintChange}
                   />
                   <TokensList
                     tokens={tokensList}

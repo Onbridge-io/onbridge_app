@@ -31,7 +31,7 @@ let AddressZero = null
 let Contracts = null
 
 try {
-  provider = new ethers.providers.Web3Provider(window.ethereum)
+  provider = new ethers.providers.Web3Provider(window.ethereum, 'any')
   signer = provider.getSigner()
   BSCToken = new ethers.Contract(BSCTockenAddress, L1TokenAbi, signer)
   BSCBridge = new ethers.Contract(BSCBridgeAddress, L1BridgeAbi, signer)
@@ -58,8 +58,6 @@ try {
 export async function bridgeToken(
   chainId,
   tokenId,
-  tokensChainId,
-  change,
   setChange,
   setDisableButtons,
   setPending,
@@ -110,9 +108,9 @@ export async function bridgeToken(
                 setTxLink(tx.hash)
                 setTimeout(function testTokens() {
                   axios
-                    .get(`${host}/tokens/`)
+                    .get(`${host}/tokens/${tokenId}`)
                     .then((response) => {
-                      if (response.data.results[tokenId].chainId !== chainId) {
+                      if (response.data.chainId !== chainId) {
                         setPending(false)
                         setChange((change) => !change)
                         setDisableButtons(false)

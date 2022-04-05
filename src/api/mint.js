@@ -12,7 +12,7 @@ let signer = null
 let BSCToken = null
 
 try {
-  provider = new ethers.providers.Web3Provider(window.ethereum)
+  provider = new ethers.providers.Web3Provider(window.ethereum, 'any')
   signer = provider.getSigner()
   BSCToken = new ethers.Contract(BSCTokenAddress, L1TokenAbi, signer)
 } catch (e) {
