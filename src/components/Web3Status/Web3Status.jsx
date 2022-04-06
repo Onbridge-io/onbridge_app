@@ -11,7 +11,6 @@ import {
   Web3StatusHolder,
   NetworksMenu,
   NetworksMenuImage,
-  NetworksMenuImageHidden,
   NetworksMenuTitle,
   NetworksMenuHidden,
   NetworksMenuTranslated,
@@ -22,6 +21,7 @@ import {
   NetworksMenuButtonContent,
   NetworksMenuMainButton,
   NetworksMenuArrow,
+  HiddenText,
 } from './Web3Status.module.scss'
 import { injected } from '../../utils/web3/connectors'
 import { useEagerConnect, useInactiveListener } from '../../utils/web3/hooks'
@@ -46,10 +46,6 @@ function NetworkSwitcher() {
   const [menuIsVisible, setMenuIsVidible] = useState(false)
   const wrongNetwork = error instanceof UnsupportedChainIdError
 
-  const imageClassNames = classnames(NetworksMenuImage, {
-    [NetworksMenuImageHidden]: wrongNetwork,
-  })
-
   const menuClassNames = classnames(NetworksMenu, {
     [NetworksMenuHidden]: !menuIsVisible,
     [NetworksMenuTranslated]: wrongNetwork,
@@ -68,13 +64,13 @@ function NetworkSwitcher() {
         }}
       >
         <img
-          src={networksLogos[chainId]}
+          src={wrongNetwork ? '/img/error.svg' : networksLogos[chainId]}
           alt="chainImage"
           height="24"
           width="24"
-          className={imageClassNames}
+          className={NetworksMenuImage}
         />
-        {selectButtonText}
+        <span className={HiddenText}>{selectButtonText}</span>
         <img
           className={NetworksMenuArrow}
           src="/img/chevron-down.svg"

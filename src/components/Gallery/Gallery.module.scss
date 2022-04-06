@@ -15,12 +15,9 @@
     justify-content: center;
   }
 
-  &ChainStatus {
-    display: none;
-  }
-
   &Info {
     margin: 40px auto;
+    text-align: center;
   }
 
   &Head {
@@ -60,16 +57,18 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .Gallery {
-    &ChainStatus {
-      display: flex;
+    padding-top: 5px;
+    margin: 20px auto;
+    &Info {
+      margin: 40px auto 20px;
     }
 
     &Head {
       margin-top: 12px;
       flex-direction: column;
-      min-height: 150px;
+      min-height: 100px;
       align-items: flex-start;
     }
   }

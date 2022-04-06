@@ -13,7 +13,6 @@ import {
   GalleryHeadLogo,
   GalleryHeadCounter,
   GalleryGrid,
-  GalleryChainStatus,
   GallerySpinner,
 } from './Gallery.module.scss'
 import { GalleryItem } from './GalleryItem/GalleryItem'
@@ -21,24 +20,11 @@ import { GalleryMintItem } from './GalleryMintItem/GalleryMintItem'
 import Filters from '../Filters/Filters'
 
 import useModal from '../../utils/hooks/useModal'
-import { Web3Status } from '..'
 
-const fakeData = {
-  contract: {
-    logo: 'https://app.onbridge.io/img/favicon.ico',
-    name: 'OnBridge Pirates',
-  },
-  tokens: [
-    {
-      colectionName: 'Unofficial Punks',
-      name: 'Cryptonatrix ',
-      imageSrc:
-        'https://lh3.googleusercontent.com/ZQG5lomHgYynSNFZwDFETow-i6BxtJ7AIb5AUHkjH-PbGHKpzEIq5J0g-ohtFeB-gvu2QTMBUkVo2aKS_GnzZc-X3nIWiRLVwzcpfw=w600',
-      network: 'mainnet',
-    },
-  ],
+const contract = {
+  logo: 'https://app.onbridge.io/img/favicon.ico',
+  name: 'OnBridge Pirates',
 }
-const { contract } = fakeData
 
 function TokensList({ tokens, change, setChange }) {
   const [currentItem, setCurrentItem] = useState({
@@ -143,7 +129,6 @@ export function Gallery() {
             setChainChecked={setChainChecked}
           />
           <div className={GalleryStyled}>
-            <Web3Status className={GalleryChainStatus} />
             <div className={GalleryHead}>
               <div className={GalleryHeadTitle}>
                 <img

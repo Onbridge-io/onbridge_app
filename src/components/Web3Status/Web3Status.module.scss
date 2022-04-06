@@ -40,10 +40,6 @@
 
   &Image {
     margin-right: 8px;
-
-    &Hidden {
-      display: none;
-    }
   }
 
   &Hidden {
@@ -112,10 +108,40 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .Web3Status {
     &Holder {
-      padding: 14px 12px;
+      padding: 9px 6px;
+      margin-left: 8px;
     }
+    &Address {
+      font-size: 14px;
+    }
+  }
+  .NetworksMenu {
+    width: 180px;
+    top: 45px;
+    left: -20px;
+    &Translated {
+      right: 0;
+      left: auto;
+    }
+    &Arrow {
+      display: none;
+    }
+
+    &Image {
+      margin-right: 0;
+      max-width: initial;
+    }
+    &MainButton {
+      padding: 8px;
+    }
+    &Wrapper {
+      margin-right: 0;
+    }
+  }
+  .HiddenText {
+    display: none;
   }
 }
