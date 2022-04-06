@@ -1,0 +1,56 @@
+@import '../../../scss/variables.scss';
+
+.Activity {
+  display: flex;
+  list-style: none;
+  padding: 30px 20px;
+  background: #22252c;
+  background: linear-gradient(180deg, #22252c 0%, #202329 104.84%);
+  border: 1px solid #3e3e3e;
+  border-radius: 16px;
+  justify-content: space-between;
+  margin-bottom: 12px;
+
+  &Element {
+    width: 25%;
+    text-align: left;
+    display: flex;
+    align-items: center;
+
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: 0.01em;
+
+    &Image {
+      margin-right: 8px;
+    }
+    &Small {
+      width: 20%;
+    }
+    &Medium {
+      width: 25%;
+    }
+    &Large {
+      width: 35%;
+    }
+  }
+}
+@media (max-width: 768px) {
+  .HiddenText {
+    display: none;
+  }
+  .Activity {
+    &Element {
+      &Small {
+        width: 20%;
+      }
+      &Medium {
+        width: 30%;
+      }
+      &Large {
+        width: 30%;
+      }
+    }
+  }
+}
