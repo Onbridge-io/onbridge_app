@@ -96,6 +96,7 @@
   .Filters {
     grid-template-columns: 1fr;
     gap: 56px 70px;
+    margin: 20px auto;
     &Item {
       &MainButton {
         padding: 10px 24px;
