@@ -1,0 +1,63 @@
+@import '../../scss/variables.scss';
+
+.Activities {
+  &Container {
+    display: flex;
+  }
+
+  &Table {
+    display: flex;
+    flex-direction: column;
+    margin: 50px auto 20px;
+    flex-basis: 900px;
+
+    &Header {
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      padding: 20px;
+
+      &Item {
+        width: 25%;
+
+        color: rgba(255, 255, 255, 0.4);
+        font-family: Inter;
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 18px;
+        letter-spacing: 0.01em;
+        text-align: left;
+
+        &Small {
+          width: 20%;
+        }
+        &Medium {
+          width: 25%;
+        }
+        &Large {
+          width: 35%;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .Activities {
+    &Table {
+      &Header {
+        &Item {
+          &Small {
+            width: 20%;
+          }
+          &Medium {
+            width: 30%;
+          }
+          &Large {
+            width: 30%;
+          }
+        }
+      }
+    }
+  }
+}
