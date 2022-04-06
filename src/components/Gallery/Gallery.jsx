@@ -18,6 +18,7 @@ import {
 import { GalleryItem } from './GalleryItem/GalleryItem'
 import { GalleryMintItem } from './GalleryMintItem/GalleryMintItem'
 import Filters from '../Filters/Filters'
+import Referral from '../Referral/Referral'
 
 import useModal from '../../utils/hooks/useModal'
 
@@ -124,6 +125,7 @@ export function Gallery() {
         </div>
       ) : (
         <>
+          <Referral />
           <Filters
             chainChecked={chainChecked}
             setChainChecked={setChainChecked}

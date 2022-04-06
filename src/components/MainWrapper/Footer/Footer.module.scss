@@ -14,49 +14,4 @@
   .FooterCoopyright {
     text-align: center;
   }
-
-  &Link {
-    margin: 20px 0 0;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    &Container {
-      display: flex;
-    }
-    &Input {
-      color: #9e57e4;
-      padding: 5px;
-      border: 1px solid #9e57e4;
-      border-radius: 6px 0 0 6px;
-      border-right: none;
-      background-color: transparent;
-      transition: all 0.3s;
-      font-family: Inter;
-      font-size: 18px;
-    }
-    &Button {
-      position: relative;
-      cursor: pointer;
-      padding: 5px;
-      border: 1px solid #9e57e4;
-      border-radius: 0 6px 6px 0;
-      background-color: transparent;
-      color: white;
-      padding: 5px 10px;
-    }
-    &ButtonSuccess {
-      border: 1px solid #70f1d9;
-    }
-
-    &ButtonSuccess::before {
-      display: block;
-      position: absolute;
-      content: 'Copied!';
-      top: 0;
-      left: 50%;
-      transform: translate(-50%, -100%);
-      padding-bottom: 5px;
-      color: #70f1d9;
-    }
-  }
 }
