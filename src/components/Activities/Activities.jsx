@@ -8,6 +8,8 @@ import ActivityItem from './ActivityItem/ActivityItem'
 import {
   ActivitiesContainer,
   ActivitiesWrapper,
+  ActivitiesInfo,
+  ActivitiesInfoText,
   ActivitiesTable,
   ActivitiesTableHeader,
   ActivitiesTableHeaderItem,
@@ -60,67 +62,77 @@ function Activities() {
   }, [account])
 
   return (
-    <div className={ActivitiesContainer}>
-      {isLoading ? (
-        <div className={ActivitiesWrapper}>
-          <Spinner />
-        </div>
-      ) : activitiesList.length > 0 ? (
-        <div className={ActivitiesTable}>
-          <ul className={ActivitiesTableHeader}>
-            <li
-              className={`${ActivitiesTableHeaderItem} ${ActivitiesTableHeaderItemLarge}`}
-            >
-              Network
-            </li>
-            <li
-              className={`${ActivitiesTableHeaderItem} ${ActivitiesTableHeaderItemMedium}`}
-            >
-              Event
-            </li>
-            <li
-              className={`${ActivitiesTableHeaderItem} ${ActivitiesTableHeaderItemMedium}`}
-            >
-              Date
-            </li>
-            <li
-              className={`${ActivitiesTableHeaderItem} ${ActivitiesTableHeaderItemSmall}`}
-            >
-              Reward
-            </li>
-            <li
-              className={`${ActivitiesTableHeaderItem} ${ActivitiesTableHeaderItemExtraSmall}`}
-            ></li>
-          </ul>
-          <div className={ActivitiesTableBody}>
-            <InfiniteScroll
-              style={{ overflow: 'hidden' }}
-              dataLength={activitiesList.length}
-              next={fetchMoreActivities}
-              hasMore={hasMoreActivities}
-              loader={
-                <div className={ActivitiesWrapper}>
-                  <Spinner />
-                </div>
-              }
-            >
-              {activitiesList.map((activity) => (
-                <ActivityItem
-                  key={activity.id}
-                  network={activity.chainId}
-                  event={activity.eventType}
-                  date={activity.creationTime}
-                  reward={activity.reward}
-                  tx={activity.tx}
-                />
-              ))}
-            </InfiniteScroll>
-          </div>
+    <>
+      {!account ? (
+        <div className={ActivitiesInfo}>
+          <p className={ActivitiesInfoText}>
+            Please connect your wallet to proceed
+          </p>
         </div>
       ) : (
-        <div className={ActivitiesWrapper}>You have no activities</div>
+        <div className={ActivitiesContainer}>
+          {isLoading ? (
+            <div className={ActivitiesWrapper}>
+              <Spinner />
+            </div>
+          ) : activitiesList.length > 0 ? (
+            <div className={ActivitiesTable}>
+              <ul className={ActivitiesTableHeader}>
+                <li
+                  className={`${ActivitiesTableHeaderItem} ${ActivitiesTableHeaderItemLarge}`}
+                >
+                  Network
+                </li>
+                <li
+                  className={`${ActivitiesTableHeaderItem} ${ActivitiesTableHeaderItemMedium}`}
+                >
+                  Event
+                </li>
+                <li
+                  className={`${ActivitiesTableHeaderItem} ${ActivitiesTableHeaderItemMedium}`}
+                >
+                  Date
+                </li>
+                <li
+                  className={`${ActivitiesTableHeaderItem} ${ActivitiesTableHeaderItemSmall}`}
+                >
+                  Reward
+                </li>
+                <li
+                  className={`${ActivitiesTableHeaderItem} ${ActivitiesTableHeaderItemExtraSmall}`}
+                ></li>
+              </ul>
+              <div className={ActivitiesTableBody}>
+                <InfiniteScroll
+                  style={{ overflow: 'hidden' }}
+                  dataLength={activitiesList.length}
+                  next={fetchMoreActivities}
+                  hasMore={hasMoreActivities}
+                  loader={
+                    <div className={ActivitiesWrapper}>
+                      <Spinner />
+                    </div>
+                  }
+                >
+                  {activitiesList.map((activity) => (
+                    <ActivityItem
+                      key={activity.id}
+                      network={activity.chainId}
+                      event={activity.eventType}
+                      date={activity.creationTime}
+                      reward={activity.reward}
+                      tx={activity.tx}
+                    />
+                  ))}
+                </InfiniteScroll>
+              </div>
+            </div>
+          ) : (
+            <div className={ActivitiesWrapper}>You have no activities</div>
+          )}
+        </div>
       )}
-    </div>
+    </>
   )
 }
 

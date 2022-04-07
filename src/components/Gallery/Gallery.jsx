@@ -105,16 +105,18 @@ export function Gallery() {
   }
 
   useEffect(() => {
-    setIsLoading(true)
-    getTokensInfo({ account: account, chains: chainChecked })
-      .then((res) => {
-        setCurrentPage(1)
-        setIsLoading(false)
-        setTokensList(res.results)
-        setTotalAmountOfTokens(res.count)
-        setHasMoreTokens(res.results.length < res.count)
-      })
-      .catch((err) => console.log(err))
+    if (account) {
+      setIsLoading(true)
+      getTokensInfo({ account: account, chains: chainChecked })
+        .then((res) => {
+          setCurrentPage(1)
+          setIsLoading(false)
+          setTokensList(res.results)
+          setTotalAmountOfTokens(res.count)
+          setHasMoreTokens(res.results.length < res.count)
+        })
+        .catch((err) => console.log(err))
+    }
   }, [mintChange, chainChecked, account])
 
   return (

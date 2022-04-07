@@ -5,6 +5,22 @@
     display: flex;
   }
 
+  &Info {
+    margin: 40px auto;
+    display: flex;
+    flex-direction: column;
+    background-color: #22252c;
+    padding: 32px;
+    border: 1px solid $border;
+    border-radius: 16px;
+    max-width: 1200px;
+
+    &Text {
+      margin: 40px auto;
+      text-align: center;
+    }
+  }
+
   &Wrapper {
     margin: 20px auto;
     width: max-content;
