@@ -26,6 +26,7 @@ import {
 import { injected } from '../../utils/web3/connectors'
 import { useEagerConnect, useInactiveListener } from '../../utils/web3/hooks'
 import { shortenAddress, switchNetwork } from '../../utils/web3'
+import { signUp } from '../../api/signUp'
 import { Button } from '../'
 
 const connectorsByName = {
@@ -132,7 +133,14 @@ function NetworkSwitcher() {
 }
 
 export function Web3Status({ ...props }) {
-  const { connector, account, activate, deactivate, error } = useWeb3React()
+  const {
+    connector,
+    account,
+    activate,
+    deactivate,
+    error,
+    chainId,
+  } = useWeb3React()
   const wrongNetwork = error instanceof UnsupportedChainIdError
 
   // handle logic to recognize the connector currently being activated
@@ -196,6 +204,17 @@ export function Web3Status({ ...props }) {
       )
     })
   }
+
+  useEffect(() => {
+    if (account && chainId) {
+      const isSigned = localStorage.getItem(account)
+      if (!isSigned) {
+        signUp({ account, chainId }).then(() => {
+          localStorage.setItem(account, 'signed-up')
+        })
+      }
+    }
+  }, [account])
 
   return (
     <div className={Web3StatusStyled} {...props}>
