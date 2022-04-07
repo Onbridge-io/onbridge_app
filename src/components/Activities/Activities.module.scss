@@ -5,6 +5,11 @@
     display: flex;
   }
 
+  &Wrapper {
+    margin: 20px auto;
+    width: max-content;
+  }
+
   &Table {
     display: flex;
     flex-direction: column;
@@ -37,6 +42,9 @@
         &Large {
           width: 35%;
         }
+        &ExtraSmall {
+          width: 10%;
+        }
       }
     }
   }
@@ -45,8 +53,11 @@
 @media (max-width: 768px) {
   .Activities {
     &Table {
+      margin-top: 20px;
       &Header {
+        padding: 15px 10px;
         &Item {
+          font-size: 12px;
           &Small {
             width: 20%;
           }
@@ -54,7 +65,10 @@
             width: 30%;
           }
           &Large {
-            width: 30%;
+            width: 25%;
+          }
+          &ExtraSmall {
+            width: 10%;
           }
         }
       }

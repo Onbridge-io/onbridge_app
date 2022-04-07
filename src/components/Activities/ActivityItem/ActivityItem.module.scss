@@ -11,6 +11,11 @@
   justify-content: space-between;
   margin-bottom: 12px;
 
+  &Link {
+    color: #70f1d9;
+    font-size: 15px;
+  }
+
   &Element {
     width: 25%;
     text-align: left;
@@ -34,6 +39,9 @@
     &Large {
       width: 35%;
     }
+    &ExtraSmall {
+      width: 10%;
+    }
   }
 }
 @media (max-width: 768px) {
@@ -41,7 +49,12 @@
     display: none;
   }
   .Activity {
+    padding: 15px 10px;
+    &Link {
+      font-size: 12px;
+    }
     &Element {
+      font-size: 12px;
       &Small {
         width: 20%;
       }
@@ -49,7 +62,10 @@
         width: 30%;
       }
       &Large {
-        width: 30%;
+        width: 25%;
+      }
+      &ExtraSmall {
+        width: 10%;
       }
     }
   }
