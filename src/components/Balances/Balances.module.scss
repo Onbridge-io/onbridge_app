@@ -1,0 +1,26 @@
+.Balances {
+  &Container {
+    display: flex;
+    width: max-content;
+    margin-top: 10px;
+    margin-right: 25px;
+    margin-left: auto;
+    align-items: center;
+  }
+  &Sum {
+    background-color: #292c32;
+    border-radius: 8px;
+    padding: 16px;
+    text-align: center;
+    color: #70f1d9;
+    margin-left: 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .Balances {
+    &Container {
+      margin-right: 0;
+    }
+  }
+}
