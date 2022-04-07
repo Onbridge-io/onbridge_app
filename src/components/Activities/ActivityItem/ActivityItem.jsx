@@ -4,9 +4,11 @@ import Networks from '../../../networks.json'
 
 import {
   Activity,
+  ActivityLink,
   ActivityElement,
   ActivityElementImage,
   ActivityElementSmall,
+  ActivityElementExtraSmall,
   ActivityElementMedium,
   ActivityElementLarge,
   HiddenText,
@@ -18,7 +20,14 @@ const networksLogos = {
   80001: '/img/networks-logos/polygon.svg',
 }
 
-function ActivityItem({ network, event, date, reward }) {
+const eventStatuses = {
+  0: 'SIGN UP',
+  1: 'INVITEE SIGNED UP',
+  2: 'BRIDGE',
+  3: 'MINT',
+}
+
+function ActivityItem({ network, event, date, reward, tx }) {
   return (
     <ul className={Activity}>
       <li className={`${ActivityElement} ${ActivityElementLarge}`}>
@@ -31,12 +40,28 @@ function ActivityItem({ network, event, date, reward }) {
         />
         <span className={HiddenText}>{Networks[network].longName}</span>
       </li>
-      <li className={`${ActivityElement} ${ActivityElementSmall}`}>{event}</li>
+      <li className={`${ActivityElement} ${ActivityElementMedium}`}>
+        {eventStatuses[event]}
+      </li>
       <li className={`${ActivityElement} ${ActivityElementMedium}`}>
         {getTimeFromTimeStamp(date)}
       </li>
       <li className={`${ActivityElement} ${ActivityElementSmall}`}>
         {reward} ONB
+      </li>
+      <li className={`${ActivityElement} ${ActivityElementExtraSmall}`}>
+        {tx ? (
+          <a
+            className={ActivityLink}
+            target="_blank"
+            rel="noreferrer"
+            href={`${Networks[network].blockExplorer}${tx}`}
+          >
+            TX
+          </a>
+        ) : (
+          ''
+        )}
       </li>
     </ul>
   )
