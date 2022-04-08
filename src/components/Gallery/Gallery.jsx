@@ -166,6 +166,7 @@ export function Gallery() {
                   <GalleryMintItem
                     totalAmountOfTokens={totalAmountOfTokens}
                     chainId={chainId}
+                    account={account}
                     setChange={setMintChange}
                   />
                   <TokensList

@@ -4,6 +4,7 @@ import Networks from '../networks.json'
 import L1TokenAbi from '../abis/L1Token.json'
 
 const host = process.env.REACT_APP_API_HOST
+const contestHost = process.env.REACT_APP_CONTEST_API_HOST
 
 const BSCTokenAddress = Networks[97].tokenAddress
 
@@ -23,6 +24,8 @@ export async function mintToken(
   totalAmountOfTokens,
   setChange,
   setTransactionStatus,
+  account,
+  chainId,
 ) {
   const signerAddress = await signer.getAddress()
   BSCToken.mint(signerAddress)
@@ -40,6 +43,17 @@ export async function mintToken(
                 setTimeout(testTokens, 2000)
                 setTransactionStatus('Token adding..')
               }
+            })
+            .then(() => {
+              axios
+                .post(`${contestHost}/activities/`, {
+                  user: account,
+                  chainId,
+                  eventType: '3',
+                })
+                .catch((error) => {
+                  console.log(error)
+                })
             })
             .catch((error) => {
               console.log(error)
