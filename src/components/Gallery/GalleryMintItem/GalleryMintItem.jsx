@@ -15,14 +15,25 @@ import {
   GalleryItemButtonsContainer,
 } from './GalleryMintItem.module.scss'
 
-export function GalleryMintItem({ chainId, totalAmountOfTokens, setChange }) {
+export function GalleryMintItem({
+  chainId,
+  account,
+  totalAmountOfTokens,
+  setChange,
+}) {
   const [transactionStatus, setTransactionStatus] = useState()
   const [changeNet, setChangeNet] = useState(false)
 
   useEffect(() => {
     if (L1ChainIds.includes(chainId) && changeNet) {
       setTransactionStatus('Await confirmation..')
-      mintToken(totalAmountOfTokens, setChange, setTransactionStatus)
+      mintToken(
+        totalAmountOfTokens,
+        setChange,
+        setTransactionStatus,
+        account,
+        chainId,
+      )
     }
   }, [chainId])
 
@@ -41,7 +52,13 @@ export function GalleryMintItem({ chainId, totalAmountOfTokens, setChange }) {
                 })
               } else {
                 setTransactionStatus('Await confirmation..')
-                mintToken(totalAmountOfTokens, setChange, setTransactionStatus)
+                mintToken(
+                  totalAmountOfTokens,
+                  setChange,
+                  setTransactionStatus,
+                  account,
+                  chainId,
+                )
               }
             }}
           >
